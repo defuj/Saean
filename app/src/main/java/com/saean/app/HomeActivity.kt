@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.viewpager.widget.ViewPager
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.google.firebase.FirebaseApp
 import com.google.firebase.database.DataSnapshot
@@ -24,12 +25,13 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         FirebaseApp.initializeApp(this)
         setContentView(R.layout.activity_home)
+        database = FirebaseDatabase.getInstance()
+
         sharedPreferences = getSharedPreferences(Cache.cacheName,0)
         if(sharedPreferences!!.getBoolean(Cache.blocked,false)){
             startActivity(Intent(this, BlockedActivity::class.java))
             finish()
         }
-        database = FirebaseDatabase.getInstance()
 
         val checkBlocked = database.getReference("${ApiServices.clientID}/config/blocked")
         checkBlocked.addValueEventListener(object : ValueEventListener {
@@ -47,13 +49,13 @@ class HomeActivity : AppCompatActivity() {
                         startActivity(Intent(this@HomeActivity,
                             BlockedActivity::class.java))
                         finish()
-                    }
-                }else{
-                    val edit = sharedPreferences!!.edit()
-                    edit.putBoolean(Cache.blocked, false)
-                    edit.apply()
+                    }else{
+                        val edit = sharedPreferences!!.edit()
+                        edit.putBoolean(Cache.blocked, false)
+                        edit.apply()
 
-                    setupFunctions()
+                        setupFunctions()
+                    }
                 }
             }
         })
@@ -86,6 +88,8 @@ class HomeActivity : AppCompatActivity() {
                         pagerHome!!.setCurrentItem(2,false)
                     }else{
                         startActivity(Intent(this,LoginActivity::class.java))
+                        pagerHome!!.setCurrentItem(0,false)
+                        menuBottomHome!!.selectedItemId = R.id.menu_home
                     }
                 }
                 R.id.menu_account -> {
@@ -93,6 +97,8 @@ class HomeActivity : AppCompatActivity() {
                         pagerHome!!.setCurrentItem(3,false)
                     }else{
                         startActivity(Intent(this,LoginActivity::class.java))
+                        pagerHome!!.setCurrentItem(0,false)
+                        menuBottomHome!!.selectedItemId = R.id.menu_home
                     }
                 }
             }
@@ -101,8 +107,8 @@ class HomeActivity : AppCompatActivity() {
 
         //load fragments
         val adapterHome = HomeAdapter(supportFragmentManager)
-        pagerHome!!.adapter = adapterHome
-        pagerHome!!.offscreenPageLimit = 4
+        pagerHome.adapter = adapterHome
+        pagerHome.offscreenPageLimit = 4
     }
 
     override fun onBackPressed() {

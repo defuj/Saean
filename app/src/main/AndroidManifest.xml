@@ -29,7 +29,10 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:icon"
         tools:targetApi="m">
-        <activity android:name=".LoginActivity"></activity>
+        <activity
+            android:name=".LoginActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.FullStatusBar"/>
         <activity
             android:name=".BlockedActivity"
             android:screenOrientation="portrait"

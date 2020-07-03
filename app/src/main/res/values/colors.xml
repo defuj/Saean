@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/BLUE5</color>
+    <color name="colorPrimaryDark">@color/BLUE7</color>
+    <color name="colorAccent">@color/BLUE3</color>
+
+    <color name="BLUE1">#9BF7FC</color>
+    <color name="BLUE2">#8AF1FD</color>
+    <color name="BLUE3">#2BD4FB</color>
+    <color name="BLUE4">#0FB7F7</color>
+    <color name="BLUE5">#1AA2DA</color>
+    <color name="BLUE6">#0297E0</color>
+    <color name="BLUE7">#087EC9</color>
+
+    <color name="BLACK01">#F7F7FA</color>
+    <color name="BLACK10">#E8E8E8</color>
+    <color name="BLACK40">#CACCCF</color>
+    <color name="BLACK60">#A0A4A8</color>
+    <color name="BLACK80">#52575C</color>
+    <color name="BLACK100">#25282B</color>
+
+    <color name="GREEN50">#31B057</color>
+    <color name="GREEN60">#1C9440</color>
+    <color name="GREEN80">#0F752E</color>
+
+    <color name="ORANGE70">#F85A1D</color>
+</resources>

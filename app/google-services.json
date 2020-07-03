@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "192386851514",
+    "firebase_url": "https://saean-64b11.firebaseio.com",
+    "project_id": "saean-64b11",
+    "storage_bucket": "saean-64b11.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:192386851514:android:2680a9347475c3caef1883",
+        "android_client_info": {
+          "package_name": "com.saean.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "192386851514-oqdhh039oerc69tnnnat6bdaun3kaent.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBeuCzlJjuST17xXZ7Hyv9YUJwy8llMQdA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "192386851514-oqdhh039oerc69tnnnat6bdaun3kaent.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

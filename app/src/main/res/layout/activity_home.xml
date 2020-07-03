@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <id.co.bigtek.kelasjodoh.helper.NonSwipeableViewPager
+            android:id="@+id/pagerHome"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/menuBottomHome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            app:itemIconTint="@drawable/tab_selector"
+            app:labelVisibilityMode="labeled"
+            app:menu="@menu/menu_bottom_nav"
+            app:elevation="6dp"
+            app:itemTextColor="@drawable/tab_selector"
+            app:itemTextAppearanceActive="@style/NavigationBottom"
+            app:itemTextAppearanceInactive="@style/NavigationBottom"
+            app:itemIconSize="20dp" />
+    </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

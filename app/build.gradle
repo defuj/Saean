@@ -75,9 +75,16 @@ dependencies {
     //implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.google.android.gms:play-services-location:17.0.0'
 
+    //firebase
     implementation 'com.google.firebase:firebase-analytics:17.4.3'
     implementation 'com.google.firebase:firebase-database:19.3.1'
     implementation 'com.google.firebase:firebase-messaging:20.2.1'
+    implementation 'com.firebaseui:firebase-ui-auth:4.3.1'
+    implementation 'com.google.firebase:firebase-auth:19.3.1'
+    implementation 'com.google.firebase:firebase-storage:19.1.1'
+
+    //facebook sdk
+    implementation 'com.facebook.android:facebook-android-sdk:6.3.0'
 
     implementation 'com.pixplicity.sharp:library:1.1.0'
     implementation 'com.github.nikartm:image-support:1.0.5'

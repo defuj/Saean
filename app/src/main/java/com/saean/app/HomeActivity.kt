@@ -98,9 +98,9 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun setupFunctions() {
-        val dialog = SweetAlertDialog(this, SweetAlertDialog.NORMAL_TYPE)
+        val dialog = SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE)
         dialog.titleText = "Selamat Datang"
-        dialog.contentText = "Terimakasih atas kunjungan Anda, silahkan kembali beberapa saat lagi."
+        dialog.contentText = "Terimakasih atas kunjungan Anda."
         dialog.showCancelButton(true)
         dialog.setConfirmClickListener {
             dialog.dismissWithAnimation()

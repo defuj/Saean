@@ -27,6 +27,7 @@ import java.io.BufferedInputStream
 import java.io.ByteArrayOutputStream
 import java.io.InputStream
 import java.net.URL
+import java.security.MessageDigest
 import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
@@ -547,5 +548,25 @@ object MyFunctions {
 
     fun stopScreenshot(activity: Activity){
         activity.window.setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE)
+    }
+
+    fun encrypt(password : String): String {
+        val hexChars = "0123456789AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz="
+        val bytes = MessageDigest
+            .getInstance("SHA-256") //SHA-512
+            .digest(password.toByteArray())
+        val result = StringBuilder(bytes.size * 2)
+
+        bytes.forEach {
+            val i = it.toInt()
+            result.append(hexChars[i shr 4 and 0x0f])
+            result.append(hexChars[i and 0x0f])
+        }
+        return result.toString()
+    }
+
+    fun changeToUnderscore(content : String) : String{
+        val email = content.replace(".","_")
+        return email.replace("-","_")
     }
 }

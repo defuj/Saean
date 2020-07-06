@@ -64,6 +64,23 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Promo untuk kamu"
+                        android:fontFamily="@font/neosanspro_medium"
+                        android:paddingHorizontal="16dp"
+                        android:paddingTop="16dp"
+                        android:textColor="@color/BLACK80"
+                        android:textSize="16sp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Temukan berbagai promo menarik tiap harinya"
+                        android:fontFamily="@font/opensans_regular"
+                        android:paddingHorizontal="16dp"
+                        android:textColor="@color/BLACK60"
+                        android:textSize="14sp"/>
                     <com.github.islamkhsh.CardSliderViewPager
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

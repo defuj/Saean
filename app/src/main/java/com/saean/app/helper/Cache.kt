@@ -8,8 +8,8 @@ object Cache {
     const val email = "email"
     const val pass = "pass"
     const val address = "address"
-    const val whatsApp = "whatsApp"
-    const val token = "token"
+    const val phone = "phone"
+    const val picture = "picture"
 
     const val longitude = "longitude"
     const val latitude = "latitude"

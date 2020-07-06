@@ -27,9 +27,10 @@ class TrackingService : Service() {
     }
 
     private fun requestLocationUpdates() {
+        val database = FirebaseDatabase.getInstance()
         val sharedPreferences : SharedPreferences = getSharedPreferences(Cache.cacheName,0)
         val request = LocationRequest()
-        request.interval = 6000
+        request.interval = 12000
         request.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         val client : FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 
@@ -42,6 +43,14 @@ class TrackingService : Service() {
                         edit.putString(Cache.latitude,p0.lastLocation.latitude.toString())
                         edit.putString(Cache.longitude,p0.lastLocation.longitude.toString())
                         edit.apply()
+
+                        if(sharedPreferences.getBoolean(Cache.logged,false)){
+                            val email = MyFunctions.changeToUnderscore(sharedPreferences.getString(Cache.email,"")!!)
+                            if(email.isNotEmpty()){
+                                database.getReference("user/$email").child("userLocation").child("latitude").setValue(p0.lastLocation.latitude)
+                                database.getReference("user/$email").child("userLocation").child("longitude").setValue(p0.lastLocation.longitude)
+                            }
+                        }
                     }
                 }
             },null)

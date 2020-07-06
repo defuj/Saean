@@ -23,5 +23,8 @@
     <color name="GREEN60">#1C9440</color>
     <color name="GREEN80">#0F752E</color>
 
+    <color name="ORANGE60">#FD7946</color>
     <color name="ORANGE70">#F85A1D</color>
+
+    <color name="YELLOW60">#FF9800</color>
 </resources>

@@ -81,5 +81,6 @@ dependencies {
 
     implementation 'com.pixplicity.sharp:library:1.1.0'
     implementation 'com.github.nikartm:image-support:1.0.5'
+    implementation 'com.github.IslamKhSh:CardSlider:1.0.1'
 }
 apply plugin: 'com.google.gms.google-services'

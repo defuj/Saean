@@ -29,10 +29,16 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:icon"
         tools:targetApi="m">
+
+        <service
+            android:name=".helper.TrackingService"
+            android:enabled="true"
+            android:exported="true"/>
+
         <activity
             android:name=".LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.FullStatusBar"/>
+            android:theme="@style/AppTheme.FullStatusBar" />
         <activity
             android:name=".BlockedActivity"
             android:screenOrientation="portrait"

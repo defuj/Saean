@@ -1,14 +1,14 @@
-package com.saean.app.home.adapter
+package com.saean.app.menus
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import com.saean.app.home.AccountFragment
-import com.saean.app.home.HomeFragment
-import com.saean.app.home.MapsFragment
-import com.saean.app.home.TransactionsFragment
+import com.saean.app.menus.fragments.AccountFragment
+import com.saean.app.menus.fragments.HomeFragment
+import com.saean.app.menus.fragments.MapsFragment
+import com.saean.app.menus.fragments.TransactionsFragment
 
-class HomeAdapter
+class MenusAdapter
 constructor(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
 
     private val pages = listOf(

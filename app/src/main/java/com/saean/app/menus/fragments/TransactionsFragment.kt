@@ -1,4 +1,4 @@
-package com.saean.app.home
+package com.saean.app.menus.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

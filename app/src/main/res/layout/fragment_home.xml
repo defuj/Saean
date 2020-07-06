@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".home.HomeFragment"
+    tools:context=".menus.fragments.HomeFragment"
     android:background="@android:color/white">
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -17,7 +17,8 @@
             android:layout_height="56dp"
             android:background="@android:color/white"
             app:contentInsetStart="0dp"
-            android:paddingHorizontal="8dp">
+            android:paddingHorizontal="8dp"
+            app:menu="@menu/menu_toolbar_home">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -36,10 +37,10 @@
                     android:gravity="center_vertical"
                     android:text="Cari servis paling tepat!"
                     android:textSize="14sp"
-                    android:fontFamily="@font/neosans_pro_regular"
+                    android:fontFamily="@font/opensans_regular"
                     android:drawableStart="@drawable/ic_search_market"
                     android:drawablePadding="8dp"
-                    android:background="@drawable/bg_form_search_market"/>
+                    android:background="@drawable/background_form_search_market"/>
             </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
@@ -58,7 +59,58 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-
+                <LinearLayout
+                    android:id="@+id/containerPromo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <com.github.islamkhsh.CardSliderViewPager
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/promoSlider"
+                        android:layout_marginTop="8dp"
+                        app:cardSlider_smallScaleFactor="0.9"
+                        app:cardSlider_otherPagesWidth="20dp"
+                        app:cardSlider_pageMargin="6dp"
+                        app:auto_slide_time="5"
+                        app:cardSlider_indicator="@id/indicator"
+                        android:clipChildren="true" />
+                    <com.github.islamkhsh.CardSliderIndicator
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/indicator"
+                        app:indicatorsToShow="5"
+                        android:layout_marginHorizontal="24dp"
+                        android:layout_marginVertical="6dp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/containerNearbyStore"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Toko Servis Terdekat"
+                        android:fontFamily="@font/neosanspro_medium"
+                        android:paddingHorizontal="16dp"
+                        android:paddingTop="8dp"
+                        android:textColor="@color/BLACK80"
+                        android:textSize="16sp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Laptop kamu rusak? Segera servis sekarang!"
+                        android:fontFamily="@font/opensans_regular"
+                        android:paddingHorizontal="16dp"
+                        android:textColor="@color/BLACK60"
+                        android:textSize="14sp"/>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/storeNearbySlider"
+                        android:overScrollMode="never"/>
+                </LinearLayout>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

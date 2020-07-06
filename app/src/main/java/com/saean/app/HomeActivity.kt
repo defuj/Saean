@@ -1,10 +1,11 @@
 package com.saean.app
 
+import android.Manifest
 import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.viewpager.widget.ViewPager
+import androidx.core.app.ActivityCompat
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.google.firebase.FirebaseApp
 import com.google.firebase.database.DataSnapshot
@@ -13,13 +14,15 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.saean.app.helper.Cache
 import com.saean.app.helper.MyFunctions
-import com.saean.app.home.adapter.HomeAdapter
+import com.saean.app.helper.TrackingService
+import com.saean.app.menus.MenusAdapter
 import com.saean.app.network.ApiServices
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {
     private var sharedPreferences: SharedPreferences ?= null
     private lateinit var database: FirebaseDatabase
+    private val permissionRequest = 100
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +36,7 @@ class HomeActivity : AppCompatActivity() {
             finish()
         }
 
-        val checkBlocked = database.getReference("${ApiServices.clientID}/config/blocked")
+        val checkBlocked = database.getReference("config/blocked")
         checkBlocked.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
 
@@ -59,6 +62,39 @@ class HomeActivity : AppCompatActivity() {
                 }
             }
         })
+
+        setupGPS()
+    }
+
+    private fun setupGPS() {
+        if(MyFunctions.gpsCheck(this)){
+            if(MyFunctions.gpsPermissionCheck(this)){
+                startTrackerService()
+            }else{
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), permissionRequest)
+            }
+        }else{
+            val dialog = SweetAlertDialog(this,SweetAlertDialog.WARNING_TYPE)
+            dialog.titleText = "Warning"
+            dialog.contentText = "Please enable location services!"
+            dialog.setCancelable(false)
+            dialog.setConfirmClickListener {
+                dialog.dismissWithAnimation()
+                setupGPS()
+            }
+            dialog.show()
+        }
+    }
+
+    private fun startTrackerService() {
+        startService(Intent(this, TrackingService::class.java))
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray) {
+        setupGPS()
     }
 
     private fun setupFunctions() {
@@ -106,7 +142,7 @@ class HomeActivity : AppCompatActivity() {
         }
 
         //load fragments
-        val adapterHome = HomeAdapter(supportFragmentManager)
+        val adapterHome = MenusAdapter(supportFragmentManager)
         pagerHome.adapter = adapterHome
         pagerHome.offscreenPageLimit = 4
     }

@@ -16,7 +16,6 @@ import com.saean.app.helper.Cache
 import com.saean.app.helper.MyFunctions
 import com.saean.app.helper.TrackingService
 import com.saean.app.menus.MenusAdapter
-import com.saean.app.network.ApiServices
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {
@@ -97,23 +96,10 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun setupFunctions() {
-        val dialog = SweetAlertDialog(this, SweetAlertDialog.SUCCESS_TYPE)
-        dialog.titleText = "Selamat Datang"
-        dialog.contentText = "Terimakasih atas kunjungan Anda."
-        dialog.showCancelButton(true)
-        dialog.setConfirmClickListener {
-            dialog.dismissWithAnimation()
-        }
-        dialog.setOnDismissListener {
-            dialog.dismissWithAnimation()
-        }
-        dialog.setCancelable(true)
-        dialog.show()
-
-        loadFragment()
+        setupFragment()
     }
 
-    private fun loadFragment() {
+    private fun setupFragment() {
         menuBottomHome!!.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.menu_home -> pagerHome!!.setCurrentItem(0,false)

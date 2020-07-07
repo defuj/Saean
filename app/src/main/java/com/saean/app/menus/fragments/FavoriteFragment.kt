@@ -52,10 +52,10 @@ class FavoriteFragment : Fragment() {
     }
 
     private fun setupRefresh() {
-        refreshFeed.setOnRefreshListener {
+        refreshFavorite.setOnRefreshListener {
             object : CountDownTimer(3000,1000){
                 override fun onFinish() {
-                    refreshFeed.isRefreshing = false
+                    refreshFavorite.isRefreshing = false
                 }
 
                 override fun onTick(millisUntilFinished: Long) {

@@ -23,6 +23,6 @@
         app:ibv_badgeColor="@color/ORANGE70"
         app:ibv_badgeLimitValue="true"
         app:ibv_badgePosition="top_right"
-        android:paddingHorizontal="8dp"
+        android:paddingHorizontal="10dp"
         android:paddingVertical="4dp"/>
 </FrameLayout>

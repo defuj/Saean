@@ -18,8 +18,10 @@ import android.os.Environment
 import android.util.Base64
 import android.util.DisplayMetrics
 import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
@@ -568,5 +570,14 @@ object MyFunctions {
     fun changeToUnderscore(content : String) : String{
         val email = content.replace(".","_")
         return email.replace("-","_")
+    }
+
+    fun closeKeyboard(activity: Activity) {
+        val view = activity.currentFocus
+        if (view != null) {
+            val imm =
+                activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
+        }
     }
 }

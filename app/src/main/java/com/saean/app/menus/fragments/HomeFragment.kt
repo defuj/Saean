@@ -6,7 +6,6 @@ import android.os.CountDownTimer
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.github.islamkhsh.CardSliderIndicator
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -24,7 +23,8 @@ class HomeFragment : Fragment() {
     private lateinit var database: FirebaseDatabase
     private var sharedPreferences : SharedPreferences? = null
     private var promo : ArrayList<PromoModel>? = null
-    private var store : ArrayList<StoreModel>? = null
+    private var storeNearby : ArrayList<StoreModel>? = null
+    private var storeOthers : ArrayList<StoreModel>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,11 +70,31 @@ class HomeFragment : Fragment() {
         setupRefresh()
         setupSliderPromo()
         setupNearbyStore()
+        setupOtherStore()
+    }
+
+    private fun setupOtherStore() {
+        storeOthers = ArrayList()
+        storeOthers!!.clear()
+        recyclerOtherStore.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false)
+
+        for(i in 0 until 19){
+            val model = StoreModel()
+            model.storeID = "id${i+1}"
+            model.storeName = "This is name of the Store ${i+1}"
+            model.storeImage = "https://pemmzchannel.com/wp-content/uploads/2020/02/IT-Galeri-Store-1000x570.jpg"
+            model.storeAddress = "Sumedang Utara"
+            model.storeStatusOpen = true
+            storeOthers!!.add(model)
+        }
+
+        val adapter = StoreAdapter("vertical",storeOthers!!)
+        recyclerOtherStore.adapter = adapter
     }
 
     private fun setupNearbyStore() {
-        store = ArrayList()
-        store!!.clear()
+        storeNearby = ArrayList()
+        storeNearby!!.clear()
         storeNearbySlider.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
 
         for(i in 0 until 5){
@@ -85,9 +105,9 @@ class HomeFragment : Fragment() {
             model.storeDescription = activity!!.getString(R.string.lorem_ipsum)
             model.storeStatusOpen = true
             model.storeRating = i.toFloat()
-            store!!.add(model)
+            storeNearby!!.add(model)
         }
-        val adapter = StoreAdapter(store!!)
+        val adapter = StoreAdapter("horizontal",storeNearby!!)
         storeNearbySlider.adapter = adapter
     }
 

@@ -1,14 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".menus.fragments.TransactionsFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".menus.fragments.TransactionsFragment"
+    android:background="@android:color/white">
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarTransaction"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@android:color/white"
+            app:contentInsetStart="0dp"
+            android:paddingHorizontal="8dp"
+            app:menu="@menu/menu_toolbar_home">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_marginHorizontal="12dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="Transaksi"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/neosanspro_medium"
+                    android:textColor="@color/BLACK80" />
+            </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refreshTransaction"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+        <androidx.core.widget.NestedScrollView
+            android:overScrollMode="never"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:id="@+id/containerSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1.5dp"
+                        android:background="@color/BLACK01"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <EditText
+                            android:id="@+id/searchTransaction"
+                            android:paddingStart="10dp"
+                            android:paddingEnd="10dp"
+                            android:layout_marginEnd="6dp"
+                            android:layout_width="0dp"
+                            android:layout_height="46dp"
+                            android:gravity="center_vertical"
+                            android:hint="Cari Transaksi, Nama atau Kode"
+                            android:textSize="14sp"
+                            android:fontFamily="@font/opensans_regular"
+                            android:drawableStart="@drawable/ic_search_market"
+                            android:drawablePadding="12dp"
+                            android:background="@android:color/white"
+                            android:layout_weight="1"
+                            android:singleLine="true"
+                            android:maxLines="1"
+                            tools:ignore="Autofill"
+                            android:imeOptions="actionSearch"/>
+                        <View
+                            android:layout_width="1.5dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/BLACK01"/>
+                        <Button
+                            android:id="@+id/btnFilter"
+                            android:minWidth="130dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="Semua"
+                            android:fontFamily="@font/opensans_regular"
+                            android:textColor="@color/BLACK80"
+                            android:background="?attr/selectableItemBackground"
+                            style="@style/Widget.AppCompat.Button.Borderless"
+                            android:gravity="center_vertical"
+                            android:drawableStart="@drawable/ic_adjust"
+                            android:drawablePadding="16dp"
+                            android:paddingHorizontal="16dp"
+                            android:textSize="14sp"/>
+                    </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1.5dp"
+                        android:background="@color/BLACK01"/>
+                </LinearLayout>
 
-</FrameLayout>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

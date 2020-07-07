@@ -10,4 +10,5 @@ class StoreModel {
     var storeLongitude : Double? = null
     var storeDistance : Double? = null
     var storeStatusOpen : Boolean? = null
+    var storeAddress : String? = null
 }

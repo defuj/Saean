@@ -1,8 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".menus.fragments.MapsFragment">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.cardview.widget.CardView
+            android:visibility="visible"
+            android:id="@+id/NavigationSearch"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:cardElevation="4dp"
+            app:cardCornerRadius="8dp"
+            app:cardBackgroundColor="#4B000000"
+            android:layout_marginVertical="16dp"
+            android:layout_marginHorizontal="16dp"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="0.0px"
+            android:clipToPadding="false"
+            android:clipChildren="false"
+            app:cardPreventCornerOverlap="false">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-</FrameLayout>
+                    <EditText
+                        android:id="@+id/et_search_people"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:fontFamily="@font/opensans_regular"
+                        android:hint="Cari toko sekitar"
+                        android:inputType="text"
+                        android:maxLength="100"
+                        android:singleLine="true"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="12dp"
+                        android:textColor="@android:color/white"
+                        android:textColorHint="@android:color/white"
+                        android:textSize="16sp"
+                        android:drawablePadding="12dp"
+                        android:drawableStart="@drawable/ic_search_white"
+                        tools:ignore="Autofill"
+                        android:imeOptions="actionSearch"/>
+
+                    <ImageButton
+                        android:id="@+id/btnGoToMyLocation"
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_my_location_white"
+                        android:background="@android:color/transparent"/>
+                </LinearLayout>
+            </FrameLayout>
+        </androidx.cardview.widget.CardView>
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
+</RelativeLayout>

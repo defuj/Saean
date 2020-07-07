@@ -57,19 +57,18 @@ class HomeActivity : AppCompatActivity() {
                         edit.putBoolean(Cache.blocked, false)
                         edit.apply()
 
-                        setupFunctions()
+                        setupGPS()
                     }
                 }
             }
         })
-
-        setupGPS()
     }
 
     private fun setupGPS() {
         if(MyFunctions.gpsCheck(this)){
             if(MyFunctions.gpsPermissionCheck(this)){
                 startTrackerService()
+                setupFunctions()
             }else{
                 ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), permissionRequest)
             }
@@ -118,25 +117,9 @@ class HomeActivity : AppCompatActivity() {
         menuBottomHome!!.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.menu_home -> pagerHome!!.setCurrentItem(0,false)
-                R.id.menu_maps -> pagerHome!!.setCurrentItem(1,false)
-                R.id.menu_cart -> {
-                    if(MyFunctions.checkBoolean(this, Cache.logged)){
-                        pagerHome!!.setCurrentItem(2,false)
-                    }else{
-                        startActivity(Intent(this,LoginActivity::class.java))
-                        pagerHome!!.setCurrentItem(0,false)
-                        menuBottomHome!!.selectedItemId = R.id.menu_home
-                    }
-                }
-                R.id.menu_account -> {
-                    if(MyFunctions.checkBoolean(this, Cache.logged)){
-                        pagerHome!!.setCurrentItem(3,false)
-                    }else{
-                        startActivity(Intent(this,LoginActivity::class.java))
-                        pagerHome!!.setCurrentItem(0,false)
-                        menuBottomHome!!.selectedItemId = R.id.menu_home
-                    }
-                }
+                R.id.menu_feed -> pagerHome!!.setCurrentItem(1,false)
+                R.id.menu_cart -> pagerHome!!.setCurrentItem(2,false)
+                R.id.menu_account -> pagerHome!!.setCurrentItem(3,false)
             }
             true
         }

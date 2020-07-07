@@ -6,7 +6,8 @@
         android:id="@+id/menu_favorite"
         android:icon="@drawable/ic_menu_toolbar_home_favorite"
         android:title="Favorite"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom"
+        android:visible="false"/>
 
     <item
         android:id="@+id/menu_message"

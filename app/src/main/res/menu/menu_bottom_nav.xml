@@ -7,13 +7,13 @@
         android:title="Home" />
 
     <item
-        android:id="@+id/menu_maps"
-        android:icon="@drawable/ic_menu_home_location"
-        android:title="Lihat Maps" />
+        android:id="@+id/menu_feed"
+        android:icon="@drawable/ic_menu_toolbar_home_favorite"
+        android:title="Favorit" />
 
     <item
         android:id="@+id/menu_cart"
-        android:icon="@drawable/ic_menu_home_shopping_cart"
+        android:icon="@drawable/ic_menu_home_transaction"
         android:title="Transaksi" />
 
     <item

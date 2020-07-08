@@ -10,7 +10,6 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.saean.app.helper.Cache
-import com.saean.app.network.ApiServices
 import kotlinx.android.synthetic.main.activity_blocked.*
 
 class BlockedActivity : AppCompatActivity() {
@@ -23,7 +22,7 @@ class BlockedActivity : AppCompatActivity() {
         database = FirebaseDatabase.getInstance()
         sharedPreferences = getSharedPreferences(Cache.cacheName,0)
 
-        database.getReference("${ApiServices.clientID}/config/blocked").addValueEventListener(object :
+        database.getReference("config/blocked").addValueEventListener(object :
             ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
 

@@ -8,12 +8,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import cn.pedant.SweetAlert.SweetAlertDialog
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.saean.app.LoginActivity
 import com.saean.app.createStore.CreateStoreActivity
 import com.saean.app.R
 import com.saean.app.helper.Cache
@@ -44,7 +46,7 @@ class AccountFragment : Fragment() {
 
     private fun setupBadgesToolbar() {
         val menu = toolbarAccount.menu
-        menu.getItem(0).isVisible = true
+        //menu.getItem(0).isVisible = true
         val menuMessage = menu.getItem(1).setActionView(R.layout.item_badges_toolbar)
         val menuNotification = menu.getItem(2).setActionView(R.layout.item_badges_toolbar)
 
@@ -64,6 +66,31 @@ class AccountFragment : Fragment() {
     private fun setupFunctions() {
         setupUserInfo()
         setupRefresh()
+        setupMenus()
+    }
+
+    private fun setupMenus() {
+        menuSettingLogout.setOnClickListener {
+            val dialog = SweetAlertDialog(activity!!,SweetAlertDialog.WARNING_TYPE)
+            dialog.titleText = "Keluar dari akun"
+            dialog.contentText = "Apakah Anda ingin keluar dari akun saat ini?"
+            dialog.confirmText = "Keluar"
+            dialog.cancelText = "Batal"
+            dialog.setConfirmClickListener {
+                dialog.dismissWithAnimation()
+
+                val edit = sharedPreferences!!.edit()
+                edit.clear()
+                edit.apply()
+
+                startActivity(Intent(activity!!,LoginActivity::class.java))
+                activity!!.finish()
+            }
+            dialog.setCancelClickListener {
+                dialog.dismissWithAnimation()
+            }
+            dialog.show()
+        }
     }
 
     private fun setupUserInfo() {
@@ -104,6 +131,7 @@ class AccountFragment : Fragment() {
 
                     //check user has have a store or not
                     if(snapshot.child("userStore").exists()){
+                        menuSettingStore.visibility = View.VISIBLE
                         database.getReference("store/${snapshot.child("userStore").getValue(String::class.java)}/storeInfo").addValueEventListener(object : ValueEventListener{
                             override fun onCancelled(error: DatabaseError) {
 
@@ -140,8 +168,10 @@ class AccountFragment : Fragment() {
                             }
                         })
                     }else{
+                        menuSettingStore.visibility = View.GONE
                         containerOpenStore.visibility = View.VISIBLE
                         containerOpenStoreAction.visibility = View.VISIBLE
+                        containerMyStore.visibility = View.GONE
                     }
                 }
             }

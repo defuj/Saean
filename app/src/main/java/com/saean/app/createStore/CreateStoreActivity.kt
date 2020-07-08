@@ -71,7 +71,7 @@ class CreateStoreActivity : AppCompatActivity() {
                     store.child(storeID).child("storeInfo").child("storeAddress").setValue(storeAddress)
                     store.child(storeID).child("storeInfo").child("storeDescription").setValue(storeDescription)
                     store.child(storeID).child("storeInfo").child("storeOpen").setValue("closed")
-                    store.child(storeID).child("storeInfo").child("storeStatus").setValue(0)
+                    store.child(storeID).child("storeInfo").child("storeStatus").setValue(false)
                     store.child(storeID).child("storeInfo").child("storeLocation").child("latitude").setValue(storeLatitude)
                     store.child(storeID).child("storeInfo").child("storeLocation").child("longitude").setValue(storeLongitude)
                     store.child(storeID).child("storeInfo").child("storeMedia").child("website").setValue("")

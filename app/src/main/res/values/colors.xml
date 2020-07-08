@@ -27,4 +27,6 @@
     <color name="ORANGE70">#F85A1D</color>
 
     <color name="YELLOW60">#FF9800</color>
+
+    <color name="tintMenuStore">#002196F3</color>
 </resources>

@@ -104,10 +104,44 @@ class AccountFragment : Fragment() {
 
                     //check user has have a store or not
                     if(snapshot.child("userStore").exists()){
-                        containerOpenStore.visibility = View.GONE
-                        containerOpenStoreAction.visibility = View.GONE
+                        database.getReference("store/${snapshot.child("userStore").getValue(String::class.java)}/storeInfo").addValueEventListener(object : ValueEventListener{
+                            override fun onCancelled(error: DatabaseError) {
+
+                            }
+
+                            override fun onDataChange(snapshot: DataSnapshot) {
+                                storeName.text = snapshot.child("storeName").getValue(String::class.java)
+                                storeStatusVerify.text = if(snapshot.child("storeStatus").getValue(Boolean::class.java)!!){"Terverifikasi"}else{"Belum Terverifikasi"}
+                                if(snapshot.child("storeStatus").getValue(Boolean::class.java)!!){
+                                    storeVerify.visibility = View.GONE
+                                    storeVerify2.visibility = View.GONE
+                                }else{
+                                    storeVerify.visibility = View.VISIBLE
+                                    storeVerify2.visibility = View.VISIBLE
+                                }
+
+                                btnCloseNoticeVerify.setOnClickListener {
+                                    storeVerify2.visibility = View.GONE
+                                }
+
+                                if(snapshot.child("storePicture").getValue(String::class.java)!!.isNotEmpty()){
+                                    Glide.with(activity!!)
+                                        .load(snapshot.child("storePicture").getValue(String::class.java)!!)
+                                        .apply(RequestOptions.circleCropTransform())
+                                        .into(storePicture)
+                                }
+
+                                //set store rating
+
+                                // hide container create store
+                                containerOpenStore.visibility = View.GONE
+                                containerOpenStoreAction.visibility = View.GONE
+                                containerMyStore.visibility = View.VISIBLE
+                            }
+                        })
                     }else{
                         containerOpenStore.visibility = View.VISIBLE
+                        containerOpenStoreAction.visibility = View.VISIBLE
                     }
                 }
             }

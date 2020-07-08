@@ -55,12 +55,12 @@ class HomeActivity : AppCompatActivity() {
                         val edit = sharedPreferences!!.edit()
                         edit.putBoolean(Cache.blocked, false)
                         edit.apply()
-
-                        setupGPS()
                     }
                 }
             }
         })
+
+        setupGPS()
     }
 
     private fun setupGPS() {

@@ -6,14 +6,9 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.IBinder
-import android.util.Log
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.*
 import com.google.firebase.database.FirebaseDatabase
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class TrackingService : Service() {
 

@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/menu_favorite"
-        android:icon="@drawable/ic_menu_toolbar_home_favorite"
-        android:title="Favorite"
+        android:id="@+id/menu_setting"
+        android:icon="@drawable/ic_menu_toolbar_settings"
+        android:title="Setting"
         app:showAsAction="ifRoom"
         android:visible="false"/>
 

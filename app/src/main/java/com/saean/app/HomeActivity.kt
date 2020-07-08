@@ -69,7 +69,7 @@ class HomeActivity : AppCompatActivity() {
                 startTrackerService()
                 setupFunctions()
             }else{
-                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), permissionRequest)
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION), permissionRequest)
             }
         }else{
             val dialog = SweetAlertDialog(this,SweetAlertDialog.WARNING_TYPE)

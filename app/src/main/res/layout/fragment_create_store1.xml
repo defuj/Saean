@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@android:color/white"
+    tools:context=".createStore.fragments.CreateStore1Fragment">
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        app:liftOnScroll="true">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarCreateStore1"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@android:color/white"
+            app:navigationIcon="?attr/homeAsUpIndicator"/>
+    </com.google.android.material.appbar.AppBarLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="56dp"
+        android:padding="16dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Masukan info Toko"
+            android:textSize="18sp"
+            android:fontFamily="@font/neosanspro_medium"
+            android:textColor="@color/BLACK100"
+            android:layout_marginBottom="16dp"/>
+        <EditText
+            android:id="@+id/storeName"
+            android:paddingVertical="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/opensans_regular"
+            android:hint="Apa nama tokomu"
+            android:textColor="@color/BLACK80"
+            android:textColorHint="@color/BLACK60"
+            android:background="@android:color/transparent"
+            android:inputType="textNoSuggestions"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:maxLength="100"
+            android:textSize="16sp"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1.5dp"
+            android:background="@color/BLACK10"/>
+        <TextView
+            android:layout_marginTop="3dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="- Nama yang menarik lebih mudah diingat pembeli\n- Nama yang sudah dipilih tidak dapat diubah"
+            android:textSize="12sp"
+            android:fontFamily="@font/opensans_regular"
+            android:textColor="@color/BLACK80"
+            android:justificationMode="inter_word"
+            tools:targetApi="o" />
+        <EditText
+            android:id="@+id/storeDescription"
+            android:paddingVertical="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/opensans_regular"
+            android:hint="Deskripsi tokomu"
+            android:textColor="@color/BLACK80"
+            android:textColorHint="@color/BLACK60"
+            android:background="@android:color/transparent"
+            android:inputType="textMultiLine"
+            android:maxLength="300"
+            android:gravity="top"
+            android:layout_marginTop="12dp"
+            android:textSize="16sp"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1.5dp"
+            android:background="@color/BLACK10"/>
+        <TextView
+            android:layout_marginTop="3dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tuliskan deskripsi singkat dari toko yang akan kamu buat di sini."
+            android:textSize="12sp"
+            android:fontFamily="@font/opensans_regular"
+            android:textColor="@color/BLACK80"
+            android:justificationMode="inter_word"
+            tools:targetApi="o" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="bottom|center_horizontal">
+            <Button
+                android:id="@+id/btnNext1"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:textAllCaps="false"
+                android:text="Lanjut"
+                android:fontFamily="@font/neosanspro_medium"
+                android:textColor="@android:color/white"
+                android:background="@drawable/background_button_create_store_disabled"
+                android:minHeight="45dp"
+                android:textSize="16sp"
+                style="?attr/borderlessButtonStyle"
+                android:enabled="false"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal|center_vertical"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Syarat dan Ketentuan"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/neosanspro_medium"
+                    android:textColor="@color/BLUE6" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" dan "
+                    android:textSize="14sp"
+                    android:fontFamily="@font/neosans_pro_regular"
+                    android:textColor="@color/BLACK80" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Kebijakan Privasi."
+                    android:textSize="14sp"
+                    android:fontFamily="@font/neosanspro_medium"
+                    android:textColor="@color/BLUE6" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

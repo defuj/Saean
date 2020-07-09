@@ -22,3 +22,5 @@
 -keep class com.synnapps.carouselview.* { *; }
 -keep class cn.pedant.SweetAlert.* { *; }
 -keep class androidx.appcompat.widget.* { *; }
+-keepattributes Signature
+-keepclassmembers class com.saean.app.* { *; }

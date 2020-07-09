@@ -7,7 +7,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.content.res.Configuration
-import android.content.res.Resources
 import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
@@ -16,12 +15,10 @@ import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Environment
 import android.util.Base64
-import android.util.DisplayMetrics
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
@@ -37,6 +34,7 @@ import java.time.temporal.ChronoUnit
 import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
+import kotlin.math.*
 
 object MyFunctions {
     fun checkBoolean(context: Context, target : String) : Boolean{
@@ -579,5 +577,39 @@ object MyFunctions {
                 activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(view.windowToken, 0)
         }
+    }
+
+    fun countDistance(
+        latitude1: Double,
+        latitude2: Double,
+        longitude1: Double,
+        longitude2: Double): Double {
+
+        // The math module contains a function
+        // named toRadians which converts from
+        // degrees to radians.
+        var lat1 = latitude1
+        var lat2 = latitude2
+        var lon1 = longitude1
+        var lon2 = longitude2
+        lon1 = Math.toRadians(lon1)
+        lon2 = Math.toRadians(lon2)
+        lat1 = Math.toRadians(lat1)
+        lat2 = Math.toRadians(lat2)
+
+        // Haversine formula
+        val dlon = lon2 - lon1
+        val dlat = lat2 - lat1
+        val a = (sin(dlat / 2).pow(2.0)
+                + (cos(lat1) * cos(lat2)
+                * sin(dlon / 2).pow(2.0)))
+        val c = 2 * asin(sqrt(a))
+
+        // Radius of earth in kilometers. Use 3956
+        // for miles
+        val r = 6371.0
+
+        // calculate the result
+        return c * r
     }
 }

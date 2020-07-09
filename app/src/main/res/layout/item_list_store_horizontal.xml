@@ -45,7 +45,7 @@
                         android:layout_height="wrap_content"
                         tools:text="Open"
                         android:fontFamily="@font/opensans_regular"
-                        android:textSize="14sp"
+                        android:textSize="12sp"
                         android:textColor="@android:color/white"
                         android:background="@drawable/background_status_store_open"
                         android:paddingHorizontal="8dp"
@@ -102,6 +102,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
                         <ImageButton
+                            android:id="@+id/btnOpenMaps"
                             style="@style/Widget.AppCompat.Button.Borderless"
                             android:layout_width="60dp"
                             android:layout_height="35dp"

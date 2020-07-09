@@ -78,7 +78,7 @@ class HomeFragment : Fragment() {
         storeOthers!!.clear()
         recyclerOtherStore.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false)
 
-        for(i in 0 until 19){
+        /* for(i in 0 until 19){
             val model = StoreModel()
             model.storeID = "id${i+1}"
             model.storeName = "This is name of the Store ${i+1}"
@@ -86,10 +86,40 @@ class HomeFragment : Fragment() {
             model.storeAddress = "Sumedang Utara"
             model.storeStatusOpen = true
             storeOthers!!.add(model)
-        }
+        } */
 
-        val adapter = StoreAdapter("vertical",storeOthers!!)
-        recyclerOtherStore.adapter = adapter
+        database.getReference("store").addListenerForSingleValueEvent(object : ValueEventListener{
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.hasChildren()){
+                    for(content in snapshot.children){
+                        val info = content.child("storeInfo")
+                        val model = StoreModel()
+                        model.storeID = snapshot.key
+                        model.storeName = info.child("storeName").getValue(String::class.java)
+                        model.storeImage = info.child("storePicture").getValue(String::class.java)
+                        model.storeAddress = info.child("storeAddress").getValue(String::class.java)
+                        model.storeDescription = info.child("storeDescription").getValue(String::class.java)
+                        model.storeStatusOpen = info.child("storeOpen").getValue(Boolean::class.java)
+                        model.storeRating = info.child("storeRating").getValue(Float::class.java)
+                        model.storeFront = info.child("storeFront").getValue(String::class.java)
+                        model.storeLatitude = info.child("storeLocation").child("latitude").getValue(Double::class.java)!!
+                        model.storeLongitude = info.child("storeLocation").child("longitude").getValue(Double::class.java)!!
+                        storeOthers!!.add(model)
+
+                        if(recyclerOtherStore.adapter != null){
+                            recyclerOtherStore.adapter!!.notifyDataSetChanged()
+                        }
+                    }
+
+                    val adapter = StoreAdapter(activity!!,"vertical",storeOthers!!)
+                    recyclerOtherStore.adapter = adapter
+                }
+            }
+        })
     }
 
     private fun setupNearbyStore() {
@@ -97,7 +127,7 @@ class HomeFragment : Fragment() {
         storeNearby!!.clear()
         storeNearbySlider.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
 
-        for(i in 0 until 5){
+        /* for(i in 0 until 5){
             val model = StoreModel()
             model.storeID = "id$i"
             model.storeName = "This is name of the Store $i"
@@ -106,9 +136,41 @@ class HomeFragment : Fragment() {
             model.storeStatusOpen = true
             model.storeRating = i.toFloat()
             storeNearby!!.add(model)
-        }
-        val adapter = StoreAdapter("horizontal",storeNearby!!)
-        storeNearbySlider.adapter = adapter
+        } */
+
+        database.getReference("store").addListenerForSingleValueEvent(object : ValueEventListener{
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.hasChildren()){
+                    for(content in snapshot.children){
+                        val info = content.child("storeInfo")
+                        val model = StoreModel()
+                        model.storeID = snapshot.key
+                        model.storeName = info.child("storeName").getValue(String::class.java)
+                        model.storeImage = info.child("storePicture").getValue(String::class.java)
+                        model.storeAddress = info.child("storeAddress").getValue(String::class.java)
+                        model.storeDescription = info.child("storeDescription").getValue(String::class.java)
+                        model.storeStatusOpen = info.child("storeOpen").getValue(Boolean::class.java)
+                        model.storeRating = info.child("storeRating").getValue(Float::class.java)
+                        model.storeFront = info.child("storeFront").getValue(String::class.java)
+                        model.storeLatitude = info.child("storeLocation").child("latitude").getValue(Double::class.java)!!
+                        model.storeLongitude = info.child("storeLocation").child("longitude").getValue(Double::class.java)!!
+                        storeNearby!!.add(model)
+
+                        if(storeNearbySlider.adapter != null){
+                            storeNearbySlider.adapter!!.notifyDataSetChanged()
+                        }
+                    }
+
+                    val adapter = StoreAdapter(activity!!,"horizontal",storeNearby!!)
+                    storeNearbySlider.adapter = adapter
+                }
+            }
+        })
+
     }
 
     private fun setupSliderPromo() {
@@ -146,6 +208,7 @@ class HomeFragment : Fragment() {
                 override fun onFinish() {
                     setupSliderPromo()
                     setupNearbyStore()
+                    setupOtherStore()
                     refreshHome!!.isRefreshing = false
                 }
 

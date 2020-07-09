@@ -55,7 +55,7 @@
             android:layout_marginTop="3dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="- Nama yang menarik lebih mudah diingat pembeli\n- Nama yang sudah dipilih tidak dapat diubah"
+            android:text="Nama yang menarik lebih mudah diingat pembeli"
             android:textSize="12sp"
             android:fontFamily="@font/opensans_regular"
             android:textColor="@color/BLACK80"

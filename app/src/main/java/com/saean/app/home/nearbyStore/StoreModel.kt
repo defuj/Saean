@@ -8,7 +8,7 @@ class StoreModel {
     var storeRating : Float? = null
     var storeLatitude : Double? = null
     var storeLongitude : Double? = null
-    var storeDistance : Double? = null
+    var storeFront : String? = null
     var storeStatusOpen : Boolean? = null
     var storeAddress : String? = null
 }

@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    tools:context=".store.StoreSettingInfoActivity">
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarStoreSetting"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@android:color/white"
+            app:navigationIcon="?attr/homeAsUpIndicator">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                <TextView
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="Ubah Informasi"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/neosanspro_medium"
+                    android:textColor="@color/BLACK100" />
+                <Button
+                    android:id="@+id/btnSave"
+                    android:background="@android:color/transparent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Simpan"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/opensans_regular"
+                    android:textColor="@color/BLUE6"
+                    android:textAllCaps="false"/>
+            </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="56dp"
+        android:padding="16dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ikon Toko"
+            android:textSize="14sp"
+            android:fontFamily="@font/opensans_regular"
+            android:textColor="@color/BLACK80"
+            android:paddingVertical="6dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:padding="6dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@drawable/background_container_icon_store">
+                <ImageView
+                    android:id="@+id/storeIcon"
+                    android:layout_width="123dp"
+                    android:layout_height="123dp"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/ic_my_business"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="20dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    android:background="@drawable/background_container_icon_store_desc"
+                    android:layout_marginBottom="8dp">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Besar file maksimum:"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/opensans_bold"
+                        android:textColor="@color/BLACK80" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="5 Megabytes (5 MB)"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/opensans_regular"
+                        android:textColor="@color/BLACK60"
+                        android:layout_marginBottom="6dp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="File yang diperbolehkan:"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/opensans_bold"
+                        android:textColor="@color/BLACK80" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=".JPG .JPEG .PNG"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/opensans_regular"
+                        android:textColor="@color/BLACK60"
+                        android:layout_marginBottom="6dp"/>
+                </LinearLayout>
+                <Button
+                    android:id="@+id/btnBrowseFile"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:background="@drawable/background_container_icon_store"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:text="Browser File"
+                    android:fontFamily="@font/opensans_regular"
+                    android:textAllCaps="false"
+                    android:textColor="@color/BLACK80"
+                    android:textSize="12sp"/>
+            </LinearLayout>
+        </LinearLayout>
+        <EditText
+            android:layout_marginTop="16dp"
+            android:id="@+id/storeName"
+            android:paddingVertical="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/opensans_regular"
+            android:hint="Apa nama tokomu"
+            android:textColor="@color/BLACK80"
+            android:textColorHint="@color/BLACK60"
+            android:background="@android:color/transparent"
+            android:inputType="textNoSuggestions"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:maxLength="100"
+            android:textSize="16sp"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1.5dp"
+            android:background="@color/BLACK10"/>
+        <TextView
+            android:layout_marginTop="3dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nama yang menarik lebih mudah diingat pembeli"
+            android:textSize="12sp"
+            android:fontFamily="@font/opensans_regular"
+            android:textColor="@color/BLACK80"
+            android:justificationMode="inter_word"
+            tools:targetApi="o" />
+        <EditText
+            android:id="@+id/storeDescription"
+            android:paddingVertical="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/opensans_regular"
+            android:hint="Deskripsi tokomu"
+            android:textColor="@color/BLACK80"
+            android:textColorHint="@color/BLACK60"
+            android:background="@android:color/transparent"
+            android:inputType="textMultiLine"
+            android:maxLength="300"
+            android:gravity="top"
+            android:layout_marginTop="12dp"
+            android:textSize="16sp"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1.5dp"
+            android:background="@color/BLACK10"/>
+        <TextView
+            android:layout_marginTop="3dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tuliskan deskripsi singkat dari toko yang akan kamu buat di sini."
+            android:textSize="12sp"
+            android:fontFamily="@font/opensans_regular"
+            android:textColor="@color/BLACK80"
+            android:justificationMode="inter_word"
+            tools:targetApi="o" />
+
+    </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

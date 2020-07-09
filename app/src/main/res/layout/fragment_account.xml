@@ -281,6 +281,7 @@
                                     </LinearLayout>
                                 </LinearLayout>
                                 <TextView
+                                    android:clickable="true"
                                     android:layout_marginTop="12dp"
                                     android:id="@+id/storeVerify"
                                     android:layout_width="wrap_content"
@@ -294,7 +295,8 @@
                                     android:paddingHorizontal="12dp"
                                     android:justificationMode="inter_word"
                                     android:background="@drawable/background_container_notif_to_verify"
-                                    tools:targetApi="o" />
+                                    tools:targetApi="o"
+                                    android:focusable="true" />
                             </LinearLayout>
                         </FrameLayout>
                     </androidx.cardview.widget.CardView>
@@ -489,6 +491,97 @@
                             style="?attr/borderlessButtonStyle"
                             android:layout_marginBottom="8dp"/>
                         <RelativeLayout
+                            android:id="@+id/menuStoreInfo"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:focusable="true">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:paddingHorizontal="16dp"
+                                android:paddingVertical="12dp">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_horizontal"
+                                    android:text="Informasi Toko"
+                                    android:textSize="14sp"
+                                    android:fontFamily="@font/opensans_regular"
+                                    android:textColor="@color/BLACK80" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_horizontal"
+                                    android:text="Nama Toko, Deskripsi Toko, Status Toko"
+                                    android:textSize="14sp"
+                                    android:fontFamily="@font/opensans_regular"
+                                    android:textColor="@color/BLACK60" />
+                            </LinearLayout>
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:adjustViewBounds="true"
+                                android:src="@drawable/ic_baseline_chevron_right_24"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerInParent="true"
+                                android:layout_marginHorizontal="16dp"/>
+                            <View
+                                android:layout_alignParentBottom="true"
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/BLACK10"
+                                android:layout_marginStart="16dp"/>
+                        </RelativeLayout>
+                        <RelativeLayout
+                            android:id="@+id/menuStoreEtalase"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:focusable="true">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:paddingHorizontal="16dp"
+                                android:paddingVertical="12dp">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_horizontal"
+                                    android:text="Etalase"
+                                    android:textSize="14sp"
+                                    android:fontFamily="@font/opensans_regular"
+                                    android:textColor="@color/BLACK80" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_horizontal"
+                                    android:text="Foto, logo, banner promosi toko"
+                                    android:textSize="14sp"
+                                    android:fontFamily="@font/opensans_regular"
+                                    android:textColor="@color/BLACK60" />
+                            </LinearLayout>
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:adjustViewBounds="true"
+                                android:src="@drawable/ic_baseline_chevron_right_24"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerInParent="true"
+                                android:layout_marginHorizontal="16dp"/>
+                            <View
+                                android:layout_alignParentBottom="true"
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/BLACK10"
+                                android:layout_marginStart="16dp"/>
+                        </RelativeLayout>
+                        <RelativeLayout
+                            android:id="@+id/menuStoreProduct"
                             android:background="?attr/selectableItemBackground"
                             android:clickable="true"
                             android:layout_width="match_parent"
@@ -533,6 +626,7 @@
                                 android:layout_marginStart="16dp"/>
                         </RelativeLayout>
                         <RelativeLayout
+                            android:id="@+id/menuStoreService"
                             android:background="?attr/selectableItemBackground"
                             android:clickable="true"
                             android:layout_width="match_parent"
@@ -557,6 +651,96 @@
                                     android:layout_height="wrap_content"
                                     android:gravity="center_horizontal"
                                     android:text="Lihat dan atur semua Layanan"
+                                    android:textSize="14sp"
+                                    android:fontFamily="@font/opensans_regular"
+                                    android:textColor="@color/BLACK60" />
+                            </LinearLayout>
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:adjustViewBounds="true"
+                                android:src="@drawable/ic_baseline_chevron_right_24"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerInParent="true"
+                                android:layout_marginHorizontal="16dp"/>
+                            <View
+                                android:layout_alignParentBottom="true"
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/BLACK10"
+                                android:layout_marginStart="16dp"/>
+                        </RelativeLayout>
+                        <RelativeLayout
+                            android:id="@+id/menuStoreAddress"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:focusable="true">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:paddingHorizontal="16dp"
+                                android:paddingVertical="12dp">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_horizontal"
+                                    android:text="Lokasi"
+                                    android:textSize="14sp"
+                                    android:fontFamily="@font/opensans_regular"
+                                    android:textColor="@color/BLACK80" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_horizontal"
+                                    android:text="Alamat Toko dan Penanda Map"
+                                    android:textSize="14sp"
+                                    android:fontFamily="@font/opensans_regular"
+                                    android:textColor="@color/BLACK60" />
+                            </LinearLayout>
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:adjustViewBounds="true"
+                                android:src="@drawable/ic_baseline_chevron_right_24"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerInParent="true"
+                                android:layout_marginHorizontal="16dp"/>
+                            <View
+                                android:layout_alignParentBottom="true"
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/BLACK10"
+                                android:layout_marginStart="16dp"/>
+                        </RelativeLayout>
+                        <RelativeLayout
+                            android:id="@+id/menuStoreNotes"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:focusable="true">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:paddingHorizontal="16dp"
+                                android:paddingVertical="12dp">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_horizontal"
+                                    android:text="Catatan"
+                                    android:textSize="14sp"
+                                    android:fontFamily="@font/opensans_regular"
+                                    android:textColor="@color/BLACK80" />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_horizontal"
+                                    android:text="Informasi Syarat &amp; Ketentuan Toko"
                                     android:textSize="14sp"
                                     android:fontFamily="@font/opensans_regular"
                                     android:textColor="@color/BLACK60" />
@@ -619,51 +803,6 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center_horizontal"
                                 android:text="Data Diri, Alamat dan Keamanan Akun"
-                                android:textSize="14sp"
-                                android:fontFamily="@font/opensans_regular"
-                                android:textColor="@color/BLACK60" />
-                        </LinearLayout>
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:adjustViewBounds="true"
-                            android:src="@drawable/ic_baseline_chevron_right_24"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerInParent="true"
-                            android:layout_marginHorizontal="16dp"/>
-                        <View
-                            android:layout_alignParentBottom="true"
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/BLACK10"
-                            android:layout_marginStart="16dp"/>
-                    </RelativeLayout>
-                    <RelativeLayout
-                        android:id="@+id/menuSettingStore"
-                        android:background="?attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:focusable="true">
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:paddingHorizontal="16dp"
-                            android:paddingVertical="12dp">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_horizontal"
-                                android:text="Toko"
-                                android:textSize="14sp"
-                                android:fontFamily="@font/opensans_regular"
-                                android:textColor="@color/BLACK80" />
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_horizontal"
-                                android:text="Lokasi, Etalase dan Lainnya"
                                 android:textSize="14sp"
                                 android:fontFamily="@font/opensans_regular"
                                 android:textColor="@color/BLACK60" />

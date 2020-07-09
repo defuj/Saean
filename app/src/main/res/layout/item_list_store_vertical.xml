@@ -45,7 +45,7 @@
                         android:layout_height="wrap_content"
                         tools:text="Open"
                         android:fontFamily="@font/opensans_regular"
-                        android:textSize="14sp"
+                        android:textSize="12sp"
                         android:textColor="@android:color/white"
                         android:background="@drawable/background_status_store_open"
                         android:paddingHorizontal="8dp"
@@ -61,6 +61,7 @@
                     android:padding="12dp"
                     android:gravity="center_vertical">
                     <ImageView
+                        android:id="@+id/storeIcon"
                         android:src="@drawable/ic_my_business"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -101,6 +102,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
                         <ImageButton
+                            android:id="@+id/btnOpenInMaps"
                             style="@style/Widget.AppCompat.Button.Borderless"
                             android:layout_width="35dp"
                             android:layout_height="35dp"

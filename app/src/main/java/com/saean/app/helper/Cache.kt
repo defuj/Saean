@@ -10,6 +10,7 @@ object Cache {
     const val address = "address"
     const val phone = "phone"
     const val picture = "picture"
+    const val storeID = "storeID"
 
     const val longitude = "longitude"
     const val latitude = "latitude"

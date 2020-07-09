@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -20,6 +21,7 @@ import com.saean.app.createStore.CreateStoreActivity
 import com.saean.app.R
 import com.saean.app.helper.Cache
 import com.saean.app.helper.MyFunctions
+import com.saean.app.store.*
 import kotlinx.android.synthetic.main.fragment_account.*
 import ru.nikartm.support.ImageBadgeView
 
@@ -131,13 +133,36 @@ class AccountFragment : Fragment() {
 
                     //check user has have a store or not
                     if(snapshot.child("userStore").exists()){
-                        menuSettingStore.visibility = View.VISIBLE
+                        val edit = sharedPreferences!!.edit()
+                        edit.putString(Cache.storeID,snapshot.child("userStore").getValue(String::class.java))
+                        edit.apply()
+
+                        menuStoreInfo.setOnClickListener {
+                            startActivity(Intent(activity!!,StoreSettingInfoActivity::class.java))
+                        }
+                        menuStoreProduct.setOnClickListener {
+                            startActivity(Intent(activity!!,StoreSettingProductActivity::class.java))
+                        }
+                        menuStoreService.setOnClickListener {
+                            startActivity(Intent(activity!!,StoreSettingProductActivity::class.java))
+                        }
+                        menuStoreEtalase.setOnClickListener {
+                            startActivity(Intent(activity!!,StoreSettingEtalaseActivity::class.java))
+                        }
+                        menuStoreNotes.setOnClickListener {
+                            startActivity(Intent(activity!!,StoreSettingNotesActivity::class.java))
+                        }
+                        menuStoreAddress.setOnClickListener {
+                            startActivity(Intent(activity!!,StoreSettingAddressActivity::class.java))
+                        }
+
                         database.getReference("store/${snapshot.child("userStore").getValue(String::class.java)}/storeInfo").addValueEventListener(object : ValueEventListener{
                             override fun onCancelled(error: DatabaseError) {
 
                             }
 
                             override fun onDataChange(snapshot: DataSnapshot) {
+                                storeRating.rating = snapshot.child("storeRating").getValue(Float::class.java)!!
                                 storeName.text = snapshot.child("storeName").getValue(String::class.java)
                                 storeStatusVerify.text = if(snapshot.child("storeStatus").getValue(Boolean::class.java)!!){"Terverifikasi"}else{"Belum Terverifikasi"}
                                 if(snapshot.child("storeStatus").getValue(Boolean::class.java)!!){
@@ -146,6 +171,10 @@ class AccountFragment : Fragment() {
                                 }else{
                                     storeVerify.visibility = View.VISIBLE
                                     storeVerify2.visibility = View.VISIBLE
+
+                                    storeVerify.setOnClickListener {
+                                        Toast.makeText(activity,"Dalam Pengembangan",Toast.LENGTH_SHORT).show()
+                                    }
                                 }
 
                                 btnCloseNoticeVerify.setOnClickListener {
@@ -168,7 +197,6 @@ class AccountFragment : Fragment() {
                             }
                         })
                     }else{
-                        menuSettingStore.visibility = View.GONE
                         containerOpenStore.visibility = View.VISIBLE
                         containerOpenStoreAction.visibility = View.VISIBLE
                         containerMyStore.visibility = View.GONE

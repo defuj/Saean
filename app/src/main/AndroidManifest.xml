@@ -33,31 +33,37 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:icon"
         tools:targetApi="m">
-
+        <activity
+            android:name=".store.StoreSettingServicesActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.FullStatusBar"/>
+        <activity
+            android:name=".VerificationActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.FullStatusBar" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
-
         <activity
             android:name=".store.StoreSettingNotesActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.FullStatusBar"/>
+            android:theme="@style/AppTheme.FullStatusBar" />
         <activity
             android:name=".store.StoreSettingAddressActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.FullStatusBar"/>
+            android:theme="@style/AppTheme.FullStatusBar" />
         <activity
             android:name=".store.StoreSettingProductActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.FullStatusBar"/>
+            android:theme="@style/AppTheme.FullStatusBar" />
         <activity
             android:name=".store.StoreSettingEtalaseActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.FullStatusBar"/>
+            android:theme="@style/AppTheme.FullStatusBar" />
         <activity
             android:name=".store.StoreSettingInfoActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.FullStatusBar"/>
+            android:theme="@style/AppTheme.FullStatusBar" />
         <activity
             android:name=".createStore.CreateStoreActivity"
             android:screenOrientation="portrait"
@@ -70,7 +76,7 @@
         <service
             android:name=".helper.TrackingService"
             android:enabled="true"
-            android:exported="true" />
+            android:exported="false" />
 
         <activity
             android:name=".LoginActivity"

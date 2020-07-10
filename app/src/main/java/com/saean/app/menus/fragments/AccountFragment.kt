@@ -19,6 +19,7 @@ import com.google.firebase.database.ValueEventListener
 import com.saean.app.LoginActivity
 import com.saean.app.createStore.CreateStoreActivity
 import com.saean.app.R
+import com.saean.app.VerificationActivity
 import com.saean.app.helper.Cache
 import com.saean.app.helper.MyFunctions
 import com.saean.app.store.*
@@ -93,6 +94,30 @@ class AccountFragment : Fragment() {
             }
             dialog.show()
         }
+
+        menuSettingMyInfo.setOnClickListener {
+
+        }
+
+        menuSettingVerify.setOnClickListener {
+            startActivity(Intent(activity!!,VerificationActivity::class.java))
+        }
+
+        menuSettingChangePassword.setOnClickListener {
+
+        }
+
+        menuSettingAboutApps.setOnClickListener {
+
+        }
+
+        menuSettingTermsConditions.setOnClickListener {
+
+        }
+
+        menuSettingPrivacy.setOnClickListener {
+
+        }
     }
 
     private fun setupUserInfo() {
@@ -144,7 +169,7 @@ class AccountFragment : Fragment() {
                             startActivity(Intent(activity!!,StoreSettingProductActivity::class.java))
                         }
                         menuStoreService.setOnClickListener {
-                            startActivity(Intent(activity!!,StoreSettingProductActivity::class.java))
+                            startActivity(Intent(activity!!,StoreSettingServicesActivity::class.java))
                         }
                         menuStoreEtalase.setOnClickListener {
                             startActivity(Intent(activity!!,StoreSettingEtalaseActivity::class.java))
@@ -173,7 +198,7 @@ class AccountFragment : Fragment() {
                                     storeVerify2.visibility = View.VISIBLE
 
                                     storeVerify.setOnClickListener {
-                                        Toast.makeText(activity,"Dalam Pengembangan",Toast.LENGTH_SHORT).show()
+                                        startActivity(Intent(activity!!,VerificationActivity::class.java))
                                     }
                                 }
 

@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".VerificationActivity"
+    android:background="@android:color/white">
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarVerify"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@android:color/white"
+            app:navigationIcon="?attr/homeAsUpIndicator">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                <TextView
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="Verifikasi Data Diri"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/neosanspro_medium"
+                    android:textColor="@color/BLACK100" />
+            </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="56dp"
+        android:padding="16dp"
+        android:gravity="center_horizontal">
+        <LinearLayout
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/containerNotVerified"
+            android:visibility="gone">
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_identification"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Foto bagian depan KTP"
+                android:textSize="20sp"
+                android:fontFamily="@font/opensans_bold"
+                android:textColor="@color/BLACK100" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="16dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Yuk, ikuti cara berikut!"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/opensans_regular"
+                        android:textColor="@color/BLACK60"
+                        android:paddingVertical="4dp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Gunakan KTP asli yang masih berlaku."
+                        android:textSize="14sp"
+                        android:fontFamily="@font/opensans_regular"
+                        android:textColor="@color/BLACK60"
+                        android:gravity="center_vertical"
+                        android:drawableStart="@drawable/ic_baseline_lens"
+                        android:drawablePadding="8dp"
+                        android:paddingVertical="4dp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Pastikan foto KTP berada dalam bingkai."
+                        android:textSize="14sp"
+                        android:fontFamily="@font/opensans_regular"
+                        android:textColor="@color/BLACK60"
+                        android:gravity="center_vertical"
+                        android:drawableStart="@drawable/ic_baseline_lens"
+                        android:drawablePadding="8dp"
+                        android:paddingVertical="4dp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Pastikan foto KTP terlihat terangdan jelas."
+                        android:textSize="14sp"
+                        android:fontFamily="@font/opensans_regular"
+                        android:textColor="@color/BLACK60"
+                        android:gravity="center_vertical"
+                        android:drawableStart="@drawable/ic_baseline_lens"
+                        android:drawablePadding="8dp"
+                        android:paddingVertical="4dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Saean menjamin keamanan datamu"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/opensans_regular"
+                        android:textColor="@color/BLACK80"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:paddingVertical="12dp"
+                        android:layout_marginTop="16dp"
+                        android:drawablePadding="8dp"
+                        android:drawableStart="@drawable/ic_person_verified"/>
+
+                    <Button
+                        android:id="@+id/btnUploadKTP"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:textAllCaps="false"
+                        android:text="Ambil Foto KTP"
+                        android:fontFamily="@font/neosanspro_medium"
+                        android:textColor="@android:color/white"
+                        android:background="@drawable/background_button_create_store_active"
+                        android:minHeight="45dp"
+                        android:textSize="16sp"
+                        style="?attr/borderlessButtonStyle" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:gravity="center_horizontal|center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:id="@+id/containerProcessVerified"
+            android:paddingHorizontal="24dp">
+            <ImageView
+                android:layout_marginTop="-100dp"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_process_verified"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Verifikasi sedang berlangsung"
+                android:textSize="20sp"
+                android:gravity="center_horizontal"
+                android:fontFamily="@font/opensans_bold"
+                android:textColor="@color/BLACK100" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="Kami sedang malakukan peninjauan identitas Anda. Proses memerlukan waktu max 2x24 Jam."
+                android:textSize="16sp"
+                android:fontFamily="@font/opensans_regular"
+                android:textColor="@color/BLACK60" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="center_horizontal|center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:id="@+id/containerVerified"
+            android:paddingHorizontal="24dp"
+            android:visibility="gone">
+            <ImageView
+                android:layout_marginTop="-100dp"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_verified_success"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Verifikasi berhasil"
+                android:textSize="20sp"
+                android:gravity="center_horizontal"
+                android:fontFamily="@font/opensans_bold"
+                android:textColor="@color/BLACK100" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="Selamat! akun Anda kini sudah terverifikasi"
+                android:textSize="16sp"
+                android:fontFamily="@font/opensans_regular"
+                android:textColor="@color/BLACK60" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

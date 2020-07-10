@@ -771,7 +771,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Pengaturan &amp; Lainnya"
+                        android:text="Pengaturan Akun"
                         android:textSize="16sp"
                         android:fontFamily="@font/neosanspro_medium"
                         android:textColor="@color/BLACK80"
@@ -779,6 +779,7 @@
                         android:layout_marginBottom="6dp"
                         android:layout_marginHorizontal="16dp" />
                     <RelativeLayout
+                        android:id="@+id/menuSettingMyInfo"
                         android:background="?attr/selectableItemBackground"
                         android:clickable="true"
                         android:layout_width="match_parent"
@@ -794,7 +795,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_horizontal"
-                                android:text="Akun"
+                                android:text="Data Diri"
                                 android:textSize="14sp"
                                 android:fontFamily="@font/opensans_regular"
                                 android:textColor="@color/BLACK80" />
@@ -802,7 +803,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_horizontal"
-                                android:text="Data Diri, Alamat dan Keamanan Akun"
+                                android:text="informasi diri, foto, dll"
                                 android:textSize="14sp"
                                 android:fontFamily="@font/opensans_regular"
                                 android:textColor="@color/BLACK60" />
@@ -823,6 +824,109 @@
                             android:layout_marginStart="16dp"/>
                     </RelativeLayout>
                     <RelativeLayout
+                        android:id="@+id/menuSettingChangePassword"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusable="true">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingHorizontal="16dp"
+                            android:paddingVertical="12dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_horizontal"
+                                android:text="Ubah Kata Sandi"
+                                android:textSize="14sp"
+                                android:fontFamily="@font/opensans_regular"
+                                android:textColor="@color/BLACK80" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_horizontal"
+                                android:text="Amankan akun Anda"
+                                android:textSize="14sp"
+                                android:fontFamily="@font/opensans_regular"
+                                android:textColor="@color/BLACK60" />
+                        </LinearLayout>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/ic_baseline_chevron_right_24"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerInParent="true"
+                            android:layout_marginHorizontal="16dp"/>
+                        <View
+                            android:layout_alignParentBottom="true"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/BLACK10"
+                            android:layout_marginStart="16dp"/>
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:id="@+id/menuSettingVerify"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusable="true">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingHorizontal="16dp"
+                            android:paddingVertical="12dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_horizontal"
+                                android:text="Verifikasi Data Diri"
+                                android:textSize="14sp"
+                                android:fontFamily="@font/opensans_regular"
+                                android:textColor="@color/BLACK80" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_horizontal"
+                                android:text="Dapatkan Kepercayaan orang-orang"
+                                android:textSize="14sp"
+                                android:fontFamily="@font/opensans_regular"
+                                android:textColor="@color/BLACK60" />
+                        </LinearLayout>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/ic_baseline_chevron_right_24"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerInParent="true"
+                            android:layout_marginHorizontal="16dp"/>
+                        <View
+                            android:layout_alignParentBottom="true"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/BLACK10"
+                            android:layout_marginStart="16dp"/>
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Lainnya"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/neosanspro_medium"
+                        android:textColor="@color/BLACK80"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginBottom="6dp"
+                        android:layout_marginHorizontal="16dp" />
+
+                    <RelativeLayout
+                        android:id="@+id/menuSettingAboutApps"
                         android:background="?attr/selectableItemBackground"
                         android:clickable="true"
                         android:layout_width="match_parent"
@@ -859,6 +963,7 @@
                             android:layout_marginStart="16dp"/>
                     </RelativeLayout>
                     <RelativeLayout
+                        android:id="@+id/menuSettingTermsConditions"
                         android:background="?attr/selectableItemBackground"
                         android:clickable="true"
                         android:layout_width="match_parent"
@@ -895,6 +1000,7 @@
                             android:layout_marginStart="16dp"/>
                     </RelativeLayout>
                     <RelativeLayout
+                        android:id="@+id/menuSettingPrivacy"
                         android:background="?attr/selectableItemBackground"
                         android:clickable="true"
                         android:layout_width="match_parent"
@@ -960,12 +1066,6 @@
                                 android:fontFamily="@font/opensans_regular"
                                 android:textColor="@color/BLACK80" />
                         </LinearLayout>
-                        <View
-                            android:layout_alignParentBottom="true"
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/BLACK10"
-                            android:layout_marginStart="16dp"/>
                     </RelativeLayout>
                 </LinearLayout>
             </LinearLayout>

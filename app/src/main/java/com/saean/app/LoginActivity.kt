@@ -197,6 +197,7 @@ class LoginActivity : AppCompatActivity() {
                         database.getReference("user").child(email).child("userPicture").setValue("${account.photoUrl}")
                         database.getReference("user").child(email).child("userName").setValue("${account.displayName}")
                         database.getReference("user").child(email).child("userPhone").setValue("")
+                        database.getReference("user").child(email).child("userVerify").setValue(0)
 
                         val edit = sharedPreferences!!.edit()
                         edit.putBoolean(Cache.logged,true)

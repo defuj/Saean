@@ -1,5 +1,6 @@
 package com.saean.app.store
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.saean.app.R
@@ -16,6 +17,10 @@ class StoreSettingProductActivity : AppCompatActivity() {
     private fun setupFunctions() {
         toolbarProduct.setNavigationOnClickListener {
             finish()
+        }
+
+        btnAddProduct.setOnClickListener {
+            startActivity(Intent(this,StoreAddProductActivity::class.java))
         }
     }
 }

@@ -478,6 +478,7 @@
                             android:layout_marginHorizontal="16dp"/>
 
                         <Button
+                            android:id="@+id/btnAddProduct"
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:textAllCaps="false"

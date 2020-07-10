@@ -22,6 +22,10 @@ import androidx.core.content.ContextCompat
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import net.ricecode.similarity.JaroWinklerStrategy
+import net.ricecode.similarity.SimilarityStrategy
+import net.ricecode.similarity.StringSimilarityService
+import net.ricecode.similarity.StringSimilarityServiceImpl
 import java.io.BufferedInputStream
 import java.io.ByteArrayOutputStream
 import java.io.InputStream
@@ -611,5 +615,11 @@ object MyFunctions {
 
         // calculate the result
         return c * r
+    }
+
+    fun checkStringSimilarity(target : String, source : String) : Double{
+        val strategy: SimilarityStrategy = JaroWinklerStrategy()
+        val service: StringSimilarityService = StringSimilarityServiceImpl(strategy)
+        return service.score(source, target)
     }
 }

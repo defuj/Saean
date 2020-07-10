@@ -90,5 +90,8 @@ dependencies {
 
     //image cropper
     api 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
+
+    //check string-similarity
+    implementation 'net.ricecode:string-similarity:1.0.0'
 }
 apply plugin: 'com.google.gms.google-services'

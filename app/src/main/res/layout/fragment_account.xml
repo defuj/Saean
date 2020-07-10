@@ -560,7 +560,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:gravity="center_horizontal"
-                                    android:text="Foto, logo, banner promosi toko"
+                                    android:text="Foto, banner promosi toko"
                                     android:textSize="14sp"
                                     android:fontFamily="@font/opensans_regular"
                                     android:textColor="@color/BLACK60" />

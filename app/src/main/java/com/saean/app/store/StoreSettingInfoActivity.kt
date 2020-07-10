@@ -21,6 +21,9 @@ import com.saean.app.R
 import com.saean.app.helper.Cache
 import com.theartofdev.edmodo.cropper.CropImage
 import kotlinx.android.synthetic.main.activity_store_setting_info.*
+import net.ricecode.similarity.SimilarityStrategy
+import net.ricecode.similarity.StringSimilarityService
+import net.ricecode.similarity.StringSimilarityServiceImpl
 import java.util.*
 
 class StoreSettingInfoActivity : AppCompatActivity() {

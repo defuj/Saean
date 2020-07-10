@@ -183,6 +183,9 @@ class AccountFragment : Fragment() {
                         menuStoreAddress.setOnClickListener {
                             startActivity(Intent(activity!!,StoreSettingAddressActivity::class.java))
                         }
+                        menuStoreSchedule.setOnClickListener {
+                            startActivity(Intent(activity!!,StoreSettingScheduleActivity::class.java))
+                        }
 
                         database.getReference("store/${snapshot.child("userStore").getValue(String::class.java)}/storeInfo").addValueEventListener(object : ValueEventListener{
                             override fun onCancelled(error: DatabaseError) {

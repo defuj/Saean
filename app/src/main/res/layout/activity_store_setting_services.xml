@@ -116,6 +116,12 @@
                     android:text="Layanan di toko tidak ditemukan. Harap untuk segera menambahkan layanan ke toko kamu."
                     android:paddingVertical="24dp"/>
             </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:overScrollMode="never"
+                android:id="@+id/recyclerStoreService"
+                android:visibility="gone"/>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

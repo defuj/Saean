@@ -1,16 +1,17 @@
 package com.saean.app.store
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.RadioButton
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.bumptech.glide.Glide
 import com.google.firebase.database.FirebaseDatabase
@@ -21,7 +22,7 @@ import com.saean.app.helper.Cache
 import com.saean.app.helper.MyFunctions
 import com.theartofdev.edmodo.cropper.CropImage
 import kotlinx.android.synthetic.main.activity_store_add_product.*
-import kotlinx.android.synthetic.main.activity_store_setting_etalase.*
+import kotlinx.android.synthetic.main.activity_store_add_product.productName
 import java.util.*
 
 class StoreAddProductActivity : AppCompatActivity() {
@@ -36,8 +37,9 @@ class StoreAddProductActivity : AppCompatActivity() {
     private var image3 = ""
     private var image4 = ""
     private var imageCount = 0
-
     private var browse = ""
+    private var action = "new"
+    private var productID = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +50,7 @@ class StoreAddProductActivity : AppCompatActivity() {
         sharedPreferences =getSharedPreferences(Cache.cacheName,0)
 
         setupFunctions()
+        setupForEdit()
     }
 
     private fun setupFunctions() {
@@ -65,24 +68,35 @@ class StoreAddProductActivity : AppCompatActivity() {
                         "jasa" -> {
                             if(serviceDescription.text.isNotEmpty()){
                                 if(MyFunctions.getConnectivityStatus(this)){
-                                    val jasa = database.getReference("product/service/$storeID")
-                                    val key = jasa.push().key.toString()
-                                    jasa.child(key).child("serviceName").setValue(productName.text.toString())
-                                    jasa.child(key).child("serviceDescription").setValue(serviceDescription.text.toString())
+                                    if(action == "new"){
+                                        val jasa = database.getReference("product/service/$storeID")
+                                        val key = jasa.push().key.toString()
+                                        jasa.child(key).child("serviceName").setValue(productName.text.toString())
+                                        jasa.child(key).child("serviceDescription").setValue(serviceDescription.text.toString())
 
-                                    val dialog = SweetAlertDialog(this,SweetAlertDialog.SUCCESS_TYPE)
-                                    dialog.titleText = "Berhasil"
-                                    dialog.contentText = "Layanan anda telah ditambahkan"
-                                    dialog.setOnDismissListener {
-                                        categories = ""
-                                        radioGoods.isChecked = false
-                                        radioServices.isChecked = false
-                                        serviceDescription.text.clear()
-                                        productName.text.clear()
-                                        containerForGoods.visibility = View.GONE
-                                        containerForService.visibility = View.GONE
+                                        val dialog = SweetAlertDialog(this,SweetAlertDialog.SUCCESS_TYPE)
+                                        dialog.titleText = "Berhasil"
+                                        dialog.contentText = "Layanan anda telah ditambahkan"
+                                        dialog.setOnDismissListener {
+                                            categories = ""
+                                            radioGoods.isChecked = false
+                                            radioServices.isChecked = false
+                                            serviceDescription.text.clear()
+                                            productName.text.clear()
+                                            containerForGoods.visibility = View.GONE
+                                            containerForService.visibility = View.GONE
+                                        }
+                                        dialog.show()
+                                    }else{
+                                        val update = database.getReference("product/service/$storeID/$productID")
+                                        update.child("serviceName").setValue(productName.text.toString())
+                                        update.child("serviceDescription").setValue(serviceDescription.text.toString())
+
+                                        val dialog = SweetAlertDialog(this,SweetAlertDialog.SUCCESS_TYPE)
+                                        dialog.titleText = "Berhasil"
+                                        dialog.contentText = "Perubahan telah disimpan"
+                                        dialog.show()
                                     }
-                                    dialog.show()
                                 }else{
                                     Toast.makeText(this,"Tidak ada koneksi internet",Toast.LENGTH_SHORT).show()
                                 }
@@ -98,49 +112,84 @@ class StoreAddProductActivity : AppCompatActivity() {
                                             if(goodsPrice.text.toString().toInt() >= 100){
                                                 if(imageCount > 0){
                                                     if(MyFunctions.getConnectivityStatus(this)){
-                                                        val barang = database.getReference("product/goods/$storeID")
-                                                        val key = barang.push().key.toString()
-                                                        barang.child(key).child("goodsName").setValue(productName.text.toString())
-                                                        barang.child(key).child("goodsDescription").setValue(goodsDescription.text.toString())
-                                                        barang.child(key).child("goodsStock").setValue(goodsStock.text.toString().toInt())
-                                                        barang.child(key).child("goodsPrice").setValue(goodsPrice.text.toString().toInt())
+                                                        if(action == "new"){
+                                                            val barang = database.getReference("product/goods/$storeID")
+                                                            val key = barang.push().key.toString()
+                                                            barang.child(key).child("goodsName").setValue(productName.text.toString())
+                                                            barang.child(key).child("goodsDescription").setValue(goodsDescription.text.toString())
+                                                            barang.child(key).child("goodsStock").setValue(goodsStock.text.toString().toInt())
+                                                            barang.child(key).child("goodsPrice").setValue(goodsPrice.text.toString().toDouble())
 
-                                                        val gambar = database.getReference("product/goods/$storeID/$key/goodsPicture")
-                                                        if(image1.isNotEmpty()){
-                                                            val imageKey = gambar.push().key.toString()
-                                                            gambar.child(imageKey).setValue(image1)
-                                                        }
+                                                            val gambar = database.getReference("product/goods/$storeID/$key/goodsPicture")
+                                                            if(image1.isNotEmpty()){
+                                                                val imageKey = gambar.push().key.toString()
+                                                                gambar.child(imageKey).setValue(image1)
+                                                            }
 
-                                                        if(image2.isNotEmpty()){
-                                                            val imageKey = gambar.push().key.toString()
-                                                            gambar.child(imageKey).setValue(image2)
-                                                        }
+                                                            if(image2.isNotEmpty()){
+                                                                val imageKey = gambar.push().key.toString()
+                                                                gambar.child(imageKey).setValue(image2)
+                                                            }
 
-                                                        if(image3.isNotEmpty()){
-                                                            val imageKey = gambar.push().key.toString()
-                                                            gambar.child(imageKey).setValue(image3)
-                                                        }
+                                                            if(image3.isNotEmpty()){
+                                                                val imageKey = gambar.push().key.toString()
+                                                                gambar.child(imageKey).setValue(image3)
+                                                            }
 
-                                                        if(image4.isNotEmpty()){
-                                                            val imageKey = gambar.push().key.toString()
-                                                            gambar.child(imageKey).setValue(image4)
-                                                        }
+                                                            if(image4.isNotEmpty()){
+                                                                val imageKey = gambar.push().key.toString()
+                                                                gambar.child(imageKey).setValue(image4)
+                                                            }
 
-                                                        val dialog = SweetAlertDialog(this,SweetAlertDialog.SUCCESS_TYPE)
-                                                        dialog.titleText = "Berhasil"
-                                                        dialog.contentText = "Barang anda telah ditambahkan"
-                                                        dialog.setOnDismissListener {
-                                                            categories = ""
-                                                            radioGoods.isChecked = false
-                                                            radioServices.isChecked = false
-                                                            goodsDescription.text.clear()
-                                                            goodsStock.text.clear()
-                                                            goodsPrice.text.clear()
-                                                            productName.text.clear()
-                                                            containerForGoods.visibility = View.GONE
-                                                            containerForService.visibility = View.GONE
+                                                            val dialog = SweetAlertDialog(this,SweetAlertDialog.SUCCESS_TYPE)
+                                                            dialog.titleText = "Berhasil"
+                                                            dialog.contentText = "Barang anda telah ditambahkan"
+                                                            dialog.setOnDismissListener {
+                                                                categories = ""
+                                                                radioGoods.isChecked = false
+                                                                radioServices.isChecked = false
+                                                                goodsDescription.text.clear()
+                                                                goodsStock.text.clear()
+                                                                goodsPrice.text.clear()
+                                                                productName.text.clear()
+                                                                containerForGoods.visibility = View.GONE
+                                                                containerForService.visibility = View.GONE
+                                                            }
+                                                            dialog.show()
+                                                        }else{
+                                                            val update = database.getReference("product/goods/$storeID/$productID")
+                                                            update.child("goodsName").setValue(productName.text.toString())
+                                                            update.child("goodsDescription").setValue(goodsDescription.text.toString())
+                                                            update.child("goodsStock").setValue(goodsStock.text.toString().toInt())
+                                                            update.child("goodsPrice").setValue(goodsPrice.text.toString().toDouble())
+
+                                                            val gambar = database.getReference("product/goods/$storeID/$productID/goodsPicture")
+                                                            gambar.removeValue()
+                                                            if(image1.isNotEmpty()){
+                                                                val imageKey = gambar.push().key.toString()
+                                                                gambar.child(imageKey).setValue(image1)
+                                                            }
+
+                                                            if(image2.isNotEmpty()){
+                                                                val imageKey = gambar.push().key.toString()
+                                                                gambar.child(imageKey).setValue(image2)
+                                                            }
+
+                                                            if(image3.isNotEmpty()){
+                                                                val imageKey = gambar.push().key.toString()
+                                                                gambar.child(imageKey).setValue(image3)
+                                                            }
+
+                                                            if(image4.isNotEmpty()){
+                                                                val imageKey = gambar.push().key.toString()
+                                                                gambar.child(imageKey).setValue(image4)
+                                                            }
+
+                                                            val dialog = SweetAlertDialog(this,SweetAlertDialog.SUCCESS_TYPE)
+                                                            dialog.titleText = "Berhasil"
+                                                            dialog.contentText = "Perubahan telah disimpan"
+                                                            dialog.show()
                                                         }
-                                                        dialog.show()
                                                     }else{
                                                         Toast.makeText(this,"Tidak ada koneksi internet",Toast.LENGTH_SHORT).show()
                                                     }
@@ -328,6 +377,79 @@ class StoreAddProductActivity : AppCompatActivity() {
                 val error = result.error
                 Log.d("Result", error.toString())
             }
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun setupForEdit() {
+        try {
+            productID = intent.getStringExtra("productID")!!
+            productName.setText(intent.getStringExtra("productName"))
+            if(intent.getStringExtra("productType") == "barang"){
+                action = "edit"
+                btnSaveProduct.text = "Simpan Perubahan"
+                containerForGoods.visibility = View.VISIBLE
+                categories = "barang"
+                radioGoods.isChecked = true
+                radioServices.isChecked = false
+
+                goodsDescription.setText(intent.getStringExtra("productDescription"))
+                goodsStock.setText("${intent.getIntExtra("productStock",0)}")
+                goodsPrice.setText("${intent.getIntExtra("productPrice",0)}")
+
+                if(intent.getIntExtra("imageCount",0) > 0){
+                    for (i in 0 until intent.getIntExtra("imageCount",0)){
+                        when (i) {
+                            0 -> {
+                                image1 = intent.getStringExtra("image1")!!
+                                Glide.with(this)
+                                    .load(image1)
+                                    .into(productImage1)
+                                btnDeleteImageProduct1.visibility = View.VISIBLE
+
+                                imageCount +=1
+                            }
+                            1 -> {
+                                image2 = intent.getStringExtra("image2")!!
+                                Glide.with(this)
+                                    .load(image2)
+                                    .into(productImage2)
+                                btnDeleteImageProduct2.visibility = View.VISIBLE
+
+                                imageCount +=1
+                            }
+                            2 -> {
+                                image3 = intent.getStringExtra("image3")!!
+                                Glide.with(this)
+                                    .load(image3)
+                                    .into(productImage3)
+                                btnDeleteImageProduct3.visibility = View.VISIBLE
+
+                                imageCount +=1
+                            }
+                            3 -> {
+                                image4 = intent.getStringExtra("image4")!!
+                                Glide.with(this)
+                                    .load(image4)
+                                    .into(productImage4)
+                                btnDeleteImageProduct2.visibility = View.VISIBLE
+
+                                imageCount +=1
+                            }
+                        }
+                    }
+                }
+            }else{
+                action = "edit"
+                btnSaveProduct.text = "Simpan Perubahan"
+                categories = "jasa"
+                radioGoods.isChecked = false
+                radioServices.isChecked = true
+                serviceDescription.setText(intent.getStringExtra("productDescription"))
+                containerForService.visibility = View.VISIBLE
+            }
+        }catch (e:Exception){
+
         }
     }
 }

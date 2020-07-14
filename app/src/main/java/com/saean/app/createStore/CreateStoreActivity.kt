@@ -79,6 +79,35 @@ class CreateStoreActivity : AppCompatActivity() {
                     store.child(storeID).child("storeInfo").child("storeMedia").child("instagram").setValue("")
                     store.child(storeID).child("storeInfo").child("storeMedia").child("facebook").setValue("")
                     store.child(storeID).child("storeInfo").child("storeMedia").child("twitter").setValue("")
+
+                    store.child(storeID).child("storeSchedule").child("Minggu").child("status").setValue(false)
+                    store.child(storeID).child("storeSchedule").child("Minggu").child("startOpen").setValue("00.00")
+                    store.child(storeID).child("storeSchedule").child("Minggu").child("endOpen").setValue("00.00")
+
+                    store.child(storeID).child("storeSchedule").child("Senin").child("status").setValue(false)
+                    store.child(storeID).child("storeSchedule").child("Senin").child("startOpen").setValue("00.00")
+                    store.child(storeID).child("storeSchedule").child("Senin").child("endOpen").setValue("00.00")
+
+                    store.child(storeID).child("storeSchedule").child("Selasa").child("status").setValue(false)
+                    store.child(storeID).child("storeSchedule").child("Selasa").child("startOpen").setValue("00.00")
+                    store.child(storeID).child("storeSchedule").child("Selasa").child("endOpen").setValue("00.00")
+
+                    store.child(storeID).child("storeSchedule").child("Rabu").child("status").setValue(false)
+                    store.child(storeID).child("storeSchedule").child("Rabu").child("startOpen").setValue("00.00")
+                    store.child(storeID).child("storeSchedule").child("Rabu").child("endOpen").setValue("00.00")
+
+                    store.child(storeID).child("storeSchedule").child("Kamis").child("status").setValue(false)
+                    store.child(storeID).child("storeSchedule").child("Kamis").child("startOpen").setValue("00.00")
+                    store.child(storeID).child("storeSchedule").child("Kamis").child("endOpen").setValue("00.00")
+
+                    store.child(storeID).child("storeSchedule").child("Jumat").child("status").setValue(false)
+                    store.child(storeID).child("storeSchedule").child("Jumat").child("startOpen").setValue("00.00")
+                    store.child(storeID).child("storeSchedule").child("Jumat").child("endOpen").setValue("00.00")
+
+                    store.child(storeID).child("storeSchedule").child("Sabtu").child("status").setValue(false)
+                    store.child(storeID).child("storeSchedule").child("Sabtu").child("startOpen").setValue("00.00")
+                    store.child(storeID).child("storeSchedule").child("Sabtu").child("endOpen").setValue("00.00")
+
                     user.child("userStore").setValue(storeID)
 
                     progress.dismissWithAnimation()

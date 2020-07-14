@@ -31,6 +31,7 @@
                     android:fontFamily="@font/neosanspro_medium"
                     android:textColor="@color/BLACK100" />
                 <ImageButton
+                    android:visibility="gone"
                     android:id="@+id/btnAddSchedule"
                     android:layout_marginHorizontal="4dp"
                     android:layout_width="wrap_content"
@@ -49,8 +50,493 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="0dp"
+            android:paddingVertical="16dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="16dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+                    <TextView
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Minggu"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/opensans_bold"
+                        android:textColor="@color/BLACK100"/>
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/day1"
+                        android:gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tutup"
+                        android:layoutDirection="ltr"
+                        app:switchPadding="-85dp"
+                        android:paddingHorizontal="56dp"
+                        android:fontFamily="@font/opensans_regular"
+                        android:textColor="@color/BLACK80"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical|end">
 
+                    <TextView
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Jam Buka"
+                        android:fontFamily="@font/opensans_regular"
+                        android:textColor="@color/BLACK80"
+                        android:textSize="14sp"/>
+                    <Spinner
+                        android:id="@+id/spinner1start"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:spinnerMode="dialog"
+                        android:padding="8dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="—"
+                        android:textSize="18sp"
+                        android:paddingHorizontal="8dp"/>
+
+                    <Spinner
+                        android:id="@+id/spinner1end"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:spinnerMode="dialog"
+                        android:padding="8dp"/>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="16dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+                    <TextView
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Senin"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/opensans_bold"
+                        android:textColor="@color/BLACK100"/>
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/day2"
+                        android:gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tutup"
+                        android:layoutDirection="ltr"
+                        app:switchPadding="-85dp"
+                        android:paddingHorizontal="56dp"
+                        android:fontFamily="@font/opensans_regular"
+                        android:textColor="@color/BLACK80"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical|end">
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Jam Buka"
+                        android:fontFamily="@font/opensans_regular"
+                        android:textColor="@color/BLACK80"
+                        android:textSize="14sp"/>
+                    <Spinner
+                        android:id="@+id/spinner2start"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:spinnerMode="dialog"
+                        android:padding="8dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="—"
+                        android:textSize="18sp"
+                        android:paddingHorizontal="8dp"/>
+
+                    <Spinner
+                        android:id="@+id/spinner2end"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:spinnerMode="dialog"
+                        android:padding="8dp"/>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="16dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+                    <TextView
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Selasa"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/opensans_bold"
+                        android:textColor="@color/BLACK100"/>
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/day3"
+                        android:gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tutup"
+                        android:layoutDirection="ltr"
+                        app:switchPadding="-85dp"
+                        android:paddingHorizontal="56dp"
+                        android:fontFamily="@font/opensans_regular"
+                        android:textColor="@color/BLACK80"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical|end">
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Jam Buka"
+                        android:fontFamily="@font/opensans_regular"
+                        android:textColor="@color/BLACK80"
+                        android:textSize="14sp"/>
+                    <Spinner
+                        android:id="@+id/spinner3start"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:spinnerMode="dialog"
+                        android:padding="8dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="—"
+                        android:textSize="18sp"
+                        android:paddingHorizontal="8dp"/>
+
+                    <Spinner
+                        android:id="@+id/spinner3end"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:spinnerMode="dialog"
+                        android:padding="8dp"/>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="16dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+                    <TextView
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Rabu"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/opensans_bold"
+                        android:textColor="@color/BLACK100"/>
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/day4"
+                        android:gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tutup"
+                        android:layoutDirection="ltr"
+                        app:switchPadding="-85dp"
+                        android:paddingHorizontal="56dp"
+                        android:fontFamily="@font/opensans_regular"
+                        android:textColor="@color/BLACK80"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical|end">
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Jam Buka"
+                        android:fontFamily="@font/opensans_regular"
+                        android:textColor="@color/BLACK80"
+                        android:textSize="14sp"/>
+                    <Spinner
+                        android:id="@+id/spinner4start"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:spinnerMode="dialog"
+                        android:padding="8dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="—"
+                        android:textSize="18sp"
+                        android:paddingHorizontal="8dp"/>
+
+                    <Spinner
+                        android:id="@+id/spinner4end"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:spinnerMode="dialog"
+                        android:padding="8dp"/>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="16dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+                    <TextView
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Kamis"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/opensans_bold"
+                        android:textColor="@color/BLACK100"/>
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/day5"
+                        android:gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tutup"
+                        android:layoutDirection="ltr"
+                        app:switchPadding="-85dp"
+                        android:paddingHorizontal="56dp"
+                        android:fontFamily="@font/opensans_regular"
+                        android:textColor="@color/BLACK80"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical|end">
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Jam Buka"
+                        android:fontFamily="@font/opensans_regular"
+                        android:textColor="@color/BLACK80"
+                        android:textSize="14sp"/>
+                    <Spinner
+                        android:id="@+id/spinner5start"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:spinnerMode="dialog"
+                        android:padding="8dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="—"
+                        android:textSize="18sp"
+                        android:paddingHorizontal="8dp"/>
+
+                    <Spinner
+                        android:id="@+id/spinner5end"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:spinnerMode="dialog"
+                        android:padding="8dp"/>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="16dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+                    <TextView
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Jum'at"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/opensans_bold"
+                        android:textColor="@color/BLACK100"/>
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/day6"
+                        android:gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tutup"
+                        android:layoutDirection="ltr"
+                        app:switchPadding="-85dp"
+                        android:paddingHorizontal="56dp"
+                        android:fontFamily="@font/opensans_regular"
+                        android:textColor="@color/BLACK80"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical|end">
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Jam Buka"
+                        android:fontFamily="@font/opensans_regular"
+                        android:textColor="@color/BLACK80"
+                        android:textSize="14sp"/>
+                    <Spinner
+                        android:id="@+id/spinner6start"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:spinnerMode="dialog"
+                        android:padding="8dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="—"
+                        android:textSize="18sp"
+                        android:paddingHorizontal="8dp"/>
+
+                    <Spinner
+                        android:id="@+id/spinner6end"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:spinnerMode="dialog"
+                        android:padding="8dp"/>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="16dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+                    <TextView
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Sabtu"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/opensans_bold"
+                        android:textColor="@color/BLACK100"/>
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/day7"
+                        android:gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tutup"
+                        android:layoutDirection="ltr"
+                        app:switchPadding="-85dp"
+                        android:paddingHorizontal="56dp"
+                        android:fontFamily="@font/opensans_regular"
+                        android:textColor="@color/BLACK80"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical|end">
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Jam Buka"
+                        android:fontFamily="@font/opensans_regular"
+                        android:textColor="@color/BLACK80"
+                        android:textSize="14sp"/>
+                    <Spinner
+                        android:id="@+id/spinner7start"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:spinnerMode="dialog"
+                        android:padding="8dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="—"
+                        android:textSize="18sp"
+                        android:paddingHorizontal="8dp"/>
+
+                    <Spinner
+                        android:id="@+id/spinner7end"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:spinnerMode="dialog"
+                        android:padding="8dp"/>
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

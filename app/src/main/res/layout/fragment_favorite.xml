@@ -50,8 +50,43 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:overScrollMode="never"
+                    android:id="@+id/recyclerFavorite"
+                    tools:itemCount="1"/>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/containerNoFavorite"
+        android:gravity="center_horizontal|center_vertical">
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_favorite_container"
+            android:layout_marginBottom="24dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="Belum ada daftar fovorit"
+            android:textSize="20sp"
+            android:fontFamily="@font/neosanspro_medium"
+            android:textColor="@color/BLACK100" />
+        <TextView
+            android:maxWidth="240dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="Silahkan berkunjung ke toko dan tambahkan ke daftar favorit Anda."
+            android:textSize="16sp"
+            android:fontFamily="@font/opensans_regular"
+            android:textColor="@color/BLACK60" />
+    </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,6 +1,7 @@
 package com.saean.app.menus.fragments
 
 import android.content.DialogInterface
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.LayoutInflater
@@ -10,13 +11,20 @@ import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.saean.app.R
+import com.saean.app.helper.Cache
 import com.saean.app.helper.MyFunctions
 import kotlinx.android.synthetic.main.fragment_transactions.*
 import ru.nikartm.support.ImageBadgeView
 
 
 class TransactionsFragment : Fragment() {
+    private lateinit var database: FirebaseDatabase
+    private var sharedPreferences : SharedPreferences? = null
     private var filter = "Semua"
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,6 +36,8 @@ class TransactionsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        database = FirebaseDatabase.getInstance()
+        sharedPreferences = activity!!.getSharedPreferences(Cache.cacheName,0)
 
         setupBadgesToolbar()
         setupFunctions()
@@ -48,8 +58,23 @@ class TransactionsFragment : Fragment() {
         val badgesNotification = actionViewNotification.findViewById<ImageBadgeView>(R.id.badges)
         badgesNotification.setImageResource(R.drawable.ic_menu_toolbar_home_notification)
 
+        val email = MyFunctions.changeToUnderscore(sharedPreferences!!.getString(Cache.email,"")!!)
+        database.getReference("notification/$email").addValueEventListener(object :
+            ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+                badgesNotification.badgeValue = 0
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()){
+                    badgesNotification.badgeValue = snapshot.childrenCount.toInt()
+                }else{
+                    badgesNotification.badgeValue = 0
+                }
+            }
+        })
+
         badgesMessage.badgeValue = 1
-        badgesNotification.badgeValue = 3
     }
 
     private fun setupFunctions() {

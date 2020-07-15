@@ -23,7 +23,9 @@ import com.saean.app.helper.Cache
 import com.saean.app.helper.MyFunctions
 import com.saean.app.store.model.*
 import kotlinx.android.synthetic.main.activity_store.*
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.item_list_store_horizontal.view.*
+import ru.nikartm.support.ImageBadgeView
 
 class StoreActivity : AppCompatActivity() {
     private lateinit var database: FirebaseDatabase
@@ -38,7 +40,42 @@ class StoreActivity : AppCompatActivity() {
         database = FirebaseDatabase.getInstance()
         sharedPreferences = getSharedPreferences(Cache.cacheName,0)
 
+        setupBadgesToolbar()
         setupFunctions()
+    }
+
+    private fun setupBadgesToolbar() {
+        val menu = toolbarStore.menu
+
+        val menuMessage = menu.getItem(1).setActionView(R.layout.item_badges_toolbar)
+        val menuNotification = menu.getItem(2).setActionView(R.layout.item_badges_toolbar)
+
+        val actionViewMessage = menuMessage.actionView
+        val actionViewNotification = menuNotification.actionView
+
+        val badgesMessage = actionViewMessage.findViewById<ImageBadgeView>(R.id.badges)
+        badgesMessage.setImageResource(R.drawable.ic_menu_toolbar_home_messages)
+
+        val badgesNotification = actionViewNotification.findViewById<ImageBadgeView>(R.id.badges)
+        badgesNotification.setImageResource(R.drawable.ic_menu_toolbar_home_notification)
+
+        val email = MyFunctions.changeToUnderscore(sharedPreferences!!.getString(Cache.email,"")!!)
+        database.getReference("notification/$email").addValueEventListener(object : ValueEventListener{
+            override fun onCancelled(error: DatabaseError) {
+                badgesNotification.badgeValue = 0
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()){
+                    badgesNotification.badgeValue = snapshot.childrenCount.toInt()
+                }else{
+                    badgesNotification.badgeValue = 0
+                }
+            }
+        })
+
+        badgesMessage.badgeValue = 1
+
     }
 
     private fun setupFunctions() {
@@ -100,6 +137,34 @@ class StoreActivity : AppCompatActivity() {
         setupStoreInformation()
         setupServiceList()
         setupProductList()
+        setupFavorite()
+    }
+
+    private fun setupFavorite() {
+        val storeID = intent.getStringExtra("storeID")!!
+        val email = MyFunctions.changeToUnderscore(sharedPreferences!!.getString(Cache.email,"")!!)
+
+        database.getReference("favorite/store/$email").child(storeID).addValueEventListener(object :ValueEventListener{
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()){
+                    btnAddFavorite.setImageResource(R.drawable.ic_button_favorite_activated)
+                    btnAddFavorite.setOnClickListener {
+                        database.getReference("favorite/store/$email").child(storeID).removeValue()
+                        Toast.makeText(this@StoreActivity,"Dihapus dari daftar toko favorit",Toast.LENGTH_SHORT).show()
+                    }
+                }else{
+                    btnAddFavorite.setImageResource(R.drawable.ic_button_favorite_not_activate)
+                    btnAddFavorite.setOnClickListener {
+                        database.getReference("favorite/store/$email").child(storeID).setValue(true)
+                        Toast.makeText(this@StoreActivity,"Ditambahkan ke favorit",Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        })
     }
 
     private fun setupRatingBar() {

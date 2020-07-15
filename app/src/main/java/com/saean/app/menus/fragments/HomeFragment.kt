@@ -12,6 +12,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.saean.app.R
 import com.saean.app.helper.Cache
+import com.saean.app.helper.MyFunctions
 import com.saean.app.home.nearbyStore.StoreAdapter
 import com.saean.app.home.nearbyStore.StoreModel
 import com.saean.app.home.promoSlider.PromoAdapter
@@ -62,8 +63,23 @@ class HomeFragment : Fragment() {
         val badgesNotification = actionViewNotification.findViewById<ImageBadgeView>(R.id.badges)
         badgesNotification.setImageResource(R.drawable.ic_menu_toolbar_home_notification)
 
+        val email = MyFunctions.changeToUnderscore(sharedPreferences!!.getString(Cache.email,"")!!)
+        database.getReference("notification/$email").addValueEventListener(object : ValueEventListener{
+            override fun onCancelled(error: DatabaseError) {
+                badgesNotification.badgeValue = 0
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()){
+                    badgesNotification.badgeValue = snapshot.childrenCount.toInt()
+                }else{
+                    badgesNotification.badgeValue = 0
+                }
+            }
+        })
+
         badgesMessage.badgeValue = 1
-        badgesNotification.badgeValue = 3
+
     }
 
     private fun setupFunctions() {

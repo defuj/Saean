@@ -22,6 +22,7 @@ import com.saean.app.VerificationActivity
 import com.saean.app.helper.Cache
 import com.saean.app.helper.MyFunctions
 import com.saean.app.store.*
+import com.saean.app.store.settings.*
 import kotlinx.android.synthetic.main.fragment_account.*
 import ru.nikartm.support.ImageBadgeView
 
@@ -166,25 +167,32 @@ class AccountFragment : Fragment() {
                         edit.apply()
 
                         menuStoreInfo.setOnClickListener {
-                            startActivity(Intent(activity!!,StoreSettingInfoActivity::class.java))
+                            startActivity(Intent(activity!!,
+                                StoreSettingInfoActivity::class.java))
                         }
                         menuStoreProduct.setOnClickListener {
-                            startActivity(Intent(activity!!,StoreSettingProductActivity::class.java))
+                            startActivity(Intent(activity!!,
+                                StoreSettingProductActivity::class.java))
                         }
                         menuStoreService.setOnClickListener {
-                            startActivity(Intent(activity!!,StoreSettingServicesActivity::class.java))
+                            startActivity(Intent(activity!!,
+                                StoreSettingServicesActivity::class.java))
                         }
                         menuStoreEtalase.setOnClickListener {
-                            startActivity(Intent(activity!!,StoreSettingEtalaseActivity::class.java))
+                            startActivity(Intent(activity!!,
+                                StoreSettingEtalaseActivity::class.java))
                         }
                         menuStoreNotes.setOnClickListener {
-                            startActivity(Intent(activity!!,StoreSettingNotesActivity::class.java))
+                            startActivity(Intent(activity!!,
+                                StoreSettingNotesActivity::class.java))
                         }
                         menuStoreAddress.setOnClickListener {
-                            startActivity(Intent(activity!!,StoreSettingAddressActivity::class.java))
+                            startActivity(Intent(activity!!,
+                                StoreSettingAddressActivity::class.java))
                         }
                         menuStoreSchedule.setOnClickListener {
-                            startActivity(Intent(activity!!,StoreSettingScheduleActivity::class.java))
+                            startActivity(Intent(activity!!,
+                                StoreSettingScheduleActivity::class.java))
                         }
 
                         database.getReference("store/${snapshot.child("userStore").getValue(String::class.java)}/storeInfo").addValueEventListener(object : ValueEventListener{

@@ -96,5 +96,8 @@ dependencies {
 
     //custom ratingBar
     implementation 'me.zhanghai.android.materialratingbar:library:1.4.0'
+
+    //layout expandable
+    implementation 'net.cachapa.expandablelayout:expandablelayout:2.9.2'
 }
 apply plugin: 'com.google.gms.google-services'

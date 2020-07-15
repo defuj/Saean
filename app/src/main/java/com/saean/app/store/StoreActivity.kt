@@ -1,11 +1,17 @@
 package com.saean.app.store
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Rect
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.bumptech.glide.Glide
 import com.google.firebase.database.DataSnapshot
@@ -15,8 +21,7 @@ import com.google.firebase.database.ValueEventListener
 import com.saean.app.R
 import com.saean.app.helper.Cache
 import com.saean.app.helper.MyFunctions
-import com.saean.app.store.model.ServiceModel
-import com.saean.app.store.model.UserServiceAdapter
+import com.saean.app.store.model.*
 import kotlinx.android.synthetic.main.activity_store.*
 import kotlinx.android.synthetic.main.item_list_store_horizontal.view.*
 
@@ -24,6 +29,7 @@ class StoreActivity : AppCompatActivity() {
     private lateinit var database: FirebaseDatabase
     private var sharedPreferences : SharedPreferences? = null
     private var service : ArrayList<ServiceModel>? = null
+    private var product : ArrayList<ProductModel>? = null
     private var hasRated = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,9 +46,60 @@ class StoreActivity : AppCompatActivity() {
             finish()
         }
 
+        btnOpenMaps.setOnClickListener {
+            val storeID = intent.getStringExtra("storeID")!!
+            database.getReference("store/$storeID/storeInfo/storeLocation").addListenerForSingleValueEvent(object : ValueEventListener{
+                override fun onCancelled(error: DatabaseError) {
+                    Toast.makeText(this@StoreActivity,"Koneksi internet bermasalah", Toast.LENGTH_SHORT).show()
+                }
+
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if(snapshot.exists()){
+                        val storeLatitude = snapshot.child("latitude").getValue(Double::class.java)!!
+                        val storeLongitude = snapshot.child("longitude").getValue(Double::class.java)!!
+                        val gmmIntentUri = Uri.parse("google.navigation:q=$storeLatitude,$storeLongitude")
+                        val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+                        mapIntent.setPackage("com.google.android.apps.maps")
+                        try {
+                            startActivity(mapIntent)
+                        }catch (e:Exception){
+                            Toast.makeText(this@StoreActivity,"Google Maps not installed", Toast.LENGTH_SHORT).show()
+                        }
+                    }else{
+                        Toast.makeText(this@StoreActivity,"Lokasi tidak ditemukan", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            })
+        }
+
+        recyclerListProduct!!.addItemDecoration(object : RecyclerView.ItemDecoration(){
+            override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
+                val position = parent.getChildAdapterPosition(view)
+                val spanCount = 2
+                val spacing = 10
+                if(position>=0){
+                    val column = position % spanCount
+                    outRect.left = spacing - column * spacing / spanCount
+                    outRect.right = (column + 1) * spacing / spanCount
+
+                    if (position < spanCount) {
+                        outRect.top = spacing
+                    }
+
+                    outRect.bottom = spacing
+                }else {
+                    outRect.left = 0
+                    outRect.right = 0
+                    outRect.top = 0
+                    outRect.bottom = 0
+                }
+            }
+        })
+
         setupRatingBar()
         setupStoreInformation()
         setupServiceList()
+        setupProductList()
     }
 
     private fun setupRatingBar() {
@@ -66,7 +123,10 @@ class StoreActivity : AppCompatActivity() {
                 database.getReference("store/$storeID/storeRate").child(email).setValue(rating)
                 database.getReference("store/$storeID/storeRate").addListenerForSingleValueEvent(object : ValueEventListener{
                     override fun onCancelled(error: DatabaseError) {
-
+                        val dialog = SweetAlertDialog(this@StoreActivity,SweetAlertDialog.ERROR_TYPE)
+                        dialog.titleText = "Failed"
+                        dialog.contentText = "Gagal memberikan rating, silahkan coba lagi!"
+                        dialog.show()
                     }
 
                     override fun onDataChange(snapshot: DataSnapshot) {
@@ -77,6 +137,11 @@ class StoreActivity : AppCompatActivity() {
                         }
                         val result = rateTotal/total
                         database.getReference("store/$storeID/storeInfo").child("storeRating").setValue(result)
+
+                        val dialog = SweetAlertDialog(this@StoreActivity,SweetAlertDialog.SUCCESS_TYPE)
+                        dialog.titleText = "Berhasil"
+                        dialog.contentText = "Terimakasih telah memberi penilaian Anda pada toko kami."
+                        dialog.show()
                     }
                 })
             }
@@ -139,6 +204,22 @@ class StoreActivity : AppCompatActivity() {
                                 "${MyFunctions.formatDistance(MyFunctions.countDistance(latitude1, latitude2,longitude1,longitude2)*1000)} m"
                             }
                         }
+
+                        if(snapshot.child("storeDescription").exists()){
+                            if(snapshot.child("storeDescription").getValue(String::class.java)!!.isNotEmpty()){
+                                btnInfoStore.visibility = View.VISIBLE
+                                btnInfoStore.setOnClickListener {
+                                    val dialog = SweetAlertDialog(this@StoreActivity,SweetAlertDialog.NORMAL_TYPE)
+                                    dialog.titleText = snapshot.child("storeName").getValue(String::class.java)
+                                    dialog.contentText = snapshot.child("storeDescription").getValue(String::class.java)
+                                    dialog.show()
+                                }
+                            }else{
+                                btnInfoStore.visibility = View.GONE
+                            }
+                        }else{
+                            btnInfoStore.visibility = View.GONE
+                        }
                         progress.dismissWithAnimation()
                     }else{
                         progress.dismissWithAnimation()
@@ -195,6 +276,65 @@ class StoreActivity : AppCompatActivity() {
                 }else{
                     containerListService.visibility = View.GONE
                     containerNoService.visibility = View.VISIBLE
+                }
+            }
+        })
+    }
+
+    private fun setupProductList() {
+        val storeID = intent.getStringExtra("storeID")!!
+        database.getReference("product/goods/$storeID").addValueEventListener(object : ValueEventListener{
+            override fun onCancelled(error: DatabaseError) {
+                containerListProduct.visibility = View.GONE
+                containerNoProduct.visibility = View.VISIBLE
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()){
+                    if(snapshot.hasChildren()){
+                        containerListProduct.visibility = View.VISIBLE
+                        containerNoProduct.visibility = View.GONE
+
+                        product = ArrayList()
+                        product!!.clear()
+                        recyclerListProduct!!.layoutManager = GridLayoutManager(this@StoreActivity,2,GridLayoutManager.VERTICAL,false)
+                        for(products in snapshot.children){
+                            val model = ProductModel()
+                            model.productID = products.key.toString()
+                            model.productName = products.child("goodsName").getValue(String::class.java)
+                            model.productDescription = products.child("goodsDescription").getValue(String::class.java)
+                            model.productStock = products.child("goodsStock").getValue(Int::class.java)
+                            try {
+                                model.productPrice = products.child("goodsPrice").getValue(Double::class.java)!!
+                            }catch (e:Exception){
+                                model.productPrice = 0.0
+                            }
+
+                            var bannerProduct: ArrayList<BannerModel>
+                            if(products.child("goodsPicture").exists()){
+                                bannerProduct = ArrayList()
+                                bannerProduct.clear()
+                                for(images in products.child("goodsPicture").children){
+                                    val banner = BannerModel()
+                                    banner.bannerID = images.key.toString()
+                                    banner.bannerImage = images.getValue(String::class.java)
+                                    bannerProduct.add(banner)
+                                }
+                                model.productImage = bannerProduct
+                            }
+                            model.storeID = storeID
+                            product!!.add(model)
+                        }
+
+                        val adapter = UserProductAdapter(this@StoreActivity,product!!)
+                        recyclerListProduct.adapter = adapter
+                    }else{
+                        containerListProduct.visibility = View.GONE
+                        containerNoProduct.visibility = View.VISIBLE
+                    }
+                }else{
+                    containerListProduct.visibility = View.GONE
+                    containerNoProduct.visibility = View.VISIBLE
                 }
             }
         })

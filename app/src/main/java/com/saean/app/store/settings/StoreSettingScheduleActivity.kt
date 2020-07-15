@@ -1,4 +1,4 @@
- package com.saean.app.store
+ package com.saean.app.store.settings
 
 import android.R
 import android.annotation.SuppressLint

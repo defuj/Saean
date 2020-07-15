@@ -14,10 +14,11 @@ import com.google.firebase.database.FirebaseDatabase
 import com.saean.app.R
 import com.saean.app.helper.Cache
 import com.saean.app.helper.MyFunctions
+import com.saean.app.store.ProductDetailActivity
 import com.saean.app.store.StoreAddProductActivity
 import kotlinx.android.synthetic.main.item_list_store_service.view.*
 
-class ServiceAdapter(context: Context, private val service: ArrayList<ServiceModel>) :
+class ServiceAdapter(private val context: Context, private val service: ArrayList<ServiceModel>) :
     RecyclerView.Adapter<ServiceAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -66,7 +67,10 @@ class ServiceAdapter(context: Context, private val service: ArrayList<ServiceMod
         }
 
         holder.itemView.setOnClickListener {
-
+            val intent = Intent(context, ProductDetailActivity::class.java)
+            intent.putExtra("productType","jasa")
+            intent.putExtra("productID",content.serviceID)
+            context.startActivity(intent)
         }
     }
 

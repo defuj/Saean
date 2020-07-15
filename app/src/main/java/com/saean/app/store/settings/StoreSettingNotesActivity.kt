@@ -1,4 +1,4 @@
-package com.saean.app.store
+package com.saean.app.store.settings
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

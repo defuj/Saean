@@ -93,5 +93,8 @@ dependencies {
 
     //check string-similarity
     implementation 'net.ricecode:string-similarity:1.0.0'
+
+    //custom ratingBar
+    implementation 'me.zhanghai.android.materialratingbar:library:1.4.0'
 }
 apply plugin: 'com.google.gms.google-services'

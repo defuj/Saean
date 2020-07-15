@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    tools:context=".store.StoreSettingInfoActivity">
+    tools:context=".store.settings.StoreSettingInfoActivity">
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
         android:layout_height="wrap_content"

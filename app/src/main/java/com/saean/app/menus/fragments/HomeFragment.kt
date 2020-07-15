@@ -98,7 +98,7 @@ class HomeFragment : Fragment() {
                     for(content in snapshot.children){
                         val info = content.child("storeInfo")
                         val model = StoreModel()
-                        model.storeID = snapshot.key
+                        model.storeID = content.key
                         model.storeName = info.child("storeName").getValue(String::class.java)
                         model.storeImage = info.child("storePicture").getValue(String::class.java)
                         model.storeAddress = info.child("storeAddress").getValue(String::class.java)
@@ -148,7 +148,7 @@ class HomeFragment : Fragment() {
                     for(content in snapshot.children){
                         val info = content.child("storeInfo")
                         val model = StoreModel()
-                        model.storeID = snapshot.key
+                        model.storeID = content.key.toString()
                         model.storeName = info.child("storeName").getValue(String::class.java)
                         model.storeImage = info.child("storePicture").getValue(String::class.java)
                         model.storeAddress = info.child("storeAddress").getValue(String::class.java)

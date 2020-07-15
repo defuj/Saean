@@ -1,4 +1,4 @@
-package com.saean.app.store
+package com.saean.app.store.settings
 
 import android.content.Intent
 import android.content.SharedPreferences
@@ -12,8 +12,8 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.saean.app.R
 import com.saean.app.helper.Cache
+import com.saean.app.store.StoreAddProductActivity
 import com.saean.app.store.model.*
-import kotlinx.android.synthetic.main.activity_store_setting_product.*
 import kotlinx.android.synthetic.main.activity_store_setting_services.*
 import kotlinx.android.synthetic.main.activity_store_setting_services.btnClose
 
@@ -40,7 +40,8 @@ class StoreSettingServicesActivity : AppCompatActivity() {
         }
 
         btnAddService.setOnClickListener {
-            startActivity(Intent(this,StoreAddProductActivity::class.java))
+            startActivity(Intent(this,
+                StoreAddProductActivity::class.java))
         }
 
         setupService()

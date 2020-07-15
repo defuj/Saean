@@ -171,7 +171,7 @@ class LoginActivity : AppCompatActivity() {
                         progress.dismissWithAnimation()
                         val edit = sharedPreferences!!.edit()
                         edit.putBoolean(Cache.logged,true)
-                        edit.putString(Cache.email,login_email.text.toString())
+                        edit.putString(Cache.email,account.email!!.toString())
                         try {
                             edit.putString(Cache.name,snapshot.child("userName").getValue(String::class.java))
                             edit.putString(Cache.pass,snapshot.child("userPassword").getValue(String::class.java))

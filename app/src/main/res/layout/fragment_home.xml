@@ -109,7 +109,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Toko Servis Terdekat"
+                        android:text="Toko Rekomendasi"
                         android:fontFamily="@font/neosanspro_medium"
                         android:paddingHorizontal="16dp"
                         android:paddingTop="8dp"

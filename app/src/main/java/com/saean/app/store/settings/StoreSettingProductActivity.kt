@@ -1,4 +1,4 @@
-package com.saean.app.store
+package com.saean.app.store.settings
 
 import android.content.Intent
 import android.content.SharedPreferences
@@ -14,6 +14,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.saean.app.R
 import com.saean.app.helper.Cache
+import com.saean.app.store.StoreAddProductActivity
 import com.saean.app.store.model.BannerModel
 import com.saean.app.store.model.ProductAdapter
 import com.saean.app.store.model.ProductModel
@@ -38,7 +39,8 @@ class StoreSettingProductActivity : AppCompatActivity() {
         }
 
         btnAddProduct.setOnClickListener {
-            startActivity(Intent(this,StoreAddProductActivity::class.java))
+            startActivity(Intent(this,
+                StoreAddProductActivity::class.java))
         }
 
         recyclerStoreProduct!!.addItemDecoration(object : RecyclerView.ItemDecoration(){

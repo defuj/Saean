@@ -18,9 +18,7 @@
         android:clipToPadding="false"
         android:clipChildren="false"
         app:cardPreventCornerOverlap="false"
-        android:foreground="?attr/selectableItemBackground"
-        android:focusable="true"
-        android:clickable="true">
+        android:foreground="?attr/selectableItemBackground">
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">

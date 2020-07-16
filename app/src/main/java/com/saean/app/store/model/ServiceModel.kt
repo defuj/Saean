@@ -4,4 +4,5 @@ class ServiceModel {
     var serviceID : String? = null
     var serviceTitle : String? = null
     var serviceDescription : String? = null
+    var storeID : String? = null
 }

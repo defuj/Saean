@@ -121,7 +121,21 @@ class HomeFragment : Fragment() {
                         model.storeDescription = info.child("storeDescription").getValue(String::class.java)
                         model.storeStatusOpen = info.child("storeOpen").getValue(Boolean::class.java)
                         model.storeRating = info.child("storeRating").getValue(Float::class.java)
-                        model.storeFront = info.child("storeFront").getValue(String::class.java)
+                        if(info.child("storeFront").exists()){
+                            if(info.child("storeFront").hasChildren()){
+                                var i = 0
+                                for (sf in info.child("storeFront").children){
+                                    if(i == 0){
+                                        model.storeFront = sf.getValue(String::class.java)
+                                        i+=1
+                                    }
+                                }
+                            }else{
+                                model.storeFront = ""
+                            }
+                        }else{
+                            model.storeFront = ""
+                        }
                         model.storeLatitude = info.child("storeLocation").child("latitude").getValue(Double::class.java)!!
                         model.storeLongitude = info.child("storeLocation").child("longitude").getValue(Double::class.java)!!
                         storeOthers!!.add(model)
@@ -143,17 +157,6 @@ class HomeFragment : Fragment() {
         storeNearby!!.clear()
         storeNearbySlider.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL,false)
 
-        /* for(i in 0 until 5){
-            val model = StoreModel()
-            model.storeID = "id$i"
-            model.storeName = "This is name of the Store $i"
-            model.storeImage = "https://pemmzchannel.com/wp-content/uploads/2020/02/IT-Galeri-Store-1000x570.jpg"
-            model.storeDescription = activity!!.getString(R.string.lorem_ipsum)
-            model.storeStatusOpen = true
-            model.storeRating = i.toFloat()
-            storeNearby!!.add(model)
-        } */
-
         database.getReference("store").addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onCancelled(error: DatabaseError) {
 
@@ -171,7 +174,21 @@ class HomeFragment : Fragment() {
                         model.storeDescription = info.child("storeDescription").getValue(String::class.java)
                         model.storeStatusOpen = info.child("storeOpen").getValue(Boolean::class.java)
                         model.storeRating = info.child("storeRating").getValue(Float::class.java)
-                        model.storeFront = info.child("storeFront").getValue(String::class.java)
+                        if(info.child("storeFront").exists()){
+                            if(info.child("storeFront").hasChildren()){
+                                var i = 0
+                                for (sf in info.child("storeFront").children){
+                                    if(i == 0){
+                                        model.storeFront = sf.getValue(String::class.java)
+                                        i+=1
+                                    }
+                                }
+                            }else{
+                                model.storeFront = ""
+                            }
+                        }else{
+                            model.storeFront = ""
+                        }
                         model.storeLatitude = info.child("storeLocation").child("latitude").getValue(Double::class.java)!!
                         model.storeLongitude = info.child("storeLocation").child("longitude").getValue(Double::class.java)!!
                         storeNearby!!.add(model)

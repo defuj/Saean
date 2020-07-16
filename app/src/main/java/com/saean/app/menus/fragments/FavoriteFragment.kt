@@ -118,7 +118,21 @@ class FavoriteFragment : Fragment() {
                                     model.storeDescription = info.child("storeDescription").getValue(String::class.java)
                                     model.storeStatusOpen = info.child("storeOpen").getValue(Boolean::class.java)
                                     model.storeRating = info.child("storeRating").getValue(Float::class.java)
-                                    model.storeFront = info.child("storeFront").getValue(String::class.java)
+                                    if(info.child("storeFront").exists()){
+                                        if(info.child("storeFront").hasChildren()){
+                                            var i = 0
+                                            for (sf in info.child("storeFront").children){
+                                                if(i == 0){
+                                                    model.storeFront = sf.getValue(String::class.java)
+                                                    i+=1
+                                                }
+                                            }
+                                        }else{
+                                            model.storeFront = ""
+                                        }
+                                    }else{
+                                        model.storeFront = ""
+                                    }
                                     model.storeLatitude = info.child("storeLocation").child("latitude").getValue(Double::class.java)!!
                                     model.storeLongitude = info.child("storeLocation").child("longitude").getValue(Double::class.java)!!
                                     store!!.add(model)

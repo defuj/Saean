@@ -67,7 +67,7 @@ class CreateStoreActivity : AppCompatActivity() {
                     store.child(storeID).child("storeInfo").child("storeAdmin").setValue(sharedPreferences!!.getString(Cache.email,""))
                     store.child(storeID).child("storeInfo").child("storePicture").setValue("")
                     store.child(storeID).child("storeInfo").child("storeRating").setValue(0.0F)
-                    store.child(storeID).child("storeInfo").child("storeFront").setValue("")
+                    //store.child(storeID).child("storeInfo").child("storeFront").setValue("")
                     store.child(storeID).child("storeInfo").child("storeName").setValue(storeName)
                     store.child(storeID).child("storeInfo").child("storeAddress").setValue(storeAddress)
                     store.child(storeID).child("storeInfo").child("storeDescription").setValue(storeDescription)

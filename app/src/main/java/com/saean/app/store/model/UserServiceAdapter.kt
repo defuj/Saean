@@ -12,6 +12,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.saean.app.R
 import com.saean.app.helper.Cache
 import com.saean.app.helper.MyFunctions
+import com.saean.app.store.CreateOrderActivity
 import com.saean.app.store.ProductDetailActivity
 import kotlinx.android.synthetic.main.item_list_store_service_user.view.*
 
@@ -37,9 +38,8 @@ class UserServiceAdapter(private val context: Context, private val service: Arra
         }
 
         holder.itemView.setOnClickListener {
-            val intent = Intent(context, ProductDetailActivity::class.java)
-            intent.putExtra("productType","jasa")
-            intent.putExtra("productID",content.serviceID)
+            val intent = Intent(context, CreateOrderActivity::class.java)
+            intent.putExtra("serviceID",content.serviceID)
             context.startActivity(intent)
         }
     }

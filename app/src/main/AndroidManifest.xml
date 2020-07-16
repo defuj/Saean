@@ -34,9 +34,17 @@
         tools:replace="android:icon"
         tools:targetApi="m">
         <activity
-            android:name=".store.ProductDetailActivity"
+            android:name=".store.CreateOrderActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.FullStatusBar"/>
+        <activity
+            android:name=".store.StoreInfoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.FullStatusBar" />
+        <activity
+            android:name=".store.ProductDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.FullStatusBar" />
         <activity
             android:name=".store.StoreActivity"
             android:screenOrientation="portrait"

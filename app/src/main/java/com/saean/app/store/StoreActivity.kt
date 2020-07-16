@@ -3,35 +3,45 @@ package com.saean.app.store
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.graphics.Rect
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.github.florent37.viewtooltip.ViewTooltip
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.saean.app.R
 import com.saean.app.helper.Cache
+import com.saean.app.helper.MyComparator
 import com.saean.app.helper.MyFunctions
+import com.saean.app.home.promoSlider.PromoModel
 import com.saean.app.store.model.*
 import kotlinx.android.synthetic.main.activity_store.*
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.item_list_store_horizontal.view.*
 import ru.nikartm.support.ImageBadgeView
+import java.time.LocalTime
+import java.util.*
+import kotlin.collections.ArrayList
 
 class StoreActivity : AppCompatActivity() {
     private lateinit var database: FirebaseDatabase
     private var sharedPreferences : SharedPreferences? = null
     private var service : ArrayList<ServiceModel>? = null
     private var product : ArrayList<ProductModel>? = null
+    private var slider : ArrayList<PromoModel>? = null
+    private var schedule : ArrayList<ScheduleModel>? = null
     private var hasRated = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,7 +51,25 @@ class StoreActivity : AppCompatActivity() {
         sharedPreferences = getSharedPreferences(Cache.cacheName,0)
 
         setupBadgesToolbar()
+        setupToolTips()
         setupFunctions()
+    }
+
+    private fun setupToolTips() {
+        ViewTooltip.on(this,btnInfoStore)
+            .text("Klik untuk lihat info & Jadwal buka toko")
+            .textColor(Color.WHITE)
+            .color(Color.parseColor("#FD7946"))
+            .shadowColor(Color.parseColor("#FD7946"))
+            .corner(16)
+            .arrowWidth(15)
+            .arrowHeight(15)
+            .distanceWithView(0)
+            .position(ViewTooltip.Position.TOP)
+            .align(ViewTooltip.ALIGN.START)
+            .autoHide(true,5000)
+            .clickToHide(true)
+            .show()
     }
 
     private fun setupBadgesToolbar() {
@@ -81,6 +109,11 @@ class StoreActivity : AppCompatActivity() {
     private fun setupFunctions() {
         toolbarStore.setNavigationOnClickListener {
             finish()
+        }
+
+        if(intent.getStringExtra("storeID")!! == sharedPreferences!!.getString(Cache.storeID,"")!!){
+            sendChatToStore.visibility = View.GONE
+            containerGiveRating.visibility = View.GONE
         }
 
         btnOpenMaps.setOnClickListener {
@@ -138,6 +171,55 @@ class StoreActivity : AppCompatActivity() {
         setupServiceList()
         setupProductList()
         setupFavorite()
+        //setupSchedule()
+    }
+
+    private fun setupSchedule() {
+        val storeID = intent.getStringExtra("storeID")!!
+        database.getReference("store/$storeID/storeSchedule").addValueEventListener(object : ValueEventListener{
+            override fun onCancelled(error: DatabaseError) {
+                containerOpeningHours.visibility = View.GONE
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()){
+                    if(snapshot.hasChildren()){
+                        containerOpeningHours.visibility = View.VISIBLE
+                        schedule = ArrayList()
+                        schedule!!.clear()
+
+                        recyclerOpeningHours!!.layoutManager = LinearLayoutManager(this@StoreActivity,LinearLayoutManager.VERTICAL,false)
+                        for(content in snapshot.children){
+                            val model = ScheduleModel()
+                            model.scheduleDay = content.key.toString()
+                            model.scheduleStatus = content.child("status").getValue(Boolean::class.java)!!
+                            model.scheduleStartOpen = content.child("startOpen").getValue(String::class.java)
+                            model.scheduleEndOpen = content.child("endOpen").getValue(String::class.java)
+                            schedule!!.add(model)
+                        }
+
+                        val days = arrayOf("Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu")
+                        for(i in 0 until schedule!!.size){
+                            if(schedule!![i].scheduleDay != days[i]){
+                                for(m in 0 until schedule!!.size){
+                                    if(schedule!![m].scheduleDay == days[i]){
+                                        schedule!!.add(i,schedule!![m])
+                                        schedule!!.removeAt(m+1)
+                                    }
+                                }
+                            }
+                        }
+
+                        val adapter = ScheduleAdapter(this@StoreActivity,schedule!!)
+                        recyclerOpeningHours.adapter = adapter
+                    }else{
+                        containerOpeningHours.visibility = View.GONE
+                    }
+                }else{
+                    containerOpeningHours.visibility = View.GONE
+                }
+            }
+        })
     }
 
     private fun setupFavorite() {
@@ -195,10 +277,10 @@ class StoreActivity : AppCompatActivity() {
                     }
 
                     override fun onDataChange(snapshot: DataSnapshot) {
-                        val total = snapshot.childrenCount.toInt()
-                        var rateTotal = 0
+                        val total = snapshot.childrenCount.toFloat()
+                        var rateTotal = 0.0
                         for (rate in snapshot.children){
-                            rateTotal += rate.getValue(Int::class.java)!!
+                            rateTotal += rate.getValue(Float::class.java)!!
                         }
                         val result = rateTotal/total
                         database.getReference("store/$storeID/storeInfo").child("storeRating").setValue(result)
@@ -245,16 +327,71 @@ class StoreActivity : AppCompatActivity() {
                 @SuppressLint("SetTextI18n")
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if(snapshot.exists()){
+                        val today = MyFunctions.getTanggal("EEEE")
+                        val schedule = database.getReference("store/$storeID/storeSchedule/$today")
+                        schedule.addValueEventListener(object : ValueEventListener{
+                            override fun onCancelled(error: DatabaseError) {
+                                Toast.makeText(this@StoreActivity,"Failed to connect",Toast.LENGTH_SHORT).show()
+                                storeStatusOpen.visibility = View.VISIBLE
+                                storeStatusOpen.text = "Closed"
+                                storeStatusOpen.setBackgroundResource(R.drawable.background_status_store_closed)
+                            }
+
+                            @RequiresApi(Build.VERSION_CODES.O)
+                            override fun onDataChange(snapshot: DataSnapshot) {
+                                if(snapshot.exists()){
+                                    if(snapshot.child("status").getValue(Boolean::class.java)!!){
+                                        val target = LocalTime.parse(MyFunctions.getTanggal("HH:mm:ss"))
+                                        val start = MyFunctions.formatTanggal(snapshot.child("startOpen").getValue(String::class.java)!!,"HH:mm:ss","HH.mm")
+                                        val end = MyFunctions.formatTanggal(snapshot.child("endOpen").getValue(String::class.java)!!,"HH:mm:ss","HH.mm")
+                                        val targetInZone = target.isAfter(LocalTime.parse(start)) && target.isBefore(
+                                            LocalTime.parse(end))
+                                        if(targetInZone){
+                                            storeStatusOpen.visibility = View.GONE
+                                            storeStatusOpen.text = "Open"
+                                            storeStatusOpen.setBackgroundResource(R.drawable.background_status_store_closed)
+                                        }else{
+                                            storeStatusOpen.visibility = View.VISIBLE
+                                            storeStatusOpen.text = "Closed"
+                                            storeStatusOpen.setBackgroundResource(R.drawable.background_status_store_closed)
+                                        }
+                                    }else{
+                                        storeStatusOpen.visibility = View.VISIBLE
+                                        storeStatusOpen.text = "Closed"
+                                        storeStatusOpen.setBackgroundResource(R.drawable.background_status_store_closed)
+                                    }
+                                }else{
+                                    storeStatusOpen.visibility = View.VISIBLE
+                                    storeStatusOpen.text = "Closed"
+                                    storeStatusOpen.setBackgroundResource(R.drawable.background_status_store_closed)
+                                }
+                            }
+
+                        })
+
                         storeName.text = snapshot.child("storeName").getValue(String::class.java)
                         storeAddress.text = snapshot.child("storeAddress").getValue(String::class.java)
-                        if(snapshot.child("storeFront").getValue(String::class.java)!!.isNotEmpty()){
-                            Glide.with(this@StoreActivity)
-                                .load(snapshot.child("storeFront").getValue(String::class.java))
-                                .into(storeFront)
-                        }else{
-                            Glide.with(this@StoreActivity)
-                                .load(R.drawable.image_placeholder_landscape)
-                                .into(storeFront)
+
+                        if(snapshot.child("storeFront").exists()){
+                            if(snapshot.child("storeFront").hasChildren()){
+                                slider = ArrayList()
+                                slider!!.clear()
+
+                                for(img in snapshot.child("storeFront").children){
+                                    val model = PromoModel()
+                                    model.image = img.getValue(String::class.java)
+                                    slider!!.add(model)
+                                }
+
+                                indicatorStoreSlider.indicatorsToShow = if(snapshot.child("storeFront").childrenCount >= 5){
+                                    5
+                                }else{
+                                    snapshot.child("storeFront").childrenCount.toInt()
+                                }
+
+                                val adapter = StoreFrontAdapter(slider!!)
+                                storeFrontSlider.adapter = adapter
+                            }
                         }
                         storeRating.text = "${snapshot.child("storeRating").getValue(Float::class.java)!!}"
                         if(sharedPreferences!!.getString(Cache.latitude,"")!!.isNotEmpty()){
@@ -277,13 +414,30 @@ class StoreActivity : AppCompatActivity() {
                                     val dialog = SweetAlertDialog(this@StoreActivity,SweetAlertDialog.NORMAL_TYPE)
                                     dialog.titleText = snapshot.child("storeName").getValue(String::class.java)
                                     dialog.contentText = snapshot.child("storeDescription").getValue(String::class.java)
-                                    dialog.show()
+                                    //dialog.show()
+
+                                    val intent = Intent(this@StoreActivity,StoreInfoActivity::class.java)
+                                    intent.putExtra("storeID",storeID)
+                                    startActivity(intent)
                                 }
                             }else{
                                 btnInfoStore.visibility = View.GONE
                             }
                         }else{
                             btnInfoStore.visibility = View.GONE
+                        }
+                        if(snapshot.child("storeStatus").getValue(Boolean::class.java)!!){
+                            storeVerified.visibility = View.VISIBLE
+                            storeName.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_store_verified_1,0,0,0)
+                        }else{
+                            storeVerified.visibility = View.INVISIBLE
+                            storeName.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0)
+                        }
+                        if(snapshot.child("storePicture").getValue(String::class.java)!!.isNotEmpty()){
+                            Glide.with(this@StoreActivity)
+                                .load(snapshot.child("storePicture").getValue(String::class.java)!!)
+                                .apply(RequestOptions.circleCropTransform())
+                                .into(storeIcon)
                         }
                         progress.dismissWithAnimation()
                     }else{
@@ -329,6 +483,7 @@ class StoreActivity : AppCompatActivity() {
                             model.serviceID = services.key.toString()
                             model.serviceTitle = services.child("serviceName").getValue(String::class.java)
                             model.serviceDescription = services.child("serviceDescription").getValue(String::class.java)
+                            model.storeID = storeID
                             service!!.add(model)
                         }
 

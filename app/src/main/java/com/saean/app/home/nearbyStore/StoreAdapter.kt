@@ -86,8 +86,9 @@ class StoreAdapter(private val context: Context,private val listType : String,pr
                                 val end = MyFunctions.formatTanggal(snapshot.child("endOpen").getValue(String::class.java)!!,"HH:mm:ss","HH.mm")
                                 val targetInZone = target.isAfter(LocalTime.parse(start)) && target.isBefore(LocalTime.parse(end))
                                 if(targetInZone){
+                                    storeStatusOpen.visibility = View.GONE
                                     storeStatusOpen.text = "Open"
-                                    storeStatusOpen.setBackgroundResource(R.drawable.background_status_store_open)
+                                    storeStatusOpen.setBackgroundResource(R.drawable.background_status_store_closed)
                                 }else{
                                     storeStatusOpen.text = "Closed"
                                     storeStatusOpen.setBackgroundResource(R.drawable.background_status_store_closed)
@@ -172,8 +173,9 @@ class StoreAdapter(private val context: Context,private val listType : String,pr
                                 val end = MyFunctions.formatTanggal(snapshot.child("endOpen").getValue(String::class.java)!!,"HH:mm:ss","HH.mm")
                                 val targetInZone = target.isAfter(LocalTime.parse(start)) && target.isBefore(LocalTime.parse(end))
                                 if(targetInZone){
+                                    storeStatusOpen.visibility = View.GONE
                                     storeStatusOpen.text = "Open"
-                                    storeStatusOpen.setBackgroundResource(R.drawable.background_status_store_open)
+                                    storeStatusOpen.setBackgroundResource(R.drawable.background_status_store_closed)
                                 }else{
                                     storeStatusOpen.text = "Closed"
                                     storeStatusOpen.setBackgroundResource(R.drawable.background_status_store_closed)

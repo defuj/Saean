@@ -4,40 +4,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".store.settings.StoreSettingEtalaseActivity"
+    tools:context=".store.CreateOrderActivity"
     android:background="@android:color/white">
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
         android:layout_height="wrap_content"
         android:layout_width="match_parent">
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbarStoreSetting"
+            android:id="@+id/toolbarCreateOrder"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:background="@android:color/white"
+            app:contentInsetStart="0dp"
+            app:contentInsetStartWithNavigation="0dp"
+            android:paddingEnd="8dp"
             app:navigationIcon="?attr/homeAsUpIndicator">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
                 <TextView
+                    android:layout_marginStart="12dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:text="Gambar Etalase"
+                    android:text="Buat Order"
                     android:textSize="18sp"
                     android:fontFamily="@font/neosanspro_medium"
-                    android:textColor="@color/BLACK100" />
-                <ImageButton
-                    android:id="@+id/btnAddEtalase"
-                    android:layout_marginHorizontal="4dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/ic_baseline_add"
-                    android:background="?attr/actionBarItemBackground"/>
+                    android:textColor="@color/BLACK80" />
             </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
@@ -50,19 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:overScrollMode="never"
-                android:id="@+id/recyclerEtalase"/>
+
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-    <LinearLayout
-        android:id="@+id/containerNoEtalase"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp">
-
-    </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

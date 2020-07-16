@@ -37,10 +37,15 @@ class UserProductAdapter(private val context: Context, private val product: Arra
             val database : FirebaseDatabase = FirebaseDatabase.getInstance()
             productName.text = MyFunctions.capitalize(content.productName!!)
             productPrice.text = MyFunctions.formatUang(content.productPrice!!)
+
             if(content.productStock!! > 0){
+                containerProductOut.visibility = View.GONE
+                productReady.visibility = View.GONE
                 productReady.text = "Tersedia"
                 productReady.setBackgroundResource(R.drawable.background_status_store_open)
             }else{
+                containerProductOut.visibility = View.GONE
+                productReady.visibility = View.VISIBLE
                 productReady.text = "Tidak Tersedia"
                 productReady.setBackgroundResource(R.drawable.background_status_store_closed)
             }
@@ -63,12 +68,6 @@ class UserProductAdapter(private val context: Context, private val product: Arra
                 }else{
                     "habis"
                 }
-            }
-
-            if(content.productStock!! > 0){
-                containerProductOut.visibility = View.GONE
-            }else{
-                containerProductOut.visibility = View.VISIBLE
             }
         }
 

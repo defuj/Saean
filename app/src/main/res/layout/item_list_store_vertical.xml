@@ -43,13 +43,13 @@
                         android:layout_height="wrap_content"
                         tools:text="Open"
                         android:fontFamily="@font/opensans_regular"
-                        android:textSize="12sp"
+                        android:textSize="11sp"
                         android:textColor="@android:color/white"
                         android:background="@drawable/background_status_store_open"
-                        android:paddingHorizontal="8dp"
+                        android:paddingHorizontal="4dp"
                         android:paddingVertical="2dp"
                         android:layout_alignParentBottom="true"
-                        android:layout_margin="10dp"
+                        android:layout_margin="6dp"
                         android:gravity="center_vertical"/>
                 </RelativeLayout>
                 <LinearLayout

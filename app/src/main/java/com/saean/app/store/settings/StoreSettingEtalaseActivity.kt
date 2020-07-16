@@ -8,9 +8,10 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import cn.pedant.SweetAlert.SweetAlertDialog
-import com.bumptech.glide.Glide
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -19,10 +20,13 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.saean.app.R
 import com.saean.app.helper.Cache
+import com.saean.app.store.model.BannerModel
+import com.saean.app.store.model.EtalaseAdapter
 import com.theartofdev.edmodo.cropper.CropImage
 import kotlinx.android.synthetic.main.activity_store_setting_etalase.*
 import kotlinx.android.synthetic.main.activity_store_setting_etalase.toolbarStoreSetting
 import java.util.*
+import kotlin.collections.ArrayList
 
 class StoreSettingEtalaseActivity : AppCompatActivity() {
     private lateinit var database: FirebaseDatabase
@@ -30,6 +34,8 @@ class StoreSettingEtalaseActivity : AppCompatActivity() {
 
     private lateinit var storage : FirebaseStorage
     private lateinit var storageReference : StorageReference
+
+    private var picture : ArrayList<BannerModel>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,13 +49,13 @@ class StoreSettingEtalaseActivity : AppCompatActivity() {
     }
 
     private fun setupFunctions() {
-        setupInformation()
+        setupStoreFrontList()
 
         toolbarStoreSetting.setNavigationOnClickListener {
             finish()
         }
 
-        btnUploadGambar.setOnClickListener {
+        btnAddEtalase.setOnClickListener {
             CropImage.activity()
                 .setOutputCompressFormat(Bitmap.CompressFormat.WEBP)
                 .setOutputCompressQuality(75)
@@ -58,40 +64,40 @@ class StoreSettingEtalaseActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupInformation() {
-        val progress = SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE)
-        progress.titleText = "Silahkan tunggu"
-        progress.contentText = "Mendapatkan informasi toko"
-        progress.setCancelable(false)
-        progress.show()
-
+    private fun setupStoreFrontList() {
         val storeID = sharedPreferences!!.getString(Cache.storeID,"")
-        database.getReference("store/$storeID/storeInfo").addListenerForSingleValueEvent(object :
-            ValueEventListener {
+        database.getReference("store/$storeID/storeInfo/storeFront").addValueEventListener(object : ValueEventListener{
             override fun onCancelled(error: DatabaseError) {
-                progress.dismissWithAnimation()
-                val dialog = SweetAlertDialog(this@StoreSettingEtalaseActivity,SweetAlertDialog.ERROR_TYPE)
-                dialog.titleText = "Oops"
-                dialog.contentText = "Gagal mendapatkan informasi toko. Silahkan mencoba lagi."
-                dialog.setCancelable(false)
-                dialog.setConfirmClickListener {
-                    dialog.dismissWithAnimation()
-                    finish()
-                }
-                dialog.show()
+                recyclerEtalase.visibility = View.GONE
+                containerNoEtalase.visibility = View.VISIBLE
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(snapshot.exists()){
-                    if(snapshot.child("storeFront").getValue(String::class.java)!!.isNotEmpty()){
-                        Glide.with(this@StoreSettingEtalaseActivity)
-                            .load(snapshot.child("storeFront").getValue(String::class.java)!!)
-                            .into(storeFront)
-                    }
+                    if(snapshot.hasChildren()){
+                        recyclerEtalase.visibility = View.VISIBLE
+                        containerNoEtalase.visibility = View.GONE
 
-                    progress.dismissWithAnimation()
+                        picture = ArrayList()
+                        picture!!.clear()
+
+                        recyclerEtalase.layoutManager = LinearLayoutManager(this@StoreSettingEtalaseActivity,LinearLayoutManager.VERTICAL,false)
+                        for(content in snapshot.children){
+                            val model = BannerModel()
+                            model.bannerID = content.key.toString()
+                            model.bannerImage = content.getValue(String::class.java)
+                            picture!!.add(model)
+                        }
+
+                        val adapter = EtalaseAdapter(this@StoreSettingEtalaseActivity,picture!!)
+                        recyclerEtalase.adapter = adapter
+                    }else{
+                        recyclerEtalase.visibility = View.GONE
+                        containerNoEtalase.visibility = View.VISIBLE
+                    }
                 }else{
-                    finish()
+                    recyclerEtalase.visibility = View.GONE
+                    containerNoEtalase.visibility = View.VISIBLE
                 }
             }
         })
@@ -105,7 +111,7 @@ class StoreSettingEtalaseActivity : AppCompatActivity() {
                 val resultUri = result.uri
                 val storeID = sharedPreferences!!.getString(Cache.storeID,"")
                 val filePath : Uri = resultUri
-                val ref = storageReference.child("store/$storeID/storeFront_${UUID.randomUUID()}")
+                val ref = storageReference.child("store/$storeID/storeFront/storeFront_${UUID.randomUUID()}")
 
                 val progress = SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE)
                 progress.titleText = "Sedang mengunggah"
@@ -124,12 +130,11 @@ class StoreSettingEtalaseActivity : AppCompatActivity() {
                         progress.dismissWithAnimation()
                         val downloadUri = task.result
                         Log.e("IMAGE_URL","$downloadUri")
-                        database.getReference("store/$storeID/storeInfo").child("storeFront").setValue(downloadUri.toString())
-                        Toast.makeText(this,"Gambar berhasil diunggah",Toast.LENGTH_SHORT).show()
 
-                        Glide.with(this)
-                            .load(downloadUri.toString())
-                            .into(storeFront)
+                        val upload = database.getReference("store/$storeID/storeInfo/storeFront")
+                        val key = upload.push().key.toString()
+                        upload.child(key).setValue(downloadUri.toString())
+                        Toast.makeText(this,"Gambar berhasil diunggah",Toast.LENGTH_SHORT).show()
                     } else {
                         progress.dismissWithAnimation()
                         Toast.makeText(this,"Gagal mengunggah gambar",Toast.LENGTH_SHORT).show()

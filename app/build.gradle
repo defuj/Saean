@@ -99,5 +99,8 @@ dependencies {
 
     //layout expandable
     implementation 'net.cachapa.expandablelayout:expandablelayout:2.9.2'
+
+    //tool tips
+    implementation 'com.github.florent37:viewtooltip:1.2.2'
 }
 apply plugin: 'com.google.gms.google-services'

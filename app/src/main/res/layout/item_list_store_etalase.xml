@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="12dp">
+        <RelativeLayout
+            android:padding="6dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="H,2:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@drawable/background_container_icon_store">
+            <ImageView
+                android:id="@+id/storeEtalase"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:background="#EBEEF3"/>
+            <ImageButton
+                android:id="@+id/btnDeleteEtalase"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:adjustViewBounds="true"
+                android:background="@drawable/background_container_button_circle_gray"
+                android:src="@drawable/ic_baseline_delete"
+                android:layout_alignParentEnd="true"
+                android:layout_margin="8dp"/>
+        </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

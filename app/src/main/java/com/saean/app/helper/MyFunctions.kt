@@ -90,6 +90,11 @@ object MyFunctions {
         return df.format(angka)
     }
 
+    fun formatNumber(angka : Double) : Float{
+        val df = DecimalFormat("#.#")
+        return df.format(angka).toFloat()
+    }
+
     fun setLocale(context: Context,lang : String, country : String){
         val locale = Locale(lang,country)
         Locale.setDefault(locale)

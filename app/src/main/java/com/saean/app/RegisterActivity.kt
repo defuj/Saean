@@ -85,6 +85,7 @@ class RegisterActivity : AppCompatActivity() {
                         register.child("userPhone").setValue("${regis_address.text}")
                         register.child("userGender").setValue(regis_gender.selectedItem.toString())
                         register.child("userVerify").setValue(0)
+                        register.child("userJoined").setValue(MyFunctions.getTime())
 
                         val edit = sharedPreferences!!.edit()
                         edit.putBoolean(Cache.logged,true)

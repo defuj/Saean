@@ -46,7 +46,7 @@ import kotlinx.android.synthetic.main.activity_store_setting_schedule.*
      private fun setupDays() {
          val storeID = sharedPreferences!!.getString(Cache.storeID,"")
          val schedule = database.getReference("store/$storeID/storeSchedule")
-         schedule.addListenerForSingleValueEvent(object : ValueEventListener{
+         schedule.addValueEventListener(object : ValueEventListener{
              override fun onCancelled(error: DatabaseError) {
 
              }

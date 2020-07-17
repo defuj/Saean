@@ -393,7 +393,7 @@ class StoreActivity : AppCompatActivity() {
                                 storeFrontSlider.adapter = adapter
                             }
                         }
-                        storeRating.text = "${snapshot.child("storeRating").getValue(Float::class.java)!!}"
+                        storeRating.text = MyFunctions.formatDistance(snapshot.child("storeRating").getValue(Float::class.java)!!.toDouble())
                         if(sharedPreferences!!.getString(Cache.latitude,"")!!.isNotEmpty()){
                             val latitude1 = sharedPreferences!!.getString(Cache.latitude,"")!!.toDouble()
                             val longitude1 = sharedPreferences!!.getString(Cache.longitude,"")!!.toDouble()

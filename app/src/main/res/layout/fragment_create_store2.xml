@@ -68,36 +68,32 @@
                 android:fontFamily="@font/neosans_pro_regular"
                 android:textColor="@color/BLACK60" />
 
-            <EditText
-                android:id="@+id/storeAddress"
-                android:paddingVertical="8dp"
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_marginTop="12dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/opensans_regular"
-                android:hint="Detail Alamat"
-                android:textColor="@color/BLACK80"
-                android:textColorHint="@color/BLACK60"
-                android:background="@android:color/transparent"
-                android:inputType="textMultiLine"
-                android:maxLength="300"
-                android:gravity="top"
-                android:layout_marginTop="16dp"
-                android:textSize="14sp"
-                android:focusableInTouchMode="true"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1.5dp"
-                android:background="@color/BLACK10"/>
-            <TextView
-                android:layout_marginTop="3dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Tulis nama Jalan, No. Rumah, Blok, RT/RW, dll"
-                android:textSize="12sp"
-                android:fontFamily="@font/neosans_pro_regular"
-                android:textColor="@color/BLACK60"
-                android:justificationMode="inter_word"
-                tools:targetApi="o" />
+                app:counterMaxLength="300"
+                app:counterEnabled="true"
+                app:helperTextTextAppearance="@style/helperText"
+                app:helperText="Tulis nama Jalan, No. Rumah, Blok, RT/RW, dll."
+                app:hintTextColor="@color/BLACK80">
+                <EditText
+                    android:id="@+id/storeAddress"
+                    android:paddingVertical="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/opensans_regular"
+                    android:hint="Detail Alamat"
+                    android:textColor="@color/BLACK80"
+                    android:textColorHint="@color/BLACK60"
+                    android:background="@drawable/edittext_bottom_border"
+                    android:inputType="textMultiLine"
+                    android:maxLength="300"
+                    android:gravity="top"
+                    android:layout_marginTop="16dp"
+                    android:textSize="14sp"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
             <Button
                 android:layout_marginTop="16dp"
                 android:id="@+id/btnNext2"

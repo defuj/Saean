@@ -39,4 +39,11 @@
         <item name="colorControlActivated">#FFC850</item>
     </style>
 
+    <style name="helperText">
+        <item name="android:fontFamily">@font/opensans_regular</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/BLACK80</item>
+        <item name="android:maxWidth">100dp</item>
+    </style>
+
 </resources>

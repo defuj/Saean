@@ -5,7 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
 import cn.pedant.SweetAlert.SweetAlertDialog
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.saean.app.R
 import com.saean.app.createStore.fragments.CreateStore1Fragment
 import com.saean.app.createStore.fragments.CreateStore2Fragment
@@ -22,6 +25,7 @@ class CreateStoreActivity : AppCompatActivity() {
     var storeAddress = ""
     var storeLongitude = 0.0
     var storeLatitude = 0.0
+    private var verified = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +38,23 @@ class CreateStoreActivity : AppCompatActivity() {
 
     private fun setupFunctions() {
         setupFragments()
+        setupCheckUserVerify()
+    }
+
+    private fun setupCheckUserVerify() {
+        val email = MyFunctions.changeToUnderscore(sharedPreferences!!.getString(Cache.email,"")!!)
+        val user = database.getReference("user/$email")
+        user.addValueEventListener(object : ValueEventListener{
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.child("userVerify").getValue(Int::class.java)!! == 2){
+                    verified = true
+                }
+            }
+        })
     }
 
     private fun setupFragments() {
@@ -47,6 +68,7 @@ class CreateStoreActivity : AppCompatActivity() {
     }
 
     fun createStore(){
+        val email = MyFunctions.changeToUnderscore(sharedPreferences!!.getString(Cache.email,"")!!)
         if(storeName.isNotEmpty() && storeDescription.isNotEmpty() && storeAddress.isNotEmpty() && storeLatitude != 0.0 && storeLongitude != 0.0){
             if(!MyFunctions.getConnectivityStatus(this)){
                 return
@@ -58,20 +80,19 @@ class CreateStoreActivity : AppCompatActivity() {
             progress.setCancelable(false)
             progress.show()
 
+
             object : CountDownTimer(3000,1000){
                 override fun onFinish() {
-                    val email = MyFunctions.changeToUnderscore(sharedPreferences!!.getString(Cache.email,"")!!)
                     val user = database.getReference("user/$email")
                     val store = database.getReference("store")
                     val storeID = store.push().key.toString()
                     store.child(storeID).child("storeInfo").child("storeAdmin").setValue(sharedPreferences!!.getString(Cache.email,""))
                     store.child(storeID).child("storeInfo").child("storePicture").setValue("")
                     store.child(storeID).child("storeInfo").child("storeRating").setValue(0.0F)
-                    //store.child(storeID).child("storeInfo").child("storeFront").setValue("")
                     store.child(storeID).child("storeInfo").child("storeName").setValue(storeName)
                     store.child(storeID).child("storeInfo").child("storeAddress").setValue(storeAddress)
                     store.child(storeID).child("storeInfo").child("storeDescription").setValue(storeDescription)
-                    store.child(storeID).child("storeInfo").child("storeStatus").setValue(false)
+                    store.child(storeID).child("storeInfo").child("storeStatus").setValue(verified)
                     store.child(storeID).child("storeInfo").child("storeCreated").setValue(MyFunctions.getTime())
                     store.child(storeID).child("storeInfo").child("storeLocation").child("latitude").setValue(storeLatitude)
                     store.child(storeID).child("storeInfo").child("storeLocation").child("longitude").setValue(storeLongitude)

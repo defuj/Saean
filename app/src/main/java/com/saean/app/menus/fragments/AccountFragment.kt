@@ -1,5 +1,6 @@
 package com.saean.app.menus.fragments
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -23,7 +24,10 @@ import com.saean.app.helper.Cache
 import com.saean.app.helper.MyFunctions
 import com.saean.app.store.*
 import com.saean.app.store.settings.*
+import kotlinx.android.synthetic.main.activity_store.*
 import kotlinx.android.synthetic.main.fragment_account.*
+import kotlinx.android.synthetic.main.fragment_account.storeName
+import kotlinx.android.synthetic.main.fragment_account.storeRating
 import ru.nikartm.support.ImageBadgeView
 
 class AccountFragment : Fragment() {
@@ -148,6 +152,7 @@ class AccountFragment : Fragment() {
                     .into(userPicture)
             }
 
+            @SuppressLint("SetTextI18n")
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(snapshot.exists()){
                     //set user picture
@@ -171,7 +176,8 @@ class AccountFragment : Fragment() {
                     }
 
                     //set user name
-                    userName.text = snapshot.child("userName").getValue(String::class.java)
+                    dateNow.text = MyFunctions.getTanggal("EEEE, dd MMMM")
+                    userName.text = "Hi, ${snapshot.child("userName").getValue(String::class.java)}"
                     userEmail.text = sharedPreferences!!.getString(Cache.email,"")
 
                     //check user has have a store or not
@@ -249,6 +255,8 @@ class AccountFragment : Fragment() {
                                 containerMyStore.visibility = View.VISIBLE
                             }
                         })
+
+                        checkStoreOrder()
                     }else{
                         containerOpenStore.visibility = View.VISIBLE
                         containerOpenStoreAction.visibility = View.VISIBLE
@@ -266,6 +274,73 @@ class AccountFragment : Fragment() {
             startActivity(Intent(activity!!,
                 CreateStoreActivity::class.java))
         }
+    }
+
+    private fun checkStoreOrder() {
+        val storeID = sharedPreferences!!.getString(Cache.storeID,"")
+        database.getReference("order").orderByChild("orderStore").equalTo(storeID).addValueEventListener(object : ValueEventListener{
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()){
+                    if(snapshot.hasChildren()){
+                        var stepWaiting = 0 //menunggu konfirmasi store/admin
+                        var stepProcess = 0 //diproses admin/store
+                        var stepNeedConfirmation = 0 //menunggu konfirmasi customer
+                        var stepCanceledByCustomer = 0 //dibatalkan customer
+                        var stepWorking = 0 //perbaikan
+                        var stepFinish = 0 //selesai
+
+                        var newOrder = 0 //order masuk
+                        var confirmOrder = 0 //order diterima store/admin
+                        var rejectedOrder = 0 //order ditolak store/admin
+
+                        for(content in snapshot.children){
+                            if(content.child("orderStore").getValue(String::class.java)!! == storeID){
+                                if(content.child("orderStatus").getValue(Int::class.java)!! == 0){
+                                    newOrder +=1
+                                    btnStoreActivity11.badgeValue = newOrder
+                                }else if(content.child("orderStatus").getValue(Int::class.java)!! == 1){
+                                    confirmOrder +=1
+                                    btnStoreActivity22.badgeValue = confirmOrder
+                                }else if(content.child("orderStatus").getValue(Int::class.java)!! == 2){
+                                    rejectedOrder +=1
+                                    btnStoreActivity33.badgeValue = rejectedOrder
+                                }
+
+                                if(content.child("orderProcess").getValue(Int::class.java)!! == 0){
+                                    //menunggu konfirmasi store
+                                    stepWaiting +=1
+
+                                }else if(content.child("orderProcess").getValue(Int::class.java)!! == 1){
+                                    //diproses
+                                    stepProcess +=1
+                                    btnStoreActivity1.badgeValue = stepProcess
+                                }else if(content.child("orderProcess").getValue(Int::class.java)!! == 2){
+                                    //menunggu konfirmasi customer
+                                    stepNeedConfirmation +=1
+                                    btnStoreActivity2.badgeValue = stepNeedConfirmation
+                                }else if(content.child("orderProcess").getValue(Int::class.java)!! == 3){
+                                    //dibatalkan pelanggan
+                                    stepCanceledByCustomer +=1
+                                    btnStoreActivity44.badgeValue = stepCanceledByCustomer
+                                }else if(content.child("orderProcess").getValue(Int::class.java)!! == 4){
+                                    //sedang diperbaiki
+                                    stepWorking +=1
+                                    btnStoreActivity3.badgeValue = stepWorking
+                                }else if(content.child("orderProcess").getValue(Int::class.java)!! == 5){
+                                    //selesai
+                                    stepFinish +=1
+                                    btnStoreActivity4.badgeValue = stepFinish
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        })
     }
 
     private fun setupRefresh() {

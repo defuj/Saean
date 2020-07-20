@@ -98,30 +98,35 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:id="@+id/containerAccount"
-                    android:paddingVertical="24dp"
+                    android:paddingVertical="16dp"
                     android:paddingHorizontal="16dp"
                     android:gravity="center_vertical">
-                    <ImageView
-                        android:src="@drawable/user_picture_placeholder"
-                        android:id="@+id/userPicture"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:adjustViewBounds="true"/>
+
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:paddingHorizontal="16dp">
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/dateNow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            tools:text="Senin, 20 Juli"
+                            android:textSize="16sp"
+                            android:fontFamily="@font/opensans_regular"
+                            android:textColor="@color/BLACK60"/>
                         <TextView
                             android:id="@+id/userName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
-                            tools:text="Nama Saya"
-                            android:textSize="16sp"
+                            tools:text="Hi, Nama Saya"
+                            android:textSize="22sp"
                             android:fontFamily="@font/neosanspro_medium"
                             android:textColor="@color/BLACK100" />
                         <TextView
+                            android:visibility="gone"
                             android:id="@+id/userEmail"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -131,6 +136,12 @@
                             android:fontFamily="@font/opensans_regular"
                             android:textColor="@color/BLACK60"/>
                     </LinearLayout>
+                    <ImageView
+                        android:src="@drawable/user_picture_placeholder"
+                        android:id="@+id/userPicture"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:adjustViewBounds="true"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -305,6 +316,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:id="@+id/containerMenuStore">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -314,18 +326,168 @@
                             android:fontFamily="@font/opensans_regular"
                             android:textColor="@color/BLACK80"
                             android:layout_marginHorizontal="16dp"/>
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
+                        <GridLayout
                             android:id="@+id/containerProcessStore"
                             android:layout_marginHorizontal="16dp"
-                            android:layout_marginVertical="16dp">
+                            android:layout_marginVertical="16dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:columnCount="4">
                             <LinearLayout
-                                android:layout_width="match_parent"
+                                android:layout_columnWeight="1"
+                                android:layout_gravity="fill_horizontal"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical"
-                                android:layout_weight="1"
+                                android:gravity="center_horizontal">
+                                <ru.nikartm.support.ImageBadgeView
+                                    android:id="@+id/btnStoreActivity11"
+                                    android:tint="@color/tintMenuStore"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:adjustViewBounds="true"
+                                    android:maxWidth="56dp"
+                                    android:layout_gravity="center"
+                                    tools:ibv_badgeValue="100"
+                                    app:ibv_maxBadgeValue="99"
+                                    app:ibv_badgePadding="8dp"
+                                    app:ibv_badgeTextSize="14sp"
+                                    app:ibv_fixedBadgeRadius="12dp"
+                                    app:ibv_badgeTextStyle="bold"
+                                    app:ibv_badgeTextColor="#ffffff"
+                                    app:ibv_badgeColor="@color/ORANGE70"
+                                    app:ibv_badgeLimitValue="true"
+                                    app:ibv_badgePosition="top_right"
+                                    android:paddingHorizontal="10dp"
+                                    android:paddingVertical="10dp"
+                                    app:srcCompat="@drawable/ic_menu_step_store_info"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_horizontal"
+                                    android:text="Order Masuk"
+                                    android:textSize="12sp"
+                                    android:fontFamily="@font/opensans_regular"
+                                    android:textColor="@color/BLACK80" />
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_columnWeight="1"
+                                android:layout_gravity="fill_horizontal"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:gravity="center_horizontal">
+                                <ru.nikartm.support.ImageBadgeView
+                                    android:id="@+id/btnStoreActivity22"
+                                    android:tint="@color/tintMenuStore"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:adjustViewBounds="true"
+                                    android:maxWidth="56dp"
+                                    android:layout_gravity="center"
+                                    tools:ibv_badgeValue="100"
+                                    app:ibv_maxBadgeValue="99"
+                                    app:ibv_badgePadding="8dp"
+                                    app:ibv_badgeTextSize="14sp"
+                                    app:ibv_fixedBadgeRadius="12dp"
+                                    app:ibv_badgeTextStyle="bold"
+                                    app:ibv_badgeTextColor="#ffffff"
+                                    app:ibv_badgeColor="@color/ORANGE70"
+                                    app:ibv_badgeLimitValue="true"
+                                    app:ibv_badgePosition="top_right"
+                                    android:paddingHorizontal="10dp"
+                                    android:paddingVertical="10dp"
+                                    app:srcCompat="@drawable/ic_menu_step_store_verify"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_horizontal"
+                                    android:text="Order Diterima"
+                                    android:textSize="12sp"
+                                    android:fontFamily="@font/opensans_regular"
+                                    android:textColor="@color/BLACK80" />
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_columnWeight="1"
+                                android:layout_gravity="fill_horizontal"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:gravity="center_horizontal">
+                                <ru.nikartm.support.ImageBadgeView
+                                    android:id="@+id/btnStoreActivity33"
+                                    android:tint="@color/tintMenuStore"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:adjustViewBounds="true"
+                                    android:maxWidth="56dp"
+                                    android:layout_gravity="center"
+                                    tools:ibv_badgeValue="100"
+                                    app:ibv_maxBadgeValue="99"
+                                    app:ibv_badgePadding="8dp"
+                                    app:ibv_badgeTextSize="14sp"
+                                    app:ibv_fixedBadgeRadius="12dp"
+                                    app:ibv_badgeTextStyle="bold"
+                                    app:ibv_badgeTextColor="#ffffff"
+                                    app:ibv_badgeColor="@color/ORANGE70"
+                                    app:ibv_badgeLimitValue="true"
+                                    app:ibv_badgePosition="top_right"
+                                    android:paddingHorizontal="10dp"
+                                    android:paddingVertical="10dp"
+                                    app:srcCompat="@drawable/ic_menu_step_store_chart_pie"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_horizontal"
+                                    android:text="Order Ditolak"
+                                    android:textSize="12sp"
+                                    android:fontFamily="@font/opensans_regular"
+                                    android:textColor="@color/BLACK80" />
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_columnWeight="1"
+                                android:layout_gravity="fill_horizontal"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:gravity="center_horizontal">
+                                <ru.nikartm.support.ImageBadgeView
+                                    android:id="@+id/btnStoreActivity44"
+                                    android:tint="@color/tintMenuStore"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:adjustViewBounds="true"
+                                    android:maxWidth="56dp"
+                                    android:layout_gravity="center"
+                                    tools:ibv_badgeValue="100"
+                                    app:ibv_maxBadgeValue="99"
+                                    app:ibv_badgePadding="8dp"
+                                    app:ibv_badgeTextSize="14sp"
+                                    app:ibv_fixedBadgeRadius="12dp"
+                                    app:ibv_badgeTextStyle="bold"
+                                    app:ibv_badgeTextColor="#ffffff"
+                                    app:ibv_badgeColor="@color/ORANGE70"
+                                    app:ibv_badgeLimitValue="true"
+                                    app:ibv_badgePosition="top_right"
+                                    android:paddingHorizontal="10dp"
+                                    android:paddingVertical="10dp"
+                                    app:srcCompat="@drawable/ic_menu_step_store_close"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_horizontal"
+                                    android:text="Order Dibatalkan"
+                                    android:textSize="12sp"
+                                    android:fontFamily="@font/opensans_regular"
+                                    android:textColor="@color/BLACK80" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_columnWeight="1"
+                                android:layout_gravity="fill_horizontal"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
                                 android:gravity="center_horizontal">
                                 <ru.nikartm.support.ImageBadgeView
                                     android:id="@+id/btnStoreActivity1"
@@ -335,16 +497,16 @@
                                     android:adjustViewBounds="true"
                                     android:maxWidth="56dp"
                                     android:layout_gravity="center"
-                                    tools:ibv_badgeValue="10"
+                                    tools:ibv_badgeValue="100"
                                     app:ibv_maxBadgeValue="99"
-                                    app:ibv_badgePadding="4dp"
-                                    app:ibv_badgeTextSize="11sp"
-                                    app:ibv_fixedBadgeRadius="8dp"
+                                    app:ibv_badgePadding="8dp"
+                                    app:ibv_badgeTextSize="14sp"
+                                    app:ibv_fixedBadgeRadius="12dp"
                                     app:ibv_badgeTextStyle="bold"
                                     app:ibv_badgeTextColor="#ffffff"
                                     app:ibv_badgeColor="@color/ORANGE70"
                                     app:ibv_badgeLimitValue="true"
-                                    app:ibv_badgePosition="top_right"
+                                    app:ibv_badgePosition="bottom_right"
                                     android:paddingHorizontal="10dp"
                                     android:paddingVertical="10dp"
                                     app:srcCompat="@drawable/ic_menu_step_store_planning"/>
@@ -358,10 +520,11 @@
                                     android:textColor="@color/BLACK80" />
                             </LinearLayout>
                             <LinearLayout
-                                android:layout_width="match_parent"
+                                android:layout_columnWeight="1"
+                                android:layout_gravity="fill_horizontal"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical"
-                                android:layout_weight="1"
                                 android:gravity="center_horizontal">
                                 <ru.nikartm.support.ImageBadgeView
                                     android:id="@+id/btnStoreActivity2"
@@ -371,16 +534,16 @@
                                     android:adjustViewBounds="true"
                                     android:maxWidth="56dp"
                                     android:layout_gravity="center"
-                                    tools:ibv_badgeValue="10"
+                                    tools:ibv_badgeValue="100"
                                     app:ibv_maxBadgeValue="99"
-                                    app:ibv_badgePadding="4dp"
-                                    app:ibv_badgeTextSize="11sp"
-                                    app:ibv_fixedBadgeRadius="8dp"
+                                    app:ibv_badgePadding="8dp"
+                                    app:ibv_badgeTextSize="14sp"
+                                    app:ibv_fixedBadgeRadius="12dp"
                                     app:ibv_badgeTextStyle="bold"
                                     app:ibv_badgeTextColor="#ffffff"
                                     app:ibv_badgeColor="@color/ORANGE70"
                                     app:ibv_badgeLimitValue="true"
-                                    app:ibv_badgePosition="top_right"
+                                    app:ibv_badgePosition="bottom_right"
                                     android:paddingHorizontal="10dp"
                                     android:paddingVertical="10dp"
                                     app:srcCompat="@drawable/ic_menu_step_store_timer"/>
@@ -394,10 +557,11 @@
                                     android:textColor="@color/BLACK80" />
                             </LinearLayout>
                             <LinearLayout
-                                android:layout_width="match_parent"
+                                android:layout_columnWeight="1"
+                                android:layout_gravity="fill_horizontal"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical"
-                                android:layout_weight="1"
                                 android:gravity="center_horizontal">
                                 <ru.nikartm.support.ImageBadgeView
                                     android:id="@+id/btnStoreActivity3"
@@ -407,16 +571,16 @@
                                     android:adjustViewBounds="true"
                                     android:maxWidth="56dp"
                                     android:layout_gravity="center"
-                                    tools:ibv_badgeValue="10"
+                                    tools:ibv_badgeValue="100"
                                     app:ibv_maxBadgeValue="99"
-                                    app:ibv_badgePadding="4dp"
-                                    app:ibv_badgeTextSize="11sp"
-                                    app:ibv_fixedBadgeRadius="8dp"
+                                    app:ibv_badgePadding="8dp"
+                                    app:ibv_badgeTextSize="14sp"
+                                    app:ibv_fixedBadgeRadius="12dp"
                                     app:ibv_badgeTextStyle="bold"
                                     app:ibv_badgeTextColor="#ffffff"
                                     app:ibv_badgeColor="@color/ORANGE70"
                                     app:ibv_badgeLimitValue="true"
-                                    app:ibv_badgePosition="top_right"
+                                    app:ibv_badgePosition="bottom_right"
                                     android:paddingHorizontal="10dp"
                                     android:paddingVertical="10dp"
                                     app:srcCompat="@drawable/ic_menu_step_store_repair"/>
@@ -430,10 +594,11 @@
                                     android:textColor="@color/BLACK80" />
                             </LinearLayout>
                             <LinearLayout
-                                android:layout_width="match_parent"
+                                android:layout_columnWeight="1"
+                                android:layout_gravity="fill_horizontal"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical"
-                                android:layout_weight="1"
                                 android:gravity="center_horizontal">
                                 <ru.nikartm.support.ImageBadgeView
                                     android:id="@+id/btnStoreActivity4"
@@ -443,16 +608,16 @@
                                     android:adjustViewBounds="true"
                                     android:maxWidth="56dp"
                                     android:layout_gravity="center"
-                                    tools:ibv_badgeValue="10"
+                                    tools:ibv_badgeValue="999"
                                     app:ibv_maxBadgeValue="99"
-                                    app:ibv_badgePadding="4dp"
-                                    app:ibv_badgeTextSize="11sp"
-                                    app:ibv_fixedBadgeRadius="8dp"
+                                    app:ibv_badgePadding="8dp"
+                                    app:ibv_badgeTextSize="14sp"
+                                    app:ibv_fixedBadgeRadius="12dp"
                                     app:ibv_badgeTextStyle="bold"
                                     app:ibv_badgeTextColor="#ffffff"
                                     app:ibv_badgeColor="@color/ORANGE70"
                                     app:ibv_badgeLimitValue="true"
-                                    app:ibv_badgePosition="top_right"
+                                    app:ibv_badgePosition="bottom_right"
                                     android:paddingHorizontal="10dp"
                                     android:paddingVertical="10dp"
                                     app:srcCompat="@drawable/ic_menu_step_store_order"/>
@@ -465,7 +630,7 @@
                                     android:fontFamily="@font/opensans_regular"
                                     android:textColor="@color/BLACK80" />
                             </LinearLayout>
-                        </LinearLayout>
+                        </GridLayout>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -482,7 +647,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:textAllCaps="false"
-                            android:text="Tambah Produk &amp; Layanan"
+                            android:text="+ Tambah Produk &amp; Layanan"
                             android:layout_marginHorizontal="16dp"
                             android:fontFamily="@font/opensans_regular"
                             android:textColor="@color/BLACK80"

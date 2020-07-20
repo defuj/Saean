@@ -69,11 +69,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         tools:text="Menunggu Diterima"
-                        android:fontFamily="@font/opensans_regular"
+                        android:fontFamily="@font/opensans_bold"
                         android:textSize="12sp"
-                        android:textColor="@color/BLACK100"
+                        android:textColor="#1EA360"
                         android:layout_marginTop="4dp"
-                        android:drawableStart=""/>
+                        android:drawablePadding="6dp"
+                        android:gravity="center_vertical"
+                        android:drawableStart="@drawable/ic_order_waiting"/>
                 </LinearLayout>
             </LinearLayout>
         </FrameLayout>

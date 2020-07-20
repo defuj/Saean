@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -47,6 +48,49 @@ class UserOrderAdapter(private val context: Context, private val order: ArrayLis
                 }
             })
             orderTime.text = MyFunctions.formatMillie(content.orderTime!!,"dd/MM/yyyy h:m:s")
+            if(content.orderStatus == 0){
+                //order waiting confirmation store
+                orderProgress.text = "Menunggu Konfirmasi"
+                orderProgress.setTextColor(Color.parseColor("#1EA360"))
+                orderProgress.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_order_waiting,0,0,0)
+            }else if(content.orderStatus == 1){
+                //order has confirm by store
+                if(content.orderProcess == 0){
+                    orderProgress.text = "Menunggu Pemeriksaan"
+                    orderProgress.setTextColor(Color.parseColor("#1EA360"))
+                    orderProgress.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_order_waiting,0,0,0)
+                }else if(content.orderProcess == 1){
+                    //Sedang Diproses
+                    orderProgress.text = "Sedang Diproses"
+                    orderProgress.setTextColor(Color.parseColor("#FFBB33"))
+                    orderProgress.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_order_process,0,0,0)
+                }else if(content.orderProcess == 2){
+                    //Menunggu Keputusan
+                    orderProgress.text = "Menunggu Keputusan"
+                    orderProgress.setTextColor(Color.parseColor("#1EA360"))
+                    orderProgress.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_order_waiting,0,0,0)
+                }else if(content.orderProcess == 3){
+                    //Batal
+                    orderProgress.text = "Dibatalkan"
+                    orderProgress.setTextColor(Color.parseColor("#FF6745"))
+                    orderProgress.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_order_cancel,0,0,0)
+                }else if(content.orderProcess == 4){
+                    //Perbaikan
+                    orderProgress.text = "Dalam Pemeliharaan"
+                    orderProgress.setTextColor(Color.parseColor("#FFBB33"))
+                    orderProgress.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_order_process,0,0,0)
+                }else if(content.orderProcess == 5){
+                    //Selesai
+                    orderProgress.text = "Selesai"
+                    orderProgress.setTextColor(Color.parseColor("#2196F3"))
+                    orderProgress.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_order_finish,0,0,0)
+                }
+            }else if(content.orderStatus == 2){
+                //order has abort by store
+                orderProgress.text = "Order Ditolak"
+                orderProgress.setTextColor(Color.parseColor("#FF6745"))
+                orderProgress.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_order_cancel,0,0,0)
+            }
         }
 
         holder.itemView.setOnClickListener {

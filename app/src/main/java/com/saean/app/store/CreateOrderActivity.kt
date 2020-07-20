@@ -74,7 +74,7 @@ class CreateOrderActivity : AppCompatActivity() {
         orderTime.text = MyFunctions.getTanggal("dd/MM/yyyy")
 
         btnCreateOrder.setOnClickListener {
-            if(problemDescription.text.length >= 50){
+            if(problemDescription.text.length >= 10){
                 if(imageCount == 0){
                     val dialog = SweetAlertDialog(this,SweetAlertDialog.WARNING_TYPE)
                     dialog.titleText = "Perhatian"
@@ -95,7 +95,7 @@ class CreateOrderActivity : AppCompatActivity() {
             }else{
                 val dialog = SweetAlertDialog(this,SweetAlertDialog.WARNING_TYPE)
                 dialog.titleText = "Perhatian"
-                dialog.contentText = "Harap tuliskan permasalahan pada kolom deskripsi masalah. (Minimal 50 karakter)"
+                dialog.contentText = "Harap tuliskan permasalahan pada kolom deskripsi masalah. (Minimal 10 karakter)"
                 dialog.show()
             }
         }

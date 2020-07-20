@@ -30,20 +30,10 @@
                     android:gravity="center_vertical"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:text="Informasi Order"
+                    android:text="Informasi Transaksi"
                     android:textSize="18sp"
                     android:fontFamily="@font/neosanspro_medium"
                     android:textColor="@color/BLACK80" />
-                <TextView
-                    android:id="@+id/orderTime"
-                    android:gravity="center_vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    tools:text="16/07/2020"
-                    android:textSize="14sp"
-                    android:fontFamily="@font/opensans_regular"
-                    android:textColor="@color/BLACK100"
-                    android:paddingHorizontal="16dp"/>
             </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
@@ -56,10 +46,67 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="16dp"
+                android:paddingTop="16dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="6dp">
+                    <TextView
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Kode Transaksi"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/opensans_bold"
+                        android:textColor="@color/BLACK100"/>
+                    <TextView
+                        android:id="@+id/orderID"
+                        android:gravity="end"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:text="ABC-1234567890"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/opensans_bold"
+                        android:textColor="@color/BLACK100"
+                        android:textIsSelectable="true"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="6dp">
+                    <TextView
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Waktu Transaksi"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/opensans_bold"
+                        android:textColor="@color/BLACK100"/>
+                    <TextView
+                        android:id="@+id/orderTime"
+                        android:gravity="end"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:text="17/07/2020 18:14:55"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/opensans_bold"
+                        android:textColor="@color/BLACK100"
+                        android:textIsSelectable="true"/>
+                </LinearLayout>
+            </LinearLayout>
             <TextView
                 android:layout_marginBottom="-6dp"
                 android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="6dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Toko yang dituju"
@@ -237,7 +284,7 @@
                     android:textColor="@color/BLACK100"/>
 
                 <TextView
-                    android:id="@+id/problemDescription"
+                    android:id="@+id/orderDescription"
                     android:layout_marginTop="6dp"
                     android:visibility="visible"
                     android:layout_width="match_parent"

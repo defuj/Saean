@@ -1,6 +1,5 @@
 package com.saean.app.menus.fragments
 
-import android.content.DialogInterface
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -8,9 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -18,13 +17,16 @@ import com.google.firebase.database.ValueEventListener
 import com.saean.app.R
 import com.saean.app.helper.Cache
 import com.saean.app.helper.MyFunctions
+import com.saean.app.store.model.OrderModel
+import com.saean.app.store.model.UserOrderAdapter
 import kotlinx.android.synthetic.main.fragment_transactions.*
 import ru.nikartm.support.ImageBadgeView
-
 
 class TransactionsFragment : Fragment() {
     private lateinit var database: FirebaseDatabase
     private var sharedPreferences : SharedPreferences? = null
+    private var order : ArrayList<OrderModel>? = null
+
     private var filter = "Semua"
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -80,36 +82,666 @@ class TransactionsFragment : Fragment() {
     private fun setupFunctions() {
         setupFilter()
         setupSearch()
-        setupRefresh()
+        setupList()
+    }
+
+    private fun setupList() {
+        val email = sharedPreferences!!.getString(Cache.email,"")
+        database.getReference("order").orderByChild("orderUser").equalTo("$email").addValueEventListener(object : ValueEventListener{
+            override fun onCancelled(error: DatabaseError) {
+                containerNoTransaction.visibility = View.VISIBLE
+                recyclerTransaction.visibility = View.GONE
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()){
+                    if(snapshot.hasChildren()){
+                        order = ArrayList()
+                        order!!.clear()
+                        recyclerTransaction.layoutManager = LinearLayoutManager(activity!!,LinearLayoutManager.VERTICAL,false)
+
+                        for(content in snapshot.children){
+                            if(content.child("orderUser").getValue(String::class.java)!! == email){
+                                when (filter) {
+                                    "Semua" -> {
+                                        if(searchTransaction.text.isNotEmpty()){
+                                            if(content.child("orderID").getValue(String::class.java)!!.contains(searchTransaction.text.toString()) ||
+                                                content.child("orderDescription").getValue(String::class.java)!!.contains(searchTransaction.text.toString()) ||
+                                                MyFunctions.formatMillie(content.child("orderTime").getValue(Long::class.java)!!,"dd MMMM yyyy").contains(searchTransaction.text.toString())){
+                                                val model = OrderModel()
+                                                model.orderID = content.child("orderID").getValue(String::class.java)!!
+                                                model.orderDescription = content.child("orderDescription").getValue(String::class.java)!!
+                                                model.orderProcess = content.child("orderProcess").getValue(Int::class.java)!!
+                                                model.orderService = content.child("orderService").getValue(String::class.java)!!
+                                                model.orderStore = content.child("orderStore").getValue(String::class.java)!!
+                                                model.orderTime = content.child("orderTime").getValue(Long::class.java)!!
+                                                model.orderUser = content.child("orderUser").getValue(String::class.java)!!
+                                                model.orderStatus = content.child("orderStatus").getValue(Int::class.java)!!
+                                                order!!.add(model)
+                                                if(recyclerTransaction.adapter != null){
+                                                    recyclerTransaction.adapter!!.notifyDataSetChanged()
+                                                }
+
+                                                if(order!!.size > 0){
+                                                    containerNoTransaction.visibility = View.GONE
+                                                    recyclerTransaction.visibility = View.VISIBLE
+                                                }else{
+                                                    containerNoTransaction.visibility = View.VISIBLE
+                                                    recyclerTransaction.visibility = View.GONE
+                                                }
+                                            }else{
+                                                if(order!!.size > 0){
+                                                    containerNoTransaction.visibility = View.GONE
+                                                    recyclerTransaction.visibility = View.VISIBLE
+                                                }else{
+                                                    containerNoTransaction.visibility = View.VISIBLE
+                                                    recyclerTransaction.visibility = View.GONE
+                                                }
+                                            }
+                                        }else{
+                                            val model = OrderModel()
+                                            model.orderID = content.child("orderID").getValue(String::class.java)!!
+                                            model.orderDescription = content.child("orderDescription").getValue(String::class.java)!!
+                                            model.orderProcess = content.child("orderProcess").getValue(Int::class.java)!!
+                                            model.orderService = content.child("orderService").getValue(String::class.java)!!
+                                            model.orderStore = content.child("orderStore").getValue(String::class.java)!!
+                                            model.orderTime = content.child("orderTime").getValue(Long::class.java)!!
+                                            model.orderUser = content.child("orderUser").getValue(String::class.java)!!
+                                            model.orderStatus = content.child("orderStatus").getValue(Int::class.java)!!
+                                            order!!.add(model)
+                                            if(recyclerTransaction.adapter != null){
+                                                recyclerTransaction.adapter!!.notifyDataSetChanged()
+                                            }
+
+                                            if(order!!.size > 0){
+                                                containerNoTransaction.visibility = View.GONE
+                                                recyclerTransaction.visibility = View.VISIBLE
+                                            }else{
+                                                containerNoTransaction.visibility = View.VISIBLE
+                                                recyclerTransaction.visibility = View.GONE
+                                            }
+                                        }
+
+                                    }
+                                    "Diterima" -> {
+                                        if(content.child("orderStatus").getValue(Int::class.java)!! == 1){
+                                            if(searchTransaction.text.isNotEmpty()){
+                                                if(content.child("orderID").getValue(String::class.java)!!.contains(searchTransaction.text.toString()) ||
+                                                    content.child("orderDescription").getValue(String::class.java)!!.contains(searchTransaction.text.toString()) ||
+                                                    MyFunctions.formatMillie(content.child("orderTime").getValue(Long::class.java)!!,"dd MMMM yyyy").contains(searchTransaction.text.toString())){
+                                                    val model = OrderModel()
+                                                    model.orderID = content.child("orderID").getValue(String::class.java)!!
+                                                    model.orderDescription = content.child("orderDescription").getValue(String::class.java)!!
+                                                    model.orderProcess = content.child("orderProcess").getValue(Int::class.java)!!
+                                                    model.orderService = content.child("orderService").getValue(String::class.java)!!
+                                                    model.orderStore = content.child("orderStore").getValue(String::class.java)!!
+                                                    model.orderTime = content.child("orderTime").getValue(Long::class.java)!!
+                                                    model.orderUser = content.child("orderUser").getValue(String::class.java)!!
+                                                    model.orderStatus = content.child("orderStatus").getValue(Int::class.java)!!
+                                                    order!!.add(model)
+                                                    if(recyclerTransaction.adapter != null){
+                                                        recyclerTransaction.adapter!!.notifyDataSetChanged()
+                                                    }
+
+                                                    if(order!!.size > 0){
+                                                        containerNoTransaction.visibility = View.GONE
+                                                        recyclerTransaction.visibility = View.VISIBLE
+                                                    }else{
+                                                        containerNoTransaction.visibility = View.VISIBLE
+                                                        recyclerTransaction.visibility = View.GONE
+                                                    }
+                                                }else{
+                                                    if(order!!.size > 0){
+                                                        containerNoTransaction.visibility = View.GONE
+                                                        recyclerTransaction.visibility = View.VISIBLE
+                                                    }else{
+                                                        containerNoTransaction.visibility = View.VISIBLE
+                                                        recyclerTransaction.visibility = View.GONE
+                                                    }
+                                                }
+                                            }else{
+                                                val model = OrderModel()
+                                                model.orderID = content.child("orderID").getValue(String::class.java)!!
+                                                model.orderDescription = content.child("orderDescription").getValue(String::class.java)!!
+                                                model.orderProcess = content.child("orderProcess").getValue(Int::class.java)!!
+                                                model.orderService = content.child("orderService").getValue(String::class.java)!!
+                                                model.orderStore = content.child("orderStore").getValue(String::class.java)!!
+                                                model.orderTime = content.child("orderTime").getValue(Long::class.java)!!
+                                                model.orderUser = content.child("orderUser").getValue(String::class.java)!!
+                                                model.orderStatus = content.child("orderStatus").getValue(Int::class.java)!!
+                                                order!!.add(model)
+                                                if(recyclerTransaction.adapter != null){
+                                                    recyclerTransaction.adapter!!.notifyDataSetChanged()
+                                                }
+
+                                                if(order!!.size > 0){
+                                                    containerNoTransaction.visibility = View.GONE
+                                                    recyclerTransaction.visibility = View.VISIBLE
+                                                }else{
+                                                    containerNoTransaction.visibility = View.VISIBLE
+                                                    recyclerTransaction.visibility = View.GONE
+                                                }
+                                            }
+                                        }else{
+                                            if(order!!.size > 0){
+                                                containerNoTransaction.visibility = View.GONE
+                                                recyclerTransaction.visibility = View.VISIBLE
+                                            }else{
+                                                containerNoTransaction.visibility = View.VISIBLE
+                                                recyclerTransaction.visibility = View.GONE
+                                            }
+                                        }
+                                    }
+                                    "Ditolak" -> {
+                                        if(content.child("orderStatus").getValue(Int::class.java)!! == 2){
+                                            if(searchTransaction.text.isNotEmpty()){
+                                                if(content.child("orderID").getValue(String::class.java)!!.contains(searchTransaction.text.toString()) ||
+                                                    content.child("orderDescription").getValue(String::class.java)!!.contains(searchTransaction.text.toString()) ||
+                                                    MyFunctions.formatMillie(content.child("orderTime").getValue(Long::class.java)!!,"dd MMMM yyyy").contains(searchTransaction.text.toString())){
+                                                    val model = OrderModel()
+                                                    model.orderID = content.child("orderID").getValue(String::class.java)!!
+                                                    model.orderDescription = content.child("orderDescription").getValue(String::class.java)!!
+                                                    model.orderProcess = content.child("orderProcess").getValue(Int::class.java)!!
+                                                    model.orderService = content.child("orderService").getValue(String::class.java)!!
+                                                    model.orderStore = content.child("orderStore").getValue(String::class.java)!!
+                                                    model.orderTime = content.child("orderTime").getValue(Long::class.java)!!
+                                                    model.orderUser = content.child("orderUser").getValue(String::class.java)!!
+                                                    model.orderStatus = content.child("orderStatus").getValue(Int::class.java)!!
+                                                    order!!.add(model)
+                                                    if(recyclerTransaction.adapter != null){
+                                                        recyclerTransaction.adapter!!.notifyDataSetChanged()
+                                                    }
+
+                                                    if(order!!.size > 0){
+                                                        containerNoTransaction.visibility = View.GONE
+                                                        recyclerTransaction.visibility = View.VISIBLE
+                                                    }else{
+                                                        containerNoTransaction.visibility = View.VISIBLE
+                                                        recyclerTransaction.visibility = View.GONE
+                                                    }
+                                                }else{
+                                                    if(order!!.size > 0){
+                                                        containerNoTransaction.visibility = View.GONE
+                                                        recyclerTransaction.visibility = View.VISIBLE
+                                                    }else{
+                                                        containerNoTransaction.visibility = View.VISIBLE
+                                                        recyclerTransaction.visibility = View.GONE
+                                                    }
+                                                }
+                                            }else{
+                                                val model = OrderModel()
+                                                model.orderID = content.child("orderID").getValue(String::class.java)!!
+                                                model.orderDescription = content.child("orderDescription").getValue(String::class.java)!!
+                                                model.orderProcess = content.child("orderProcess").getValue(Int::class.java)!!
+                                                model.orderService = content.child("orderService").getValue(String::class.java)!!
+                                                model.orderStore = content.child("orderStore").getValue(String::class.java)!!
+                                                model.orderTime = content.child("orderTime").getValue(Long::class.java)!!
+                                                model.orderUser = content.child("orderUser").getValue(String::class.java)!!
+                                                model.orderStatus = content.child("orderStatus").getValue(Int::class.java)!!
+                                                order!!.add(model)
+                                                if(recyclerTransaction.adapter != null){
+                                                    recyclerTransaction.adapter!!.notifyDataSetChanged()
+                                                }
+
+                                                if(order!!.size > 0){
+                                                    containerNoTransaction.visibility = View.GONE
+                                                    recyclerTransaction.visibility = View.VISIBLE
+                                                }else{
+                                                    containerNoTransaction.visibility = View.VISIBLE
+                                                    recyclerTransaction.visibility = View.GONE
+                                                }
+                                            }
+                                        }else{
+                                            if(order!!.size > 0){
+                                                containerNoTransaction.visibility = View.GONE
+                                                recyclerTransaction.visibility = View.VISIBLE
+                                            }else{
+                                                containerNoTransaction.visibility = View.VISIBLE
+                                                recyclerTransaction.visibility = View.GONE
+                                            }
+                                        }
+                                    }
+                                    "Diproses" -> {
+                                        if(content.child("orderProcess").getValue(Int::class.java)!! == 1){
+                                            if(searchTransaction.text.isNotEmpty()){
+                                                if(content.child("orderID").getValue(String::class.java)!!.contains(searchTransaction.text.toString()) ||
+                                                    content.child("orderDescription").getValue(String::class.java)!!.contains(searchTransaction.text.toString()) ||
+                                                    MyFunctions.formatMillie(content.child("orderTime").getValue(Long::class.java)!!,"dd MMMM yyyy").contains(searchTransaction.text.toString())){
+                                                    val model = OrderModel()
+                                                    model.orderID = content.child("orderID").getValue(String::class.java)!!
+                                                    model.orderDescription = content.child("orderDescription").getValue(String::class.java)!!
+                                                    model.orderProcess = content.child("orderProcess").getValue(Int::class.java)!!
+                                                    model.orderService = content.child("orderService").getValue(String::class.java)!!
+                                                    model.orderStore = content.child("orderStore").getValue(String::class.java)!!
+                                                    model.orderTime = content.child("orderTime").getValue(Long::class.java)!!
+                                                    model.orderUser = content.child("orderUser").getValue(String::class.java)!!
+                                                    model.orderStatus = content.child("orderStatus").getValue(Int::class.java)!!
+                                                    order!!.add(model)
+                                                    if(recyclerTransaction.adapter != null){
+                                                        recyclerTransaction.adapter!!.notifyDataSetChanged()
+                                                    }
+
+                                                    if(order!!.size > 0){
+                                                        containerNoTransaction.visibility = View.GONE
+                                                        recyclerTransaction.visibility = View.VISIBLE
+                                                    }else{
+                                                        containerNoTransaction.visibility = View.VISIBLE
+                                                        recyclerTransaction.visibility = View.GONE
+                                                    }
+                                                }else{
+                                                    if(order!!.size > 0){
+                                                        containerNoTransaction.visibility = View.GONE
+                                                        recyclerTransaction.visibility = View.VISIBLE
+                                                    }else{
+                                                        containerNoTransaction.visibility = View.VISIBLE
+                                                        recyclerTransaction.visibility = View.GONE
+                                                    }
+                                                }
+                                            }else{
+                                                val model = OrderModel()
+                                                model.orderID = content.child("orderID").getValue(String::class.java)!!
+                                                model.orderDescription = content.child("orderDescription").getValue(String::class.java)!!
+                                                model.orderProcess = content.child("orderProcess").getValue(Int::class.java)!!
+                                                model.orderService = content.child("orderService").getValue(String::class.java)!!
+                                                model.orderStore = content.child("orderStore").getValue(String::class.java)!!
+                                                model.orderTime = content.child("orderTime").getValue(Long::class.java)!!
+                                                model.orderUser = content.child("orderUser").getValue(String::class.java)!!
+                                                model.orderStatus = content.child("orderStatus").getValue(Int::class.java)!!
+                                                order!!.add(model)
+                                                if(recyclerTransaction.adapter != null){
+                                                    recyclerTransaction.adapter!!.notifyDataSetChanged()
+                                                }
+
+                                                if(order!!.size > 0){
+                                                    containerNoTransaction.visibility = View.GONE
+                                                    recyclerTransaction.visibility = View.VISIBLE
+                                                }else{
+                                                    containerNoTransaction.visibility = View.VISIBLE
+                                                    recyclerTransaction.visibility = View.GONE
+                                                }
+                                            }
+                                        }else{
+                                            if(order!!.size > 0){
+                                                containerNoTransaction.visibility = View.GONE
+                                                recyclerTransaction.visibility = View.VISIBLE
+                                            }else{
+                                                containerNoTransaction.visibility = View.VISIBLE
+                                                recyclerTransaction.visibility = View.GONE
+                                            }
+                                        }
+                                    }
+                                    "Butuh Konfirmasi" -> {
+                                        if(content.child("orderProcess").getValue(Int::class.java)!! == 2){
+                                            if(searchTransaction.text.isNotEmpty()){
+                                                if(content.child("orderID").getValue(String::class.java)!!.contains(searchTransaction.text.toString()) ||
+                                                    content.child("orderDescription").getValue(String::class.java)!!.contains(searchTransaction.text.toString()) ||
+                                                    MyFunctions.formatMillie(content.child("orderTime").getValue(Long::class.java)!!,"dd MMMM yyyy").contains(searchTransaction.text.toString())){
+                                                    val model = OrderModel()
+                                                    model.orderID = content.child("orderID").getValue(String::class.java)!!
+                                                    model.orderDescription = content.child("orderDescription").getValue(String::class.java)!!
+                                                    model.orderProcess = content.child("orderProcess").getValue(Int::class.java)!!
+                                                    model.orderService = content.child("orderService").getValue(String::class.java)!!
+                                                    model.orderStore = content.child("orderStore").getValue(String::class.java)!!
+                                                    model.orderTime = content.child("orderTime").getValue(Long::class.java)!!
+                                                    model.orderUser = content.child("orderUser").getValue(String::class.java)!!
+                                                    model.orderStatus = content.child("orderStatus").getValue(Int::class.java)!!
+                                                    order!!.add(model)
+                                                    if(recyclerTransaction.adapter != null){
+                                                        recyclerTransaction.adapter!!.notifyDataSetChanged()
+                                                    }
+
+                                                    if(order!!.size > 0){
+                                                        containerNoTransaction.visibility = View.GONE
+                                                        recyclerTransaction.visibility = View.VISIBLE
+                                                    }else{
+                                                        containerNoTransaction.visibility = View.VISIBLE
+                                                        recyclerTransaction.visibility = View.GONE
+                                                    }
+                                                }else{
+                                                    if(order!!.size > 0){
+                                                        containerNoTransaction.visibility = View.GONE
+                                                        recyclerTransaction.visibility = View.VISIBLE
+                                                    }else{
+                                                        containerNoTransaction.visibility = View.VISIBLE
+                                                        recyclerTransaction.visibility = View.GONE
+                                                    }
+                                                }
+                                            }else{
+                                                val model = OrderModel()
+                                                model.orderID = content.child("orderID").getValue(String::class.java)!!
+                                                model.orderDescription = content.child("orderDescription").getValue(String::class.java)!!
+                                                model.orderProcess = content.child("orderProcess").getValue(Int::class.java)!!
+                                                model.orderService = content.child("orderService").getValue(String::class.java)!!
+                                                model.orderStore = content.child("orderStore").getValue(String::class.java)!!
+                                                model.orderTime = content.child("orderTime").getValue(Long::class.java)!!
+                                                model.orderUser = content.child("orderUser").getValue(String::class.java)!!
+                                                model.orderStatus = content.child("orderStatus").getValue(Int::class.java)!!
+                                                order!!.add(model)
+                                                if(recyclerTransaction.adapter != null){
+                                                    recyclerTransaction.adapter!!.notifyDataSetChanged()
+                                                }
+
+                                                if(order!!.size > 0){
+                                                    containerNoTransaction.visibility = View.GONE
+                                                    recyclerTransaction.visibility = View.VISIBLE
+                                                }
+                                            }
+
+                                        }else{
+                                            if(order!!.size > 0){
+                                                containerNoTransaction.visibility = View.GONE
+                                                recyclerTransaction.visibility = View.VISIBLE
+                                            }else{
+                                                containerNoTransaction.visibility = View.VISIBLE
+                                                recyclerTransaction.visibility = View.GONE
+                                            }
+                                        }
+                                    }
+                                    "Batal" -> {
+                                        if(content.child("orderProcess").getValue(Int::class.java)!! == 3){
+                                            if(searchTransaction.text.isNotEmpty()){
+                                                if(content.child("orderID").getValue(String::class.java)!!.contains(searchTransaction.text.toString()) ||
+                                                    content.child("orderDescription").getValue(String::class.java)!!.contains(searchTransaction.text.toString()) ||
+                                                    MyFunctions.formatMillie(content.child("orderTime").getValue(Long::class.java)!!,"dd MMMM yyyy").contains(searchTransaction.text.toString())){
+                                                    val model = OrderModel()
+                                                    model.orderID = content.child("orderID").getValue(String::class.java)!!
+                                                    model.orderDescription = content.child("orderDescription").getValue(String::class.java)!!
+                                                    model.orderProcess = content.child("orderProcess").getValue(Int::class.java)!!
+                                                    model.orderService = content.child("orderService").getValue(String::class.java)!!
+                                                    model.orderStore = content.child("orderStore").getValue(String::class.java)!!
+                                                    model.orderTime = content.child("orderTime").getValue(Long::class.java)!!
+                                                    model.orderUser = content.child("orderUser").getValue(String::class.java)!!
+                                                    model.orderStatus = content.child("orderStatus").getValue(Int::class.java)!!
+                                                    order!!.add(model)
+                                                    if(recyclerTransaction.adapter != null){
+                                                        recyclerTransaction.adapter!!.notifyDataSetChanged()
+                                                    }
+
+                                                    if(order!!.size > 0){
+                                                        containerNoTransaction.visibility = View.GONE
+                                                        recyclerTransaction.visibility = View.VISIBLE
+                                                    }else{
+                                                        containerNoTransaction.visibility = View.VISIBLE
+                                                        recyclerTransaction.visibility = View.GONE
+                                                    }
+                                                }else{
+                                                    if(order!!.size > 0){
+                                                        containerNoTransaction.visibility = View.GONE
+                                                        recyclerTransaction.visibility = View.VISIBLE
+                                                    }else{
+                                                        containerNoTransaction.visibility = View.VISIBLE
+                                                        recyclerTransaction.visibility = View.GONE
+                                                    }
+                                                }
+                                            }else{
+                                                val model = OrderModel()
+                                                model.orderID = content.child("orderID").getValue(String::class.java)!!
+                                                model.orderDescription = content.child("orderDescription").getValue(String::class.java)!!
+                                                model.orderProcess = content.child("orderProcess").getValue(Int::class.java)!!
+                                                model.orderService = content.child("orderService").getValue(String::class.java)!!
+                                                model.orderStore = content.child("orderStore").getValue(String::class.java)!!
+                                                model.orderTime = content.child("orderTime").getValue(Long::class.java)!!
+                                                model.orderUser = content.child("orderUser").getValue(String::class.java)!!
+                                                model.orderStatus = content.child("orderStatus").getValue(Int::class.java)!!
+                                                order!!.add(model)
+                                                if(recyclerTransaction.adapter != null){
+                                                    recyclerTransaction.adapter!!.notifyDataSetChanged()
+                                                }
+
+                                                if(order!!.size > 0){
+                                                    containerNoTransaction.visibility = View.GONE
+                                                    recyclerTransaction.visibility = View.VISIBLE
+                                                }
+                                            }
+
+                                        }else{
+                                            if(order!!.size > 0){
+                                                containerNoTransaction.visibility = View.GONE
+                                                recyclerTransaction.visibility = View.VISIBLE
+                                            }else{
+                                                containerNoTransaction.visibility = View.VISIBLE
+                                                recyclerTransaction.visibility = View.GONE
+                                            }
+                                        }
+                                    }
+                                    "Perbaikan" -> {
+                                        if(content.child("orderProcess").getValue(Int::class.java)!! == 4){
+                                            if(searchTransaction.text.isNotEmpty()){
+                                                if(content.child("orderID").getValue(String::class.java)!!.contains(searchTransaction.text.toString()) ||
+                                                    content.child("orderDescription").getValue(String::class.java)!!.contains(searchTransaction.text.toString()) ||
+                                                    MyFunctions.formatMillie(content.child("orderTime").getValue(Long::class.java)!!,"dd MMMM yyyy").contains(searchTransaction.text.toString())){
+                                                    val model = OrderModel()
+                                                    model.orderID = content.child("orderID").getValue(String::class.java)!!
+                                                    model.orderDescription = content.child("orderDescription").getValue(String::class.java)!!
+                                                    model.orderProcess = content.child("orderProcess").getValue(Int::class.java)!!
+                                                    model.orderService = content.child("orderService").getValue(String::class.java)!!
+                                                    model.orderStore = content.child("orderStore").getValue(String::class.java)!!
+                                                    model.orderTime = content.child("orderTime").getValue(Long::class.java)!!
+                                                    model.orderUser = content.child("orderUser").getValue(String::class.java)!!
+                                                    model.orderStatus = content.child("orderStatus").getValue(Int::class.java)!!
+                                                    order!!.add(model)
+                                                    if(recyclerTransaction.adapter != null){
+                                                        recyclerTransaction.adapter!!.notifyDataSetChanged()
+                                                    }
+
+                                                    if(order!!.size > 0){
+                                                        containerNoTransaction.visibility = View.GONE
+                                                        recyclerTransaction.visibility = View.VISIBLE
+                                                    }else{
+                                                        containerNoTransaction.visibility = View.VISIBLE
+                                                        recyclerTransaction.visibility = View.GONE
+                                                    }
+                                                }else{
+                                                    if(order!!.size > 0){
+                                                        containerNoTransaction.visibility = View.GONE
+                                                        recyclerTransaction.visibility = View.VISIBLE
+                                                    }else{
+                                                        containerNoTransaction.visibility = View.VISIBLE
+                                                        recyclerTransaction.visibility = View.GONE
+                                                    }
+                                                }
+                                            }else{
+                                                val model = OrderModel()
+                                                model.orderID = content.child("orderID").getValue(String::class.java)!!
+                                                model.orderDescription = content.child("orderDescription").getValue(String::class.java)!!
+                                                model.orderProcess = content.child("orderProcess").getValue(Int::class.java)!!
+                                                model.orderService = content.child("orderService").getValue(String::class.java)!!
+                                                model.orderStore = content.child("orderStore").getValue(String::class.java)!!
+                                                model.orderTime = content.child("orderTime").getValue(Long::class.java)!!
+                                                model.orderUser = content.child("orderUser").getValue(String::class.java)!!
+                                                model.orderStatus = content.child("orderStatus").getValue(Int::class.java)!!
+                                                order!!.add(model)
+                                                if(recyclerTransaction.adapter != null){
+                                                    recyclerTransaction.adapter!!.notifyDataSetChanged()
+                                                }
+
+                                                if(order!!.size > 0){
+                                                    containerNoTransaction.visibility = View.GONE
+                                                    recyclerTransaction.visibility = View.VISIBLE
+                                                }
+                                            }
+
+                                        }else{
+                                            if(order!!.size > 0){
+                                                containerNoTransaction.visibility = View.GONE
+                                                recyclerTransaction.visibility = View.VISIBLE
+                                            }else{
+                                                containerNoTransaction.visibility = View.VISIBLE
+                                                recyclerTransaction.visibility = View.GONE
+                                            }
+                                        }
+                                    }
+                                    "Selesai" -> {
+                                        if(content.child("orderProcess").getValue(Int::class.java)!! == 5){
+                                            if(searchTransaction.text.isNotEmpty()){
+                                                if(content.child("orderID").getValue(String::class.java)!!.contains(searchTransaction.text.toString()) ||
+                                                    content.child("orderDescription").getValue(String::class.java)!!.contains(searchTransaction.text.toString()) ||
+                                                    MyFunctions.formatMillie(content.child("orderTime").getValue(Long::class.java)!!,"dd MMMM yyyy").contains(searchTransaction.text.toString())){
+
+                                                    val model = OrderModel()
+                                                    model.orderID = content.child("orderID").getValue(String::class.java)!!
+                                                    model.orderDescription = content.child("orderDescription").getValue(String::class.java)!!
+                                                    model.orderProcess = content.child("orderProcess").getValue(Int::class.java)!!
+                                                    model.orderService = content.child("orderService").getValue(String::class.java)!!
+                                                    model.orderStore = content.child("orderStore").getValue(String::class.java)!!
+                                                    model.orderTime = content.child("orderTime").getValue(Long::class.java)!!
+                                                    model.orderUser = content.child("orderUser").getValue(String::class.java)!!
+                                                    model.orderStatus = content.child("orderStatus").getValue(Int::class.java)!!
+                                                    order!!.add(model)
+                                                    if(recyclerTransaction.adapter != null){
+                                                        recyclerTransaction.adapter!!.notifyDataSetChanged()
+                                                    }
+
+                                                    if(order!!.size > 0){
+                                                        containerNoTransaction.visibility = View.GONE
+                                                        recyclerTransaction.visibility = View.VISIBLE
+                                                    }else{
+                                                        containerNoTransaction.visibility = View.VISIBLE
+                                                        recyclerTransaction.visibility = View.GONE
+                                                    }
+                                                }else{
+                                                    if(order!!.size > 0){
+                                                        containerNoTransaction.visibility = View.GONE
+                                                        recyclerTransaction.visibility = View.VISIBLE
+                                                    }else{
+                                                        containerNoTransaction.visibility = View.VISIBLE
+                                                        recyclerTransaction.visibility = View.GONE
+                                                    }
+                                                }
+                                            }else{
+                                                val model = OrderModel()
+                                                model.orderID = content.child("orderID").getValue(String::class.java)!!
+                                                model.orderDescription = content.child("orderDescription").getValue(String::class.java)!!
+                                                model.orderProcess = content.child("orderProcess").getValue(Int::class.java)!!
+                                                model.orderService = content.child("orderService").getValue(String::class.java)!!
+                                                model.orderStore = content.child("orderStore").getValue(String::class.java)!!
+                                                model.orderTime = content.child("orderTime").getValue(Long::class.java)!!
+                                                model.orderUser = content.child("orderUser").getValue(String::class.java)!!
+                                                model.orderStatus = content.child("orderStatus").getValue(Int::class.java)!!
+                                                order!!.add(model)
+                                                if(recyclerTransaction.adapter != null){
+                                                    recyclerTransaction.adapter!!.notifyDataSetChanged()
+                                                }
+
+                                                if(order!!.size > 0){
+                                                    containerNoTransaction.visibility = View.GONE
+                                                    recyclerTransaction.visibility = View.VISIBLE
+                                                }else{
+                                                    containerNoTransaction.visibility = View.VISIBLE
+                                                    recyclerTransaction.visibility = View.GONE
+                                                }
+                                            }
+                                        }else{
+                                            if(order!!.size > 0){
+                                                containerNoTransaction.visibility = View.GONE
+                                                recyclerTransaction.visibility = View.VISIBLE
+                                            }else{
+                                                containerNoTransaction.visibility = View.VISIBLE
+                                                recyclerTransaction.visibility = View.GONE
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        val adapter = UserOrderAdapter(activity!!,order!!)
+                        recyclerTransaction.adapter = adapter
+                    }else{
+                        containerNoTransaction.visibility = View.VISIBLE
+                        recyclerTransaction.visibility = View.GONE
+                    }
+                }else{
+                    containerNoTransaction.visibility = View.VISIBLE
+                    recyclerTransaction.visibility = View.GONE
+                }
+            }
+        })
     }
 
     private fun setupFilter() {
         btnFilter.setOnClickListener {
             val alertDialog: AlertDialog.Builder = AlertDialog.Builder(activity!!)
             alertDialog.setTitle("Filter")
-            val items = arrayOf("Semua", "Selesai", "Diproses", "Batal")
-            val checkedItem = if(filter == "Semua"){0}else if(filter == "Selesai"){1}else if(filter == "Diproses"){2}else{3}
+            val items = arrayOf("Semua","Diterima","Ditolak","Diproses","Butuh Konfirmasi","Batal","Perbaikan","Selesai")
+            val checkedItem =
+                when (filter) {
+                    "Semua" -> {
+                        0
+                    }
+                    "Diterima" -> {
+                        1
+                    }
+                    "Ditolak" -> {
+                        2
+                    }
+                    "Diproses" -> {
+                        3
+                    }
+                    "Butuh Konfirmasi" -> {
+                        4
+                    }
+                    "Batal" -> {
+                        5
+                    }
+                    "Perbaikan" -> {
+                        6
+                    }
+                    else -> {
+                        7
+                    }
+                }
             alertDialog.setSingleChoiceItems(items, checkedItem) { dialog, which ->
                 when (which) {
                     0 -> {
                         filter = "Semua"
                         btnFilter.text = "Semua"
                         dialog.dismiss()
+                        setupList()
                     }
+
                     1 -> {
-                        filter = "Selesai"
-                        btnFilter.text = "Selesai"
+                        filter = "Diterima"
+                        btnFilter.text = "Diterima"
                         dialog.dismiss()
+                        setupList()
                     }
                     2 -> {
+                        filter = "Ditolak"
+                        btnFilter.text = "Ditolak"
+                        dialog.dismiss()
+                        setupList()
+                    }
+
+                    3 -> {
                         filter = "Diproses"
                         btnFilter.text = "Diproses"
                         dialog.dismiss()
+                        setupList()
                     }
-                    3 -> {
+                    4 -> {
+                        filter = "Butuh Konfirmasi"
+                        btnFilter.text = "Butuh Konfirmasi"
+                        dialog.dismiss()
+                        setupList()
+                    }
+                    5 -> {
                         filter = "Batal"
                         btnFilter.text = "Batal"
                         dialog.dismiss()
+                        setupList()
+                    }
+                    6 -> {
+                        filter = "Perbaikan"
+                        btnFilter.text = "Perbaikan"
+                        dialog.dismiss()
+                        setupList()
+                    }
+                    7 -> {
+                        filter = "Selesai"
+                        btnFilter.text = "Selesai"
+                        dialog.dismiss()
+                        setupList()
                     }
                 }
             }
@@ -124,23 +756,10 @@ class TransactionsFragment : Fragment() {
             if(actionId == EditorInfo.IME_ACTION_SEARCH) {
                 MyFunctions.closeKeyboard(activity!!)
                 v.clearFocus()
-                //do search
+                setupList()
             }
             return@setOnEditorActionListener true
         }
     }
 
-    private fun setupRefresh() {
-        refreshTransaction.setOnRefreshListener {
-            object : CountDownTimer(3000,1000){
-                override fun onFinish() {
-                    refreshTransaction.isRefreshing = false
-                }
-
-                override fun onTick(millisUntilFinished: Long) {
-
-                }
-            }.start()
-        }
-    }
 }

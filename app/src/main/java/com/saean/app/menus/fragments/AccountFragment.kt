@@ -222,6 +222,7 @@ class AccountFragment : Fragment() {
 
                             override fun onDataChange(snapshot: DataSnapshot) {
                                 storeRating.rating = snapshot.child("storeRating").getValue(Float::class.java)!!
+                                storeRate.text = MyFunctions.formatDistance(snapshot.child("storeRating").getValue(Double::class.java)!!)
                                 storeName.text = snapshot.child("storeName").getValue(String::class.java)
                                 storeStatusVerify.text = if(snapshot.child("storeStatus").getValue(Boolean::class.java)!!){"Terverifikasi"}else{"Belum Terverifikasi"}
                                 if(snapshot.child("storeStatus").getValue(Boolean::class.java)!!){
@@ -297,17 +298,67 @@ class AccountFragment : Fragment() {
                         var confirmOrder = 0 //order diterima store/admin
                         var rejectedOrder = 0 //order ditolak store/admin
 
+                        txtOrderNew.text = "$newOrder"
+                        txtOrderAccept.text = "$confirmOrder"
+                        txtOrderRejected.text = "$rejectedOrder"
+                        txtOrderFinish.text = "$stepFinish"
+
+                        orderNew.setOnClickListener {
+                            val intent = Intent(activity!!,StoreTransactionActivity::class.java)
+                            intent.putExtra("filter","Order Baru")
+                            startActivity(intent)
+                        }
+                        orderAccept.setOnClickListener {
+                            val intent = Intent(activity!!,StoreTransactionActivity::class.java)
+                            intent.putExtra("filter","Order Diterima")
+                            startActivity(intent)
+                        }
+                        orderRejected.setOnClickListener {
+                            val intent = Intent(activity!!,StoreTransactionActivity::class.java)
+                            intent.putExtra("filter","Order Ditolak")
+                            startActivity(intent)
+                        }
+                        orderFinish.setOnClickListener {
+                            val intent = Intent(activity!!,StoreTransactionActivity::class.java)
+                            intent.putExtra("filter","Selesai")
+                            startActivity(intent)
+                        }
+
+                        btnStoreActivity1.setOnClickListener {
+                            val intent = Intent(activity!!,StoreTransactionActivity::class.java)
+                            intent.putExtra("filter","Diproses")
+                            startActivity(intent)
+                        }
+                        btnStoreActivity2.setOnClickListener {
+                            val intent = Intent(activity!!,StoreTransactionActivity::class.java)
+                            intent.putExtra("filter","Menunggu Konfirmasi")
+                            startActivity(intent)
+                        }
+                        btnStoreActivity3.setOnClickListener {
+                            val intent = Intent(activity!!,StoreTransactionActivity::class.java)
+                            intent.putExtra("filter","Sedang Perbaikan")
+                            startActivity(intent)
+                        }
+                        btnStoreActivity4.setOnClickListener {
+                            val intent = Intent(activity!!,StoreTransactionActivity::class.java)
+                            intent.putExtra("filter","Selesai")
+                            startActivity(intent)
+                        }
+
                         for(content in snapshot.children){
                             if(content.child("orderStore").getValue(String::class.java)!! == storeID){
                                 if(content.child("orderStatus").getValue(Int::class.java)!! == 0){
                                     newOrder +=1
                                     btnStoreActivity11.badgeValue = newOrder
+                                    txtOrderNew.text = "$newOrder"
                                 }else if(content.child("orderStatus").getValue(Int::class.java)!! == 1){
                                     confirmOrder +=1
                                     btnStoreActivity22.badgeValue = confirmOrder
+                                    txtOrderAccept.text = "$confirmOrder"
                                 }else if(content.child("orderStatus").getValue(Int::class.java)!! == 2){
                                     rejectedOrder +=1
                                     btnStoreActivity33.badgeValue = rejectedOrder
+                                    txtOrderRejected.text = "$rejectedOrder"
                                 }
 
                                 if(content.child("orderProcess").getValue(Int::class.java)!! == 0){
@@ -318,6 +369,7 @@ class AccountFragment : Fragment() {
                                     //diproses
                                     stepProcess +=1
                                     btnStoreActivity1.badgeValue = stepProcess
+
                                 }else if(content.child("orderProcess").getValue(Int::class.java)!! == 2){
                                     //menunggu konfirmasi customer
                                     stepNeedConfirmation +=1
@@ -330,10 +382,13 @@ class AccountFragment : Fragment() {
                                     //sedang diperbaiki
                                     stepWorking +=1
                                     btnStoreActivity3.badgeValue = stepWorking
+
                                 }else if(content.child("orderProcess").getValue(Int::class.java)!! == 5){
                                     //selesai
                                     stepFinish +=1
                                     btnStoreActivity4.badgeValue = stepFinish
+                                    txtOrderFinish.text = "$stepFinish"
+
                                 }
                             }
                         }

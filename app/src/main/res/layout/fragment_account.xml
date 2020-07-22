@@ -281,6 +281,7 @@
                                             android:fontFamily="@font/opensans_regular"
                                             android:textColor="@color/BLACK60"/>
                                         <RatingBar
+                                            android:visibility="gone"
                                             android:id="@+id/storeRating"
                                             style="@style/Widget.AppCompat.RatingBar.Small"
                                             android:layout_width="wrap_content"
@@ -289,9 +290,21 @@
                                             android:numStars="5"
                                             android:rating="0"
                                             android:theme="@style/RatingBar"/>
+                                        <TextView
+                                            android:id="@+id/storeRate"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:gravity="center_vertical"
+                                            android:fontFamily="@font/opensans_bold"
+                                            android:textColor="@color/BLACK100"
+                                            android:textSize="14sp"
+                                            android:text="4.6"
+                                            android:drawableStart="@drawable/ic_star_rate"
+                                            android:drawablePadding="8dp"/>
                                     </LinearLayout>
                                 </LinearLayout>
                                 <TextView
+                                    android:visibility="gone"
                                     android:clickable="true"
                                     android:layout_marginTop="12dp"
                                     android:id="@+id/storeVerify"
@@ -308,6 +321,140 @@
                                     android:background="@drawable/background_container_notif_to_verify"
                                     tools:targetApi="o"
                                     android:focusable="true" />
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:layout_marginTop="8dp"
+                                    android:gravity="center_vertical">
+                                    <LinearLayout
+                                        android:focusable="true"
+                                        android:clickable="true"
+                                        android:id="@+id/orderNew"
+                                        android:layout_weight="1"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical"
+                                        android:gravity="center_horizontal">
+                                        <TextView
+                                            android:id="@+id/txtOrderNew"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:gravity="center_vertical"
+                                            android:fontFamily="@font/opensans_bold"
+                                            android:textColor="@color/BLACK100"
+                                            android:textSize="18sp"
+                                            tools:text="0" />
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:gravity="center_vertical"
+                                            android:fontFamily="@font/opensans_regular"
+                                            android:textColor="@color/BLACK60"
+                                            android:textSize="11sp"
+                                            android:text="Order Baru"
+                                            tools:ignore="HardcodedText,SmallSp" />
+                                    </LinearLayout>
+                                    <View
+                                        android:layout_width="1dp"
+                                        android:layout_height="match_parent"
+                                        android:background="@color/BLACK10"
+                                        android:layout_marginVertical="8dp"/>
+                                    <LinearLayout
+                                        android:focusable="true"
+                                        android:clickable="true"
+                                        android:id="@+id/orderAccept"
+                                        android:layout_weight="1"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical"
+                                        android:gravity="center_horizontal">
+                                        <TextView
+                                            android:id="@+id/txtOrderAccept"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:gravity="center_vertical"
+                                            android:fontFamily="@font/opensans_bold"
+                                            android:textColor="@color/BLACK100"
+                                            android:textSize="18sp"
+                                            tools:text="0" />
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:gravity="center_vertical"
+                                            android:fontFamily="@font/opensans_regular"
+                                            android:textColor="@color/BLACK60"
+                                            android:textSize="11sp"
+                                            android:text="Order Diterima"
+                                            tools:ignore="HardcodedText,SmallSp" />
+                                    </LinearLayout>
+                                    <View
+                                        android:layout_width="1dp"
+                                        android:layout_height="match_parent"
+                                        android:background="@color/BLACK10"
+                                        android:layout_marginVertical="8dp"/>
+                                    <LinearLayout
+                                        android:focusable="true"
+                                        android:clickable="true"
+                                        android:id="@+id/orderRejected"
+                                        android:layout_weight="1"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical"
+                                        android:gravity="center_horizontal">
+                                        <TextView
+                                            android:id="@+id/txtOrderRejected"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:gravity="center_vertical"
+                                            android:fontFamily="@font/opensans_bold"
+                                            android:textColor="@color/BLACK100"
+                                            android:textSize="18sp"
+                                            tools:text="0" />
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:gravity="center_vertical"
+                                            android:fontFamily="@font/opensans_regular"
+                                            android:textColor="@color/BLACK60"
+                                            android:textSize="11sp"
+                                            android:text="Order Ditolak"
+                                            tools:ignore="HardcodedText,SmallSp" />
+                                    </LinearLayout>
+                                    <View
+                                        android:layout_width="1dp"
+                                        android:layout_height="match_parent"
+                                        android:background="@color/BLACK10"
+                                        android:layout_marginVertical="8dp"/>
+                                    <LinearLayout
+                                        android:focusable="true"
+                                        android:clickable="true"
+                                        android:id="@+id/orderFinish"
+                                        android:layout_weight="1"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical"
+                                        android:gravity="center_horizontal">
+                                        <TextView
+                                            android:id="@+id/txtOrderFinish"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:gravity="center_vertical"
+                                            android:fontFamily="@font/opensans_bold"
+                                            android:textColor="@color/BLACK100"
+                                            android:textSize="18sp"
+                                            tools:text="0" />
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:gravity="center_vertical"
+                                            android:fontFamily="@font/opensans_regular"
+                                            android:textColor="@color/BLACK60"
+                                            android:textSize="11sp"
+                                            android:text="Selesai"
+                                            tools:ignore="HardcodedText,SmallSp" />
+                                    </LinearLayout>
+                                </LinearLayout>
                             </LinearLayout>
                         </FrameLayout>
                     </androidx.cardview.widget.CardView>
@@ -334,6 +481,7 @@
                             android:layout_height="wrap_content"
                             android:columnCount="4">
                             <LinearLayout
+                                android:visibility="gone"
                                 android:layout_columnWeight="1"
                                 android:layout_gravity="fill_horizontal"
                                 android:layout_width="0dp"
@@ -360,7 +508,8 @@
                                     app:ibv_badgePosition="top_right"
                                     android:paddingHorizontal="10dp"
                                     android:paddingVertical="10dp"
-                                    app:srcCompat="@drawable/ic_menu_step_store_info"/>
+                                    app:srcCompat="@drawable/ic_menu_step_store_info"
+                                    android:background="?attr/actionBarItemBackground"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -371,6 +520,7 @@
                                     android:textColor="@color/BLACK80" />
                             </LinearLayout>
                             <LinearLayout
+                                android:visibility="gone"
                                 android:layout_columnWeight="1"
                                 android:layout_gravity="fill_horizontal"
                                 android:layout_width="0dp"
@@ -397,7 +547,8 @@
                                     app:ibv_badgePosition="top_right"
                                     android:paddingHorizontal="10dp"
                                     android:paddingVertical="10dp"
-                                    app:srcCompat="@drawable/ic_menu_step_store_verify"/>
+                                    app:srcCompat="@drawable/ic_menu_step_store_verify"
+                                    android:background="?attr/actionBarItemBackground"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -408,6 +559,7 @@
                                     android:textColor="@color/BLACK80" />
                             </LinearLayout>
                             <LinearLayout
+                                android:visibility="gone"
                                 android:layout_columnWeight="1"
                                 android:layout_gravity="fill_horizontal"
                                 android:layout_width="0dp"
@@ -434,7 +586,8 @@
                                     app:ibv_badgePosition="top_right"
                                     android:paddingHorizontal="10dp"
                                     android:paddingVertical="10dp"
-                                    app:srcCompat="@drawable/ic_menu_step_store_chart_pie"/>
+                                    app:srcCompat="@drawable/ic_menu_step_store_chart_pie"
+                                    android:background="?attr/actionBarItemBackground"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -445,6 +598,7 @@
                                     android:textColor="@color/BLACK80" />
                             </LinearLayout>
                             <LinearLayout
+                                android:visibility="gone"
                                 android:layout_columnWeight="1"
                                 android:layout_gravity="fill_horizontal"
                                 android:layout_width="0dp"
@@ -471,7 +625,8 @@
                                     app:ibv_badgePosition="top_right"
                                     android:paddingHorizontal="10dp"
                                     android:paddingVertical="10dp"
-                                    app:srcCompat="@drawable/ic_menu_step_store_close"/>
+                                    app:srcCompat="@drawable/ic_menu_step_store_close"
+                                    android:background="?attr/actionBarItemBackground"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -490,6 +645,8 @@
                                 android:orientation="vertical"
                                 android:gravity="center_horizontal">
                                 <ru.nikartm.support.ImageBadgeView
+                                    android:clickable="true"
+                                    android:focusable="true"
                                     android:id="@+id/btnStoreActivity1"
                                     android:tint="@color/tintMenuStore"
                                     android:layout_width="wrap_content"
@@ -509,7 +666,8 @@
                                     app:ibv_badgePosition="bottom_right"
                                     android:paddingHorizontal="10dp"
                                     android:paddingVertical="10dp"
-                                    app:srcCompat="@drawable/ic_menu_step_store_planning"/>
+                                    app:srcCompat="@drawable/ic_menu_step_store_planning"
+                                    android:background="?attr/actionBarItemBackground"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -527,6 +685,8 @@
                                 android:orientation="vertical"
                                 android:gravity="center_horizontal">
                                 <ru.nikartm.support.ImageBadgeView
+                                    android:clickable="true"
+                                    android:focusable="true"
                                     android:id="@+id/btnStoreActivity2"
                                     android:tint="@color/tintMenuStore"
                                     android:layout_width="wrap_content"
@@ -546,7 +706,8 @@
                                     app:ibv_badgePosition="bottom_right"
                                     android:paddingHorizontal="10dp"
                                     android:paddingVertical="10dp"
-                                    app:srcCompat="@drawable/ic_menu_step_store_timer"/>
+                                    app:srcCompat="@drawable/ic_menu_step_store_timer"
+                                    android:background="?attr/actionBarItemBackground"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -564,6 +725,8 @@
                                 android:orientation="vertical"
                                 android:gravity="center_horizontal">
                                 <ru.nikartm.support.ImageBadgeView
+                                    android:clickable="true"
+                                    android:focusable="true"
                                     android:id="@+id/btnStoreActivity3"
                                     android:tint="@color/tintMenuStore"
                                     android:layout_width="wrap_content"
@@ -583,7 +746,8 @@
                                     app:ibv_badgePosition="bottom_right"
                                     android:paddingHorizontal="10dp"
                                     android:paddingVertical="10dp"
-                                    app:srcCompat="@drawable/ic_menu_step_store_repair"/>
+                                    app:srcCompat="@drawable/ic_menu_step_store_repair"
+                                    android:background="?attr/actionBarItemBackground"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -601,6 +765,8 @@
                                 android:orientation="vertical"
                                 android:gravity="center_horizontal">
                                 <ru.nikartm.support.ImageBadgeView
+                                    android:clickable="true"
+                                    android:focusable="true"
                                     android:id="@+id/btnStoreActivity4"
                                     android:tint="@color/tintMenuStore"
                                     android:layout_width="wrap_content"
@@ -620,7 +786,8 @@
                                     app:ibv_badgePosition="bottom_right"
                                     android:paddingHorizontal="10dp"
                                     android:paddingVertical="10dp"
-                                    app:srcCompat="@drawable/ic_menu_step_store_order"/>
+                                    app:srcCompat="@drawable/ic_menu_step_store_order"
+                                    android:background="?attr/actionBarItemBackground"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -649,7 +816,7 @@
                             android:textAllCaps="false"
                             android:text="+ Tambah Produk &amp; Layanan"
                             android:layout_marginHorizontal="16dp"
-                            android:fontFamily="@font/opensans_regular"
+                            android:fontFamily="@font/opensans_bold"
                             android:textColor="@color/BLACK80"
                             android:background="@drawable/background_button_add_product"
                             android:minHeight="45dp"

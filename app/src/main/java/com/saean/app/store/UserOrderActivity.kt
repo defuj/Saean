@@ -1,6 +1,7 @@
 package com.saean.app.store
 
 import android.content.SharedPreferences
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import cn.pedant.SweetAlert.SweetAlertDialog
@@ -75,7 +76,25 @@ class UserOrderActivity : AppCompatActivity() {
                     orderTime.text = MyFunctions.formatMillie(snapshot.child("orderTime").getValue(Long::class.java)!!,"dd/MM/yyyy H:m:s")
                     orderDescription.text = snapshot.child("orderDescription").getValue(String::class.java)
 
-                    snapshot.child("orderStatus").getValue(Int::class.java)
+                    val status = snapshot.child("orderStatus").getValue(Int::class.java)
+                    orderStatus.setTextColor(Color.parseColor("#1EA360"))
+                    when (status) {
+                        0 -> {
+                            orderStatus.text = "Menunggu Konfirmasi"
+                        }
+                        1 -> {
+                            orderStatus.text = "Diterima"
+                        }
+                        2 -> {
+                            orderStatus.text = "Ditolak"
+                        }
+                        //get store information
+
+                        //get service information
+                    }
+
+
+
                     snapshot.child("orderProcess").getValue(Int::class.java)
                     //get store information
                     val serviceID = snapshot.child("orderService").getValue(String::class.java)

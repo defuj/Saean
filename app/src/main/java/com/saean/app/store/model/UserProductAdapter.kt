@@ -61,7 +61,7 @@ class UserProductAdapter(private val context: Context, private val product: Arra
             }
 
             productStock.text = if(content.productStock!! > 10){
-                "sisa > ${content.productStock}"
+                "tersedia > ${content.productStock}"
             }else{
                 if(content.productStock!! > 0){
                     "tersisa ${content.productStock}"

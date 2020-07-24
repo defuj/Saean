@@ -113,6 +113,15 @@ class LoginActivity : AppCompatActivity() {
                             }
                             edit.apply()
 
+                            val name = sharedPreferences!!.getString(Cache.name,"")!!
+                            val mail = MyFunctions.changeToUnderscore(sharedPreferences!!.getString(Cache.email,"")!!)
+                            val notify = database.getReference("notification/$mail")
+                            val key = notify.push().key.toString()
+                            notify.child(key).child("notificationStatus").setValue("unread")
+                            notify.child(key).child("notificationTitle").setValue("Selamat datang kembali")
+                            notify.child(key).child("notificationBody").setValue("Selamat datang kembali $name! Dapatkan berbagai promo menarik dari SAEAN, jangan sampai ketinggalan!")
+                            notify.child(key).child("notificationTime").setValue(MyFunctions.getTime())
+
                             startActivity(Intent(this@LoginActivity,HomeActivity::class.java))
                             finish()
                         }else{
@@ -183,6 +192,15 @@ class LoginActivity : AppCompatActivity() {
                         }
                         edit.apply()
 
+                        val name = sharedPreferences!!.getString(Cache.name,"")!!
+                        val mail = MyFunctions.changeToUnderscore(sharedPreferences!!.getString(Cache.email,"")!!)
+                        val notify = database.getReference("notification/$mail")
+                        val key = notify.push().key.toString()
+                        notify.child(key).child("notificationStatus").setValue("unread")
+                        notify.child(key).child("notificationTitle").setValue("Selamat datang kembali")
+                        notify.child(key).child("notificationBody").setValue("Selamat datang kembali $name! Dapatkan berbagai promo menarik dari SAEAN, jangan sampai ketinggalan!")
+                        notify.child(key).child("notificationTime").setValue(MyFunctions.getTime())
+
                         startActivity(Intent(this@LoginActivity,HomeActivity::class.java))
                         finish()
                     }else{
@@ -214,6 +232,15 @@ class LoginActivity : AppCompatActivity() {
                         }
                         edit.apply()
                         progress.dismissWithAnimation()
+
+                        val name = sharedPreferences!!.getString(Cache.name,"")!!
+                        val mail = MyFunctions.changeToUnderscore(sharedPreferences!!.getString(Cache.email,"")!!)
+                        val notify = database.getReference("notification/$mail")
+                        val key = notify.push().key.toString()
+                        notify.child(key).child("notificationStatus").setValue("unread")
+                        notify.child(key).child("notificationTitle").setValue("Selamat datang kembali")
+                        notify.child(key).child("notificationBody").setValue("Selamat datang kembali $name! Dapatkan berbagai promo menarik dari SAEAN, jangan sampai ketinggalan!")
+                        notify.child(key).child("notificationTime").setValue(MyFunctions.getTime())
 
                         startActivity(Intent(this@LoginActivity,HomeActivity::class.java))
                         finish()

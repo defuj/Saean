@@ -34,9 +34,21 @@
         tools:replace="android:icon"
         tools:targetApi="m">
         <activity
-            android:name=".store.StoreOrderActivity"
+            android:name=".messages.RoomDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.FullStatusBar"/>
+        <activity
+            android:name=".NotificationActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.FullStatusBar"/>
+        <activity
+            android:name=".messages.RoomListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.FullStatusBar"/>
+        <activity
+            android:name=".store.StoreOrderActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.FullStatusBar" />
         <activity
             android:name=".store.StoreTransactionActivity"
             android:screenOrientation="portrait"

@@ -39,6 +39,12 @@
         <item name="colorControlActivated">#FFC850</item>
     </style>
 
+    <style name="CustomTextAppearanceTab" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/opensans_bold</item>
+    </style>
+
     <style name="helperText">
         <item name="android:fontFamily">@font/opensans_regular</item>
         <item name="android:textSize">12sp</item>

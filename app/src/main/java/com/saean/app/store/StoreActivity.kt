@@ -23,11 +23,14 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.saean.app.NotificationActivity
 import com.saean.app.R
 import com.saean.app.helper.Cache
 import com.saean.app.helper.MyComparator
 import com.saean.app.helper.MyFunctions
 import com.saean.app.home.promoSlider.PromoModel
+import com.saean.app.messages.RoomDetailActivity
+import com.saean.app.messages.RoomListActivity
 import com.saean.app.store.model.*
 import kotlinx.android.synthetic.main.activity_store.*
 import ru.nikartm.support.ImageBadgeView
@@ -88,7 +91,7 @@ class StoreActivity : AppCompatActivity() {
         badgesNotification.setImageResource(R.drawable.ic_menu_toolbar_home_notification)
 
         val email = MyFunctions.changeToUnderscore(sharedPreferences!!.getString(Cache.email,"")!!)
-        database.getReference("notification/$email").addValueEventListener(object : ValueEventListener{
+        database.getReference("notification/$email").orderByChild("notificationStatus").equalTo("unread").addValueEventListener(object : ValueEventListener{
             override fun onCancelled(error: DatabaseError) {
                 badgesNotification.badgeValue = 0
             }
@@ -102,7 +105,34 @@ class StoreActivity : AppCompatActivity() {
             }
         })
 
-        badgesMessage.badgeValue = 1
+        database.getReference("message").orderByChild("messageReceiver").equalTo(email).addValueEventListener(object : ValueEventListener{
+            override fun onCancelled(error: DatabaseError) {
+                badgesMessage.badgeValue = 0
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()){
+                    var unread = 0
+                    for (status in snapshot.children){
+                        if(status.child("messageStatus").getValue(String::class.java)!! == "unread"){
+                            unread +=1
+                            badgesMessage.badgeValue = unread
+                        }
+                    }
+                    badgesMessage.badgeValue = unread
+                }else{
+                    badgesMessage.badgeValue = 0
+                }
+            }
+        })
+
+        badgesMessage.setOnClickListener {
+            startActivity(Intent(this, RoomListActivity::class.java))
+        }
+
+        badgesNotification.setOnClickListener {
+            startActivity(Intent(this, NotificationActivity::class.java))
+        }
 
     }
 
@@ -114,6 +144,12 @@ class StoreActivity : AppCompatActivity() {
         if(intent.getStringExtra("storeID")!! == sharedPreferences!!.getString(Cache.storeID,"")!!){
             sendChatToStore.visibility = View.GONE
             containerGiveRating.visibility = View.GONE
+        }
+
+        sendChatToStore.setOnClickListener {
+            val intent = Intent(this,RoomDetailActivity::class.java)
+            intent.putExtra("storeID",intent.getStringExtra("storeID")!!)
+            startActivity(intent)
         }
 
         btnOpenMaps.setOnClickListener {

@@ -1,5 +1,6 @@
 package com.saean.app.menus.fragments
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -10,6 +11,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.saean.app.NotificationActivity
 import com.saean.app.R
 import com.saean.app.helper.Cache
 import com.saean.app.helper.MyFunctions
@@ -17,6 +19,7 @@ import com.saean.app.home.nearbyStore.StoreAdapter
 import com.saean.app.home.nearbyStore.StoreModel
 import com.saean.app.home.promoSlider.PromoAdapter
 import com.saean.app.home.promoSlider.PromoModel
+import com.saean.app.messages.RoomListActivity
 import kotlinx.android.synthetic.main.fragment_home.*
 import ru.nikartm.support.ImageBadgeView
 
@@ -64,7 +67,7 @@ class HomeFragment : Fragment() {
         badgesNotification.setImageResource(R.drawable.ic_menu_toolbar_home_notification)
 
         val email = MyFunctions.changeToUnderscore(sharedPreferences!!.getString(Cache.email,"")!!)
-        database.getReference("notification/$email").addValueEventListener(object : ValueEventListener{
+        database.getReference("notification/$email").orderByChild("notificationStatus").equalTo("unread").addValueEventListener(object : ValueEventListener{
             override fun onCancelled(error: DatabaseError) {
                 badgesNotification.badgeValue = 0
             }
@@ -78,11 +81,38 @@ class HomeFragment : Fragment() {
             }
         })
 
-        badgesMessage.badgeValue = 1
+        database.getReference("message").orderByChild("messageReceiver").equalTo(email).addValueEventListener(object : ValueEventListener{
+            override fun onCancelled(error: DatabaseError) {
+                badgesMessage.badgeValue = 0
+            }
 
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()){
+                    var unread = 0
+                    for (status in snapshot.children){
+                        if(status.child("messageStatus").getValue(String::class.java)!! == "unread"){
+                            unread +=1
+                            badgesMessage.badgeValue = unread
+                        }
+                    }
+                    badgesMessage.badgeValue = unread
+                }else{
+                    badgesMessage.badgeValue = 0
+                }
+            }
+        })
+
+        badgesMessage.setOnClickListener {
+            startActivity(Intent(activity!!, RoomListActivity::class.java))
+        }
+
+        badgesNotification.setOnClickListener {
+            startActivity(Intent(activity!!, NotificationActivity::class.java))
+        }
     }
 
     private fun setupFunctions() {
+
         setupRefresh()
         setupSliderPromo()
         setupNearbyStore()

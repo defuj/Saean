@@ -61,6 +61,34 @@ class HomeActivity : AppCompatActivity() {
         })
 
         setupGPS()
+        setupOnlineStatus()
+    }
+
+    private fun setupOnlineStatus() {
+        val email = MyFunctions.changeToUnderscore(sharedPreferences!!.getString(Cache.email,"")!!)
+        val userOnlineStatus = database.getReference("user/$email").child("userOnlineStatus")
+        userOnlineStatus.onDisconnect().setValue(false)
+
+        val userOnlineTime = database.getReference("user/$email").child("userOnlineTime")
+        userOnlineTime.onDisconnect().setValue(MyFunctions.getTime())
+
+        userOnlineStatus.addValueEventListener(object : ValueEventListener{
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()){
+                    val connected = snapshot.getValue(Boolean::class.java) ?: false
+                    if(!connected){
+                        database.getReference("user/$email").child("userOnlineStatus").setValue(true)
+                    }
+                }else{
+                    database.getReference("user/$email").child("userOnlineStatus").setValue(true)
+                    database.getReference("user/$email").child("userOnlineTime").setValue(MyFunctions.getTime())
+                }
+            }
+        })
     }
 
     private fun setupGPS() {

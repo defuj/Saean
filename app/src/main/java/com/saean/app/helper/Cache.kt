@@ -15,4 +15,6 @@ object Cache {
     const val longitude = "longitude"
     const val latitude = "latitude"
     const val blocked = "blocked"
+
+    const val activeRoom = "activeRoom"
 }

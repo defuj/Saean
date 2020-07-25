@@ -147,8 +147,13 @@ class StoreActivity : AppCompatActivity() {
         }
 
         sendChatToStore.setOnClickListener {
+            val storeID = intent.getStringExtra("storeID")!!
+            val email = MyFunctions.changeToUnderscore(sharedPreferences!!.getString(Cache.email,"")!!)
             val intent = Intent(this,RoomDetailActivity::class.java)
-            intent.putExtra("storeID",intent.getStringExtra("storeID")!!)
+            intent.putExtra("roomID","${email}_$storeID")
+            intent.putExtra("receiver","store")
+            intent.putExtra("user",email)
+            intent.putExtra("store",storeID)
             startActivity(intent)
         }
 

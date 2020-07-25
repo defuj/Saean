@@ -133,6 +133,10 @@ class AccountFragment : Fragment() {
             dialog.setConfirmClickListener {
                 dialog.dismissWithAnimation()
 
+                val email = MyFunctions.changeToUnderscore(sharedPreferences!!.getString(Cache.email,"")!!)
+                database.getReference("user/$email").child("userOnlineStatus").setValue(false)
+                database.getReference("user/$email").child("userOnlineTime").setValue(MyFunctions.getTime())
+
                 val edit = sharedPreferences!!.edit()
                 edit.clear()
                 edit.apply()

@@ -2,6 +2,7 @@ package com.saean.app.messages
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.View
@@ -45,6 +46,7 @@ class RoomListAdapter(private val context: Context, private val room: ArrayList<
                         if(snapshot.child("storePicture").getValue(String::class.java)!!.isNotEmpty()){
                             Glide.with(context)
                                 .load(snapshot.child("storePicture").getValue(String::class.java)!!)
+                                .placeholder(R.drawable.image_placeholder_circle)
                                 .apply(RequestOptions.circleCropTransform())
                                 .into(roomPicture)
                         }else{
@@ -63,7 +65,7 @@ class RoomListAdapter(private val context: Context, private val room: ArrayList<
                 })
 
                 //get last message
-                database.getReference("message").orderByChild("messageStore").equalTo(content.storeID).limitToLast(1).addValueEventListener(object : ValueEventListener{
+                database.getReference("message").orderByChild("messageRoom").equalTo(content.roomID).limitToLast(1).addValueEventListener(object : ValueEventListener{
                     override fun onCancelled(error: DatabaseError) {
 
                     }
@@ -83,7 +85,7 @@ class RoomListAdapter(private val context: Context, private val room: ArrayList<
                 })
 
                 //count unread message
-                database.getReference("message").orderByChild("messageStore").equalTo(content.storeID).limitToLast(1).addValueEventListener(object : ValueEventListener{
+                database.getReference("message").orderByChild("messageRoom").equalTo(content.roomID).addValueEventListener(object : ValueEventListener{
                     override fun onCancelled(error: DatabaseError) {
 
                     }
@@ -114,13 +116,107 @@ class RoomListAdapter(private val context: Context, private val room: ArrayList<
                         }
                     }
                 })
-            }else{
 
+            }else{
+                //get user info
+                database.getReference("user/${content.user}").addValueEventListener(object : ValueEventListener{
+                    override fun onCancelled(error: DatabaseError) {
+
+                    }
+
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if(snapshot.child("userPicture").getValue(String::class.java)!!.isNotEmpty()){
+                            Glide.with(context)
+                                .load(snapshot.child("userPicture").getValue(String::class.java)!!)
+                                .placeholder(R.drawable.image_placeholder_circle)
+                                .apply(RequestOptions.circleCropTransform())
+                                .into(roomPicture)
+                        }else{
+                            Glide.with(context)
+                                .load(R.drawable.image_placeholder_circle)
+                                .apply(RequestOptions.circleCropTransform())
+                                .into(roomPicture)
+                        }
+                        roomName.text = snapshot.child("userName").getValue(String::class.java)!!
+                        if(snapshot.child("userVerify").getValue(Int::class.java)!! == 2){
+                            roomName.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_store_verified_1,0,0,0)
+                        }else{
+                            roomName.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0)
+                        }
+                    }
+                })
+
+                //get last message
+                database.getReference("message").orderByChild("messageRoom").equalTo(content.roomID).limitToLast(1).addValueEventListener(object : ValueEventListener{
+                    override fun onCancelled(error: DatabaseError) {
+
+                    }
+
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if(snapshot.hasChildren()){
+                            for (message in snapshot.children){
+                                roomLastMessage.text = if(message.child("messageType").getValue(String::class.java)!! == "text"){
+                                    message.child("messageContent").getValue(String::class.java)
+                                }else{
+                                    "Gambar"
+                                }
+                                roomTime.text = MyFunctions.formatMillie(message.child("messageTime").getValue(Long::class.java)!!,"dd MMM")
+                            }
+                        }
+                    }
+                })
+
+                //count unread message
+                database.getReference("message").orderByChild("messageRoom").equalTo(content.roomID).addValueEventListener(object : ValueEventListener{
+                    override fun onCancelled(error: DatabaseError) {
+
+                    }
+
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if(snapshot.hasChildren()){
+                            var counter = 0
+                            for (message in snapshot.children){
+                                if(message.child("messageStatus").getValue(String::class.java)!! == "unread"){
+                                    if(message.child("messageReceiver").getValue(String::class.java)!! == content.storeID){
+                                        counter +=1
+                                        if(counter > 0){
+                                            roomUnreadCount.text = if(counter > 99){"99+"}else{"$counter"}
+                                            roomUnreadCount.visibility = View.VISIBLE
+                                        }else{
+                                            roomUnreadCount.visibility = View.INVISIBLE
+                                        }
+                                    }
+                                }
+                            }
+
+                            if(counter > 0){
+                                roomUnreadCount.text = if(counter > 99){"99+"}else{"$counter"}
+                                roomUnreadCount.visibility = View.VISIBLE
+                            }else{
+                                roomUnreadCount.visibility = View.INVISIBLE
+                            }
+                        }
+                    }
+                })
             }
         }
 
         holder.itemView.setOnClickListener {
-
+            if(content.type == "store"){
+                val intent = Intent(context,RoomDetailActivity::class.java)
+                intent.putExtra("roomID",content.roomID)
+                intent.putExtra("receiver","store")
+                intent.putExtra("user",content.user)
+                intent.putExtra("store",content.storeID)
+                context.startActivity(intent)
+            }else{
+                val intent = Intent(context,RoomDetailActivity::class.java)
+                intent.putExtra("roomID",content.roomID)
+                intent.putExtra("receiver","user")
+                intent.putExtra("user",content.user)
+                intent.putExtra("store",content.storeID)
+                context.startActivity(intent)
+            }
         }
     }
 

@@ -102,5 +102,8 @@ dependencies {
 
     //tool tips
     implementation 'com.github.florent37:viewtooltip:1.2.2'
+
+    //emoji
+    implementation 'com.github.hani-momanii:SuperNova-Emoji:1.1'
 }
 apply plugin: 'com.google.gms.google-services'

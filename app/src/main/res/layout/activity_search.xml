@@ -10,8 +10,7 @@
         android:id="@+id/appbar"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:background="@android:color/white"
-        app:liftOnScroll="true">
+        android:background="@android:color/white">
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbarSearch"
             android:layout_width="match_parent"
@@ -21,7 +20,7 @@
             app:menu="@menu/menu_toolbar_home"
             app:contentInsetStartWithNavigation="0dp"
             app:contentInsetStart="0dp"
-            android:layout_marginEnd="6dp">
+            android:paddingEnd="8dp">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -59,4 +58,63 @@
         </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
+    <androidx.core.widget.NestedScrollView
+        android:overScrollMode="never"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:paddingVertical="16dp"
+                android:paddingHorizontal="16dp"
+                android:id="@+id/txtResult"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/opensans_regular"
+                android:textColor="@color/BLACK80"
+                android:text="Sedang mencari toko penyedia jasa ..."
+                android:textSize="14sp"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:overScrollMode="never"
+                android:id="@+id/recyclerSearch" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/containerNoSearch"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_vertical|center_horizontal">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_magnifying_glass"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:fontFamily="@font/neosanspro_medium"
+            android:textColor="@color/BLACK80"
+            android:text="Oops . . ."
+            android:textSize="22sp"
+            android:layout_marginTop="8dp"
+            android:paddingVertical="6dp"/>
+        <TextView
+            android:id="@+id/txtNoResult"
+            android:maxWidth="250dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:fontFamily="@font/opensans_regular"
+            android:textColor="@color/BLACK60"
+            android:text="Hasil tidak didapatkan, silahkan gunakan kata kunci lain."
+            android:textSize="16sp"/>
+    </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

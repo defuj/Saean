@@ -116,6 +116,7 @@ class LoginActivity : AppCompatActivity() {
 
                             val name = sharedPreferences!!.getString(Cache.name,"")!!
                             val mail = MyFunctions.changeToUnderscore(sharedPreferences!!.getString(Cache.email,"")!!)
+
                             val notify = database.getReference("notification/$mail")
                             val key = notify.push().key.toString()
                             notify.child(key).child("notificationStatus").setValue("unread")

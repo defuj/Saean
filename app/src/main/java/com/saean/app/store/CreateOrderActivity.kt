@@ -148,6 +148,24 @@ class CreateOrderActivity : AppCompatActivity() {
                 }
             }
 
+            database.getReference("store/${intent.getStringExtra("storeID")}/storeInfo").addListenerForSingleValueEvent(object : ValueEventListener{
+                override fun onCancelled(error: DatabaseError) {
+
+                }
+
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if(snapshot.exists()){
+                        val admin = MyFunctions.changeToUnderscore(snapshot.child("storeAdmin").getValue(String::class.java)!!)
+                        val notify = database.getReference("notification/$admin")
+                        val key = notify.push().key.toString()
+                        notify.child(key).child("notificationStatus").setValue("unread")
+                        notify.child(key).child("notificationTitle").setValue("Ada orderan baru!")
+                        notify.child(key).child("notificationBody").setValue("Kamu dapat orderan baru nih, segera cek toko kamu sekarang!")
+                        notify.child(key).child("notificationTime").setValue(MyFunctions.getTime())
+                    }
+                }
+            })
+
             progress.dismissWithAnimation()
             val dialog = SweetAlertDialog(this,SweetAlertDialog.SUCCESS_TYPE)
             dialog.titleText = "Berhasil"

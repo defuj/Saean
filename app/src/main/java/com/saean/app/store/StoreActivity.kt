@@ -432,15 +432,24 @@ class StoreActivity : AppCompatActivity() {
                         storeName.text = snapshot.child("storeName").getValue(String::class.java)
                         storeAddress.text = snapshot.child("storeAddress").getValue(String::class.java)
 
+                        val email = MyFunctions.changeToUnderscore(sharedPreferences!!.getString(Cache.email,"")!!)
+                        database.getReference("user/$email/recentStore").child(storeID).child("time").setValue(MyFunctions.getTime())
+                        database.getReference("user/$email/recentStore").child(storeID).child("storePicture").setValue("")
+
                         if(snapshot.child("storeFront").exists()){
                             if(snapshot.child("storeFront").hasChildren()){
                                 slider = ArrayList()
                                 slider!!.clear()
 
+                                var i = 0
                                 for(img in snapshot.child("storeFront").children){
                                     val model = PromoModel()
                                     model.image = img.getValue(String::class.java)
                                     slider!!.add(model)
+                                    if(i == 0){
+                                        database.getReference("user/$email/recentStore").child(storeID).child("storePicture").setValue(img.getValue(String::class.java))
+                                    }
+                                    i+=1
                                 }
 
                                 indicatorStoreSlider.indicatorsToShow = if(snapshot.child("storeFront").childrenCount >= 5){

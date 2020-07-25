@@ -34,17 +34,25 @@
         tools:replace="android:icon"
         tools:targetApi="m">
         <activity
-            android:name=".messages.RoomDetailActivity"
+            android:name=".search.SearchActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.FullStatusBar"/>
+        <activity
+            android:name=".search.RecentSearchActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.FullStatusBar"/>
+        <activity
+            android:name=".messages.RoomDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.FullStatusBar" />
         <activity
             android:name=".notification.NotificationActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.FullStatusBar"/>
+            android:theme="@style/AppTheme.FullStatusBar" />
         <activity
             android:name=".messages.RoomListActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.FullStatusBar"/>
+            android:theme="@style/AppTheme.FullStatusBar" />
         <activity
             android:name=".store.StoreOrderActivity"
             android:screenOrientation="portrait"

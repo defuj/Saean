@@ -20,6 +20,7 @@ import com.saean.app.home.nearbyStore.StoreModel
 import com.saean.app.home.promoSlider.PromoAdapter
 import com.saean.app.home.promoSlider.PromoModel
 import com.saean.app.messages.RoomListActivity
+import com.saean.app.search.RecentSearchActivity
 import kotlinx.android.synthetic.main.fragment_home.*
 import ru.nikartm.support.ImageBadgeView
 
@@ -133,6 +134,9 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupFunctions() {
+        goToSearch.setOnClickListener {
+            startActivity(Intent(activity!!,RecentSearchActivity::class.java))
+        }
 
         setupRefresh()
         setupSliderPromo()

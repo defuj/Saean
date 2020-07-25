@@ -108,6 +108,7 @@ class LoginActivity : AppCompatActivity() {
                                 edit.putString(Cache.address,snapshot.child("userAddress").getValue(String::class.java))
                                 edit.putString(Cache.picture,snapshot.child("userPicture").getValue(String::class.java))
                                 edit.putString(Cache.phone,snapshot.child("userPhone").getValue(String::class.java))
+                                edit.putString(Cache.storeID,snapshot.child("userStore").getValue(String::class.java))
                             }catch (e:Exception){
 
                             }
@@ -187,6 +188,7 @@ class LoginActivity : AppCompatActivity() {
                             edit.putString(Cache.address,snapshot.child("userAddress").getValue(String::class.java))
                             edit.putString(Cache.picture,snapshot.child("userPicture").getValue(String::class.java))
                             edit.putString(Cache.phone,snapshot.child("userPhone").getValue(String::class.java))
+                            edit.putString(Cache.storeID,snapshot.child("userStore").getValue(String::class.java))
                         }catch (e:Exception){
 
                         }

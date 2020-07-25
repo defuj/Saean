@@ -17,7 +17,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.saean.app.LoginActivity
-import com.saean.app.NotificationActivity
+import com.saean.app.notification.NotificationActivity
 import com.saean.app.createStore.CreateStoreActivity
 import com.saean.app.R
 import com.saean.app.VerificationActivity
@@ -26,7 +26,6 @@ import com.saean.app.helper.MyFunctions
 import com.saean.app.messages.RoomListActivity
 import com.saean.app.store.*
 import com.saean.app.store.settings.*
-import kotlinx.android.synthetic.main.activity_store.*
 import kotlinx.android.synthetic.main.fragment_account.*
 import kotlinx.android.synthetic.main.fragment_account.storeName
 import kotlinx.android.synthetic.main.fragment_account.storeRating
@@ -83,6 +82,8 @@ class AccountFragment : Fragment() {
             }
         })
 
+        val myStore = sharedPreferences!!.getString(Cache.storeID,"_")
+        var unread = 0
         database.getReference("message").orderByChild("messageReceiver").equalTo(email).addValueEventListener(object : ValueEventListener{
             override fun onCancelled(error: DatabaseError) {
                 badgesMessage.badgeValue = 0
@@ -90,7 +91,26 @@ class AccountFragment : Fragment() {
 
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(snapshot.exists()){
-                    var unread = 0
+                    for (status in snapshot.children){
+                        if(status.child("messageStatus").getValue(String::class.java)!! == "unread"){
+                            unread +=1
+                            badgesMessage.badgeValue = unread
+                        }
+                    }
+                    badgesMessage.badgeValue = unread
+                }else{
+                    badgesMessage.badgeValue = 0
+                }
+            }
+        })
+
+        database.getReference("message").orderByChild("messageReceiver").equalTo(myStore).addValueEventListener(object : ValueEventListener{
+            override fun onCancelled(error: DatabaseError) {
+                badgesMessage.badgeValue = 0
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()){
                     for (status in snapshot.children){
                         if(status.child("messageStatus").getValue(String::class.java)!! == "unread"){
                             unread +=1
@@ -138,8 +158,7 @@ class AccountFragment : Fragment() {
                 database.getReference("user/$email").child("userOnlineTime").setValue(MyFunctions.getTime())
 
                 val edit = sharedPreferences!!.edit()
-                edit.clear()
-                edit.apply()
+                edit.clear().apply()
 
                 startActivity(Intent(activity!!,LoginActivity::class.java))
                 activity!!.finish()

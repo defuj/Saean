@@ -11,7 +11,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.saean.app.NotificationActivity
+import com.saean.app.notification.NotificationActivity
 import com.saean.app.R
 import com.saean.app.helper.Cache
 import com.saean.app.helper.MyFunctions
@@ -81,6 +81,8 @@ class HomeFragment : Fragment() {
             }
         })
 
+        val myStore = sharedPreferences!!.getString(Cache.storeID,"_")
+        var unread = 0
         database.getReference("message").orderByChild("messageReceiver").equalTo(email).addValueEventListener(object : ValueEventListener{
             override fun onCancelled(error: DatabaseError) {
                 badgesMessage.badgeValue = 0
@@ -88,7 +90,26 @@ class HomeFragment : Fragment() {
 
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(snapshot.exists()){
-                    var unread = 0
+                    for (status in snapshot.children){
+                        if(status.child("messageStatus").getValue(String::class.java)!! == "unread"){
+                            unread +=1
+                            badgesMessage.badgeValue = unread
+                        }
+                    }
+                    badgesMessage.badgeValue = unread
+                }else{
+                    badgesMessage.badgeValue = 0
+                }
+            }
+        })
+
+        database.getReference("message").orderByChild("messageReceiver").equalTo(myStore).addValueEventListener(object : ValueEventListener{
+            override fun onCancelled(error: DatabaseError) {
+                badgesMessage.badgeValue = 0
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()){
                     for (status in snapshot.children){
                         if(status.child("messageStatus").getValue(String::class.java)!! == "unread"){
                             unread +=1

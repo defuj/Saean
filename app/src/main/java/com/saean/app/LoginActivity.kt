@@ -108,6 +108,7 @@ class LoginActivity : AppCompatActivity() {
                                 edit.putString(Cache.address,snapshot.child("userAddress").getValue(String::class.java))
                                 edit.putString(Cache.picture,snapshot.child("userPicture").getValue(String::class.java))
                                 edit.putString(Cache.phone,snapshot.child("userPhone").getValue(String::class.java))
+                                edit.putString(Cache.storeID,snapshot.child("userStore").getValue(String::class.java))
                             }catch (e:Exception){
 
                             }
@@ -115,6 +116,7 @@ class LoginActivity : AppCompatActivity() {
 
                             val name = sharedPreferences!!.getString(Cache.name,"")!!
                             val mail = MyFunctions.changeToUnderscore(sharedPreferences!!.getString(Cache.email,"")!!)
+
                             val notify = database.getReference("notification/$mail")
                             val key = notify.push().key.toString()
                             notify.child(key).child("notificationStatus").setValue("unread")
@@ -187,6 +189,7 @@ class LoginActivity : AppCompatActivity() {
                             edit.putString(Cache.address,snapshot.child("userAddress").getValue(String::class.java))
                             edit.putString(Cache.picture,snapshot.child("userPicture").getValue(String::class.java))
                             edit.putString(Cache.phone,snapshot.child("userPhone").getValue(String::class.java))
+                            edit.putString(Cache.storeID,snapshot.child("userStore").getValue(String::class.java))
                         }catch (e:Exception){
 
                         }

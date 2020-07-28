@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="?attr/selectableItemBackground">
+    <LinearLayout
+        android:id="@+id/containerNotification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_notification"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginVertical="6dp"/>
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:singleLine="true"
+                android:id="@+id/notificationTitle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/opensans_regular"
+                tools:text="Store Name"
+                android:textColor="@color/BLACK100"
+                android:textSize="16sp"
+                android:gravity="center_vertical"
+                android:drawablePadding="8dp" />
+            <TextView
+                android:id="@+id/notificationBody"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/opensans_regular"
+                tools:text="This is for last message"
+                android:textColor="@color/BLACK80"
+                android:textSize="14sp"
+                android:singleLine="true"
+                android:paddingVertical="4dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="end"
+            android:layout_marginEnd="4dp">
+            <TextView
+                android:id="@+id/notificationTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="top"
+                android:fontFamily="@font/opensans_regular"
+                tools:text="12 Jul"
+                android:textSize="12sp"
+                android:paddingVertical="6dp"
+                android:paddingHorizontal="12dp"/>
+            <TextView
+                android:layout_marginEnd="12dp"
+                android:visibility="invisible"
+                android:background="@drawable/background_unread_message_count"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:minWidth="20dp"
+                android:gravity="center_horizontal|center_vertical"
+                tools:text="99+"
+                android:textSize="11sp"
+                android:paddingHorizontal="6dp"
+                android:textAlignment="center"
+                android:textColor="@android:color/white"
+                tools:ignore="HardcodedText,SmallSp"
+                android:layout_marginStart="3dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:background="?attr/selectableItemBackground"
+    android:gravity="center_vertical"
+    android:paddingStart="16dp"
+    android:paddingEnd="10dp"
+    android:paddingVertical="6dp">
+    <ImageView
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:src="@drawable/ic_clock"
+        android:tint="@color/BLACK40"
+        android:padding="8dp"
+        android:layout_marginEnd="8dp"/>
+    <TextView
+        android:layout_weight="1"
+        android:id="@+id/txtSearchRecent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/opensans_regular"
+        android:textColor="@color/BLACK80"
+        android:textSize="14sp"
+        tools:text="Terakhir dicari"
+        android:singleLine="true"/>
+    <ImageButton
+        android:id="@+id/btnDeleteRecentSearch"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:src="@drawable/ic_close_small"
+        android:background="?attr/actionBarItemBackground"
+        android:tint="@color/BLACK60" />
+</LinearLayout>

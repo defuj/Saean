@@ -82,7 +82,7 @@ class RoomDetailActivity : AppCompatActivity() {
         val email = MyFunctions.changeToUnderscore(sharedPreferences!!.getString(Cache.email,"")!!)
         database.getReference("message").orderByChild("messageRoom").equalTo(roomID).addValueEventListener(object : ValueEventListener{
             override fun onCancelled(error: DatabaseError) {
-                recyclerChat.visibility = View.GONE
+                recyclerChat.visibility = View.INVISIBLE
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -108,8 +108,10 @@ class RoomDetailActivity : AppCompatActivity() {
                             model.messageTime = content.child("messageTime").getValue(Long::class.java)
                             messageModel!!.add(model)
 
+                            val myStore = sharedPreferences!!.getString(Cache.storeID,"_")
                             if(sharedPreferences!!.getString(Cache.activeRoom,"")!! == content.child("messageRoom").getValue(String::class.java)){
-                                if(content.child("messageReceiver").getValue(String::class.java)!! == email){
+                                if(content.child("messageReceiver").getValue(String::class.java)!! == email ||
+                                    content.child("messageReceiver").getValue(String::class.java)!! == myStore){
                                     database
                                         .getReference("message")
                                         .child(content.key.toString())
@@ -122,10 +124,10 @@ class RoomDetailActivity : AppCompatActivity() {
                         val adapter = MessageAdapter(this@RoomDetailActivity,messageModel!!)
                         recyclerChat.adapter = adapter
                     }else{
-                        recyclerChat.visibility = View.GONE
+                        recyclerChat.visibility = View.INVISIBLE
                     }
                 }else{
-                    recyclerChat.visibility = View.GONE
+                    recyclerChat.visibility = View.INVISIBLE
                 }
             }
         })
@@ -142,7 +144,7 @@ class RoomDetailActivity : AppCompatActivity() {
         edit.apply()
 
         if(receiver == "store"){
-            database.getReference("store/$store/storeInfo").addValueEventListener(object : ValueEventListener{
+            database.getReference("store/$store/storeInfo").addListenerForSingleValueEvent(object : ValueEventListener{
                 override fun onCancelled(error: DatabaseError) {
 
                 }
@@ -197,7 +199,7 @@ class RoomDetailActivity : AppCompatActivity() {
                 }
             })
         }else{
-            database.getReference("user/$user").addValueEventListener(object : ValueEventListener{
+            database.getReference("user/$user").addListenerForSingleValueEvent(object : ValueEventListener{
                 override fun onCancelled(error: DatabaseError) {
 
                 }
@@ -273,7 +275,7 @@ class RoomDetailActivity : AppCompatActivity() {
                     //delete from user
                     database.getReference("user/$user/userMessage").child(roomID).removeValue()
                     //delete all message
-                    database.getReference("message").orderByChild("messageRoom").equalTo(roomID).addValueEventListener(object : ValueEventListener{
+                    database.getReference("message").orderByChild("messageRoom").equalTo(roomID).addListenerForSingleValueEvent(object : ValueEventListener{
                         override fun onCancelled(error: DatabaseError) {
 
                         }

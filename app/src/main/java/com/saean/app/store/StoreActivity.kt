@@ -23,10 +23,9 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.saean.app.NotificationActivity
+import com.saean.app.notification.NotificationActivity
 import com.saean.app.R
 import com.saean.app.helper.Cache
-import com.saean.app.helper.MyComparator
 import com.saean.app.helper.MyFunctions
 import com.saean.app.home.promoSlider.PromoModel
 import com.saean.app.messages.RoomDetailActivity
@@ -35,7 +34,6 @@ import com.saean.app.store.model.*
 import kotlinx.android.synthetic.main.activity_store.*
 import ru.nikartm.support.ImageBadgeView
 import java.time.LocalTime
-import java.util.*
 import kotlin.collections.ArrayList
 
 class StoreActivity : AppCompatActivity() {
@@ -105,6 +103,8 @@ class StoreActivity : AppCompatActivity() {
             }
         })
 
+        val myStore = sharedPreferences!!.getString(Cache.storeID,"_")
+        var unread = 0
         database.getReference("message").orderByChild("messageReceiver").equalTo(email).addValueEventListener(object : ValueEventListener{
             override fun onCancelled(error: DatabaseError) {
                 badgesMessage.badgeValue = 0
@@ -112,7 +112,26 @@ class StoreActivity : AppCompatActivity() {
 
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(snapshot.exists()){
-                    var unread = 0
+                    for (status in snapshot.children){
+                        if(status.child("messageStatus").getValue(String::class.java)!! == "unread"){
+                            unread +=1
+                            badgesMessage.badgeValue = unread
+                        }
+                    }
+                    badgesMessage.badgeValue = unread
+                }else{
+                    badgesMessage.badgeValue = 0
+                }
+            }
+        })
+
+        database.getReference("message").orderByChild("messageReceiver").equalTo(myStore).addValueEventListener(object : ValueEventListener{
+            override fun onCancelled(error: DatabaseError) {
+                badgesMessage.badgeValue = 0
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()){
                     for (status in snapshot.children){
                         if(status.child("messageStatus").getValue(String::class.java)!! == "unread"){
                             unread +=1
@@ -413,15 +432,24 @@ class StoreActivity : AppCompatActivity() {
                         storeName.text = snapshot.child("storeName").getValue(String::class.java)
                         storeAddress.text = snapshot.child("storeAddress").getValue(String::class.java)
 
+                        val email = MyFunctions.changeToUnderscore(sharedPreferences!!.getString(Cache.email,"")!!)
+                        database.getReference("user/$email/recentStore").child(storeID).child("time").setValue(MyFunctions.getTime())
+                        database.getReference("user/$email/recentStore").child(storeID).child("storePicture").setValue("")
+
                         if(snapshot.child("storeFront").exists()){
                             if(snapshot.child("storeFront").hasChildren()){
                                 slider = ArrayList()
                                 slider!!.clear()
 
+                                var i = 0
                                 for(img in snapshot.child("storeFront").children){
                                     val model = PromoModel()
                                     model.image = img.getValue(String::class.java)
                                     slider!!.add(model)
+                                    if(i == 0){
+                                        database.getReference("user/$email/recentStore").child(storeID).child("storePicture").setValue(img.getValue(String::class.java))
+                                    }
+                                    i+=1
                                 }
 
                                 indicatorStoreSlider.indicatorsToShow = if(snapshot.child("storeFront").childrenCount >= 5){

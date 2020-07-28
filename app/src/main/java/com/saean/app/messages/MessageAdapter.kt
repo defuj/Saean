@@ -34,10 +34,11 @@ class MessageAdapter(private val context: Context, private val message: ArrayLis
         val content = message[position]
         val sharedPreferences : SharedPreferences = context.getSharedPreferences(Cache.cacheName,0)
         val email = MyFunctions.changeToUnderscore(sharedPreferences.getString(Cache.email,"")!!)
+        val myStore = sharedPreferences.getString(Cache.storeID,"_")!!
         val database : FirebaseDatabase = FirebaseDatabase.getInstance()
 
         holder.itemView.run {
-            if(content.messageReceiver != email){
+            if(content.messageSender == email || content.messageSender == myStore){
                 messageContainer.setBackgroundResource(R.drawable.background_user_1_message)
                 messageMainContainer.gravity = Gravity.END
             }else{
